@@ -1,0 +1,212 @@
+[
+  {
+    "id": "01",
+    "category": "pure_devanagari",
+    "duration_s": 1.845,
+    "elapsed_s": 11.669447422027588,
+    "status": "ok"
+  },
+  {
+    "id": "02",
+    "category": "pure_devanagari",
+    "duration_s": 2.293,
+    "elapsed_s": 8.76037049293518,
+    "status": "ok"
+  },
+  {
+    "id": "03",
+    "category": "pure_devanagari",
+    "duration_s": 4.309,
+    "elapsed_s": 11.04845643043518,
+    "status": "ok"
+  },
+  {
+    "id": "04",
+    "category": "pure_devanagari",
+    "duration_s": 4.096,
+    "elapsed_s": 10.62830638885498,
+    "status": "ok"
+  },
+  {
+    "id": "05",
+    "category": "pure_devanagari",
+    "duration_s": 3.179,
+    "elapsed_s": 9.735775470733643,
+    "status": "ok"
+  },
+  {
+    "id": "06",
+    "category": "pure_devanagari",
+    "duration_s": 3.307,
+    "elapsed_s": 9.957853078842163,
+    "status": "ok"
+  },
+  {
+    "id": "07",
+    "category": "pure_devanagari",
+    "duration_s": 2.699,
+    "elapsed_s": 9.522939682006836,
+    "status": "ok"
+  },
+  {
+    "id": "08",
+    "category": "pure_devanagari",
+    "duration_s": 2.357,
+    "elapsed_s": 9.540743827819824,
+    "status": "ok"
+  },
+  {
+    "id": "09",
+    "category": "pure_roman",
+    "duration_s": 0.779,
+    "elapsed_s": 7.777588129043579,
+    "status": "ok"
+  },
+  {
+    "id": "10",
+    "category": "pure_roman",
+    "duration_s": 1.291,
+    "elapsed_s": 8.266942024230957,
+    "status": "ok"
+  },
+  {
+    "id": "11",
+    "category": "pure_roman",
+    "duration_s": 0.832,
+    "elapsed_s": 8.219483613967896,
+    "status": "ok"
+  },
+  {
+    "id": "12",
+    "category": "pure_roman",
+    "duration_s": 1.077,
+    "elapsed_s": 8.329487562179565,
+    "status": "ok"
+  },
+  {
+    "id": "13",
+    "category": "pure_roman",
+    "duration_s": 1.387,
+    "elapsed_s": 8.475599527359009,
+    "status": "ok"
+  },
+  {
+    "id": "14",
+    "category": "pure_roman",
+    "duration_s": 1.664,
+    "elapsed_s": 9.172724723815918,
+    "status": "ok"
+  },
+  {
+    "id": "15",
+    "category": "pure_roman",
+    "duration_s": 1.141,
+    "elapsed_s": 8.272917032241821,
+    "status": "ok"
+  },
+  {
+    "id": "16",
+    "category": "pure_roman",
+    "duration_s": 1.451,
+    "elapsed_s": 8.385066509246826,
+    "status": "ok"
+  },
+  {
+    "id": "17",
+    "category": "mixed_script",
+    "duration_s": 2.539,
+    "elapsed_s": 9.9620840549469,
+    "status": "ok"
+  },
+  {
+    "id": "18",
+    "category": "mixed_script",
+    "duration_s": 2.176,
+    "elapsed_s": 9.789393186569214,
+    "status": "ok"
+  },
+  {
+    "id": "19",
+    "category": "mixed_script",
+    "duration_s": 2.933,
+    "elapsed_s": 10.384876489639282,
+    "status": "ok"
+  },
+  {
+    "id": "20",
+    "category": "mixed_script",
+    "duration_s": 2.293,
+    "elapsed_s": 9.907892227172852,
+    "status": "ok"
+  },
+  {
+    "id": "21",
+    "category": "mixed_script",
+    "duration_s": 2.88,
+    "elapsed_s": 10.385534286499023,
+    "status": "ok"
+  },
+  {
+    "id": "22",
+    "category": "mixed_script",
+    "duration_s": 3.488,
+    "elapsed_s": 10.603865623474121,
+    "status": "ok"
+  },
+  {
+    "id": "23",
+    "category": "mixed_script",
+    "duration_s": 2.357,
+    "elapsed_s": 9.915366888046265,
+    "status": "ok"
+  },
+  {
+    "id": "24",
+    "category": "english_with_NE",
+    "duration_s": 1.963,
+    "elapsed_s": 9.22270131111145,
+    "status": "ok"
+  },
+  {
+    "id": "25",
+    "category": "english_with_NE",
+    "duration_s": 2.059,
+    "elapsed_s": 9.254668951034546,
+    "status": "ok"
+  },
+  {
+    "id": "26",
+    "category": "english_with_NE",
+    "duration_s": 1.451,
+    "elapsed_s": 8.391125202178955,
+    "status": "ok"
+  },
+  {
+    "id": "27",
+    "category": "mixed_script",
+    "duration_s": 2.965,
+    "elapsed_s": 10.379599809646606,
+    "status": "ok"
+  },
+  {
+    "id": "28",
+    "category": "english_with_NE",
+    "duration_s": 2.027,
+    "elapsed_s": 9.238982200622559,
+    "status": "ok"
+  },
+  {
+    "id": "29",
+    "category": "english_with_NE",
+    "duration_s": 1.781,
+    "elapsed_s": 9.147631406784058,
+    "status": "ok"
+  },
+  {
+    "id": "30",
+    "category": "english_with_NE",
+    "duration_s": 1.685,
+    "elapsed_s": 9.103015184402466,
+    "status": "ok"
+  }
+]

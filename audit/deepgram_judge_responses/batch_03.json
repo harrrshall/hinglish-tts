@@ -1,0 +1,122 @@
+[
+ {
+  "model": "indicf5",
+  "id": "08",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2069 (mid-tier Devanagari, 'phone' kept English) → intel 3; UTMOS=4.254 + SQUIM_MOS=4.45 mean=4.35 → nat 4; PESQ=3.884 → SQ 4; end_pop_db=13.62 but terminal=0.0007 (<0.005) → no pop flag."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "08",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2069 → intel 3; UTMOS=3.985 + SQUIM_MOS=4.443 mean=4.21, disagreement=0.458<0.7 → nat 4; PESQ=3.429 → SQ 3; end_pop_db=-68.22 clean."
+ },
+ {
+  "model": "kokoro",
+  "id": "09",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.8 (Roman row, transcript shows 'हाई' homograph error) → intel 1; UTMOS=4.401 + SQUIM_MOS=4.45 mean=4.43 → nat 4; PESQ=3.842 → SQ 4; wer_en_forced=1.0 (no anglicization signal) → FALSE."
+ },
+ {
+  "model": "indic_parler",
+  "id": "09",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.8 → intel 1; UTMOS=3.965 + SQUIM_MOS=4.429 mean=4.20, disagreement=0.464<0.7 → nat 4; PESQ=3.761 → SQ 4; wer_en_forced=0.8 not <0.30 → FALSE; end_pop=11.51 but terminal=0.0007<0.005 → no pop."
+ },
+ {
+  "model": "indicf5",
+  "id": "09",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=0.779 truncated (transcript_roman='रेणाई' covers <20% of expected words) → silence_or_skip TRUE; WER_rom=1.0 → intel 1; UTMOS=3.293 + SQUIM_MOS=3.859 mean=3.58 → nat 4; PESQ=3.522 → SQ 4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "09",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=0.778 truncated (transcript 'अब आ' missing >20% words) → silence_or_skip TRUE; WER_rom=1.0 → intel 1; UTMOS=3.59 vs SQUIM_MOS=4.608 disagreement=1.018>0.7 → drop nat to 3; PESQ=3.094 → SQ 3."
+ },
+ {
+  "model": "kokoro",
+  "id": "10",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 ('hai' rendered as 'हाय' / Bengaluru muddled) → intel 1; UTMOS=4.398 + SQUIM_MOS=4.458 mean=4.43 → nat 4; PESQ=3.92 → SQ 4; wer_en_forced=0.8889 (not <0.30) → FALSE."
+ },
+ {
+  "model": "indic_parler",
+  "id": "10",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.8889 → intel 1; UTMOS=3.154 vs SQUIM_MOS=4.389 disagreement=1.235>0.7 → drop nat to 3; PESQ=3.23 → SQ 3; terminal=0.0077<0.05 no DC penalty; wer_en_forced=1.0 → FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "10",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.291 truncated (transcript 'और वन मुड़ हो' missing most words) → silence_or_skip TRUE; WER_rom=1.0 → intel 1; UTMOS=3.27 vs SQUIM_MOS=4.365 disagreement=1.095>0.7 → drop nat to 3; PESQ=3.804 → SQ 4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "10",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.291 truncated (transcript 'और आ गय हवा' missing most words) → silence_or_skip TRUE; WER_rom=1.0 → intel 1; UTMOS=4.108 + SQUIM_MOS=4.445 mean=4.28, disagreement=0.337<0.7 → nat 4; PESQ=3.938 → SQ 4."
+ }
+]

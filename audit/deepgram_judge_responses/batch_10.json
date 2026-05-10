@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "26",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "TRUE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.20, WER_en=0.00 (gap>0.15, en<0.30) → anglicized 'Karim's' decoding; UTMOS=4.47 + SQUIM_MOS=4.42 → naturalness 4; PESQ=3.48 → speaker 3."
+ },
+ {
+  "model": "indic_parler",
+  "id": "26",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.10 → intel 4; WER_en=0.00 but gap=0.10<0.15 → not anglicized; UTMOS=4.18 + SQUIM_MOS=4.45 → nat 4; PESQ=4.07 → speaker 5."
+ },
+ {
+  "model": "indicf5",
+  "id": "26",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.45 (very short for 9-word EN sentence) + WER_rom=1.0 + transcript_roman gibberish ('Er crudgedò') + transcript_en='' → skip flagged; UTMOS=3.46 vs SQUIM_MOS=4.36 disagree 0.9>0.7 → nat dropped to 3; PESQ=3.82 → speaker 4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "26",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.45 + WER_rom=1.0 + transcript_hi='और रह गया' (3 Devanagari words for 9-word EN sentence) → severe skip/wrong-language; UTMOS=4.27 + SQUIM_MOS=4.37 → nat 4; PESQ=4.17 → speaker 5."
+ },
+ {
+  "model": "kokoro",
+  "id": "27",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "Devanagari-dominant mixed: CER=0.20 → intel 3; WER_en=1.0 → not anglicized; UTMOS=4.45 + SQUIM_MOS=4.44 → nat 4; PESQ=3.98 → speaker 4; transcript preserves both English and Hindi tokens → code-switch 4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "27",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.17 → intel 3; UTMOS=3.38 vs SQUIM_MOS=4.45 disagree 1.07>0.7 → nat dropped to 3; WER_en=0.86, WER_rom=0.57 → not anglicized; PESQ=3.39 → speaker 3."
+ },
+ {
+  "model": "indicf5",
+  "id": "27",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.43 → intel 2; transcript_hi mangles 'log/lunch/yaar' → significant word loss → skip TRUE; UTMOS=4.08 + SQUIM_MOS=4.44 → nat 4; PESQ=4.27 → speaker 5; end_pop_db=8.39 but terminal=0.0016<0.005 → no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "27",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.50 → intel 2; transcript drops 'lunch/office/yaar' English tokens entirely → code-switch fails, skip TRUE; UTMOS=3.47 vs SQUIM_MOS=4.41 disagree 0.94>0.7 → nat 3; PESQ=4.02 → speaker 5."
+ },
+ {
+  "model": "kokoro",
+  "id": "28",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.00 → intel 5; silence_mid_clip_s=0.52>0.5 → skip TRUE, nat dropped one rank from mean(UTMOS=4.46, SQUIM_MOS=4.45)=4 to 3; WER_en=0.00 gap=0 → not anglicized; PESQ=3.51 → speaker 4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "28",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.00 → intel 5; UTMOS=3.55 vs SQUIM_MOS=4.44 disagree 0.89>0.7 → nat dropped to 3; WER_en=0.00 gap=0 → not anglicized; PESQ=3.85 → speaker 4; end_pop_db=9.52 but terminal=0.0023<0.005 → no pop."
+ }
+]

@@ -1,0 +1,9 @@
+filename,sentence_id,category,reference_text,tested_phenomenon
+human_01.wav,01,pure_devanagari,कल मुझे दिल्ली जाना है।,baseline_devanagari
+human_02.wav,05,pure_devanagari,"जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।",imperative_devanagari
+human_03.wav,09,pure_roman,kal mujhe office jaana hai,roman_hindi_with_english_loan
+human_04.wav,11,pure_roman,yaar tu kal kya kar raha tha,casual_roman_hindi
+human_05.wav,17,mixed_script,"Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an issue.",mixed_script_hard
+human_06.wav,18,mixed_script,"Mera presentation tomorrow है, और मैं nervous हूं।",mixed_script_grammar
+human_07.wav,24,english_with_NE,My friend Aishwarya from Chennai is visiting Bengaluru next week.,english_with_indian_NE
+human_08.wav,26,english_with_NE,I love butter chicken from Karim's in Old Delhi.,english_with_food_locality

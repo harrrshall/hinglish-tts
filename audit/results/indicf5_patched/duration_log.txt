@@ -1,0 +1,120 @@
+
+--- 01 [pure_devanagari] कल मुझे दिल्ली जाना है। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=19 ref_frames=628 gen_frames=170 text='कल मुझे दिल्ली जाना है।'
+    ok: 1.803s wav, 8.1s wall
+
+--- 02 [pure_devanagari] क्या आप मुझे पानी दे सकते हैं? ---
+DEBUG-PATCH: ref_chars=70 gen_chars=24 ref_frames=628 gen_frames=215 text='क्या आप मुझे पानी दे सकते हैं?'
+    ok: 2.283s wav, 8.8s wall
+
+--- 03 [pure_devanagari] मेरा भाई आज स्कूल नहीं गया क्योंकि उसकी तबीयत खराब है। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=44 ref_frames=628 gen_frames=394 text='मेरा भाई आज स्कूल नहीं गया क्योंकि उसकी तबीयत खराब'
+    ok: 4.192s wav, 10.6s wall
+
+--- 04 [pure_devanagari] मेरे पास सिर्फ़ तीन सौ रुपये हैं, बस इतने में चला लो। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=42 ref_frames=628 gen_frames=376 text='मेरे पास सिर्फ़ तीन सौ रुपये हैं, बस इतने में चला '
+    ok: 4.000s wav, 10.6s wall
+
+--- 05 [pure_devanagari] जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=33 ref_frames=628 gen_frames=296 text='जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।'
+    ok: 3.147s wav, 9.8s wall
+
+--- 06 [pure_devanagari] आज बहुत थक गया हूँ, बस सीधा सोना चाहता हूँ। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=34 ref_frames=628 gen_frames=305 text='आज बहुत थक गया हूँ, बस सीधा सोना चाहता हूँ।'
+    ok: 3.243s wav, 9.9s wall
+
+--- 07 [pure_devanagari] तुझे पता है कल मीटिंग कितने बजे है? ---
+DEBUG-PATCH: ref_chars=70 gen_chars=28 ref_frames=628 gen_frames=251 text='तुझे पता है कल मीटिंग कितने बजे है?'
+    ok: 2.667s wav, 9.5s wall
+
+--- 08 [pure_devanagari] अरे यार, मेरा फ़ोन कहाँ रखा था?! ---
+DEBUG-PATCH: ref_chars=70 gen_chars=26 ref_frames=628 gen_frames=233 text='अरे यार, मेरा फ़ोन कहाँ रखा था?!'
+    ok: 2.475s wav, 9.6s wall
+
+--- 09 [pure_roman] kal mujhe office jaana hai ---
+DEBUG-PATCH: ref_chars=70 gen_chars=22 ref_frames=628 gen_frames=197 text='kal mujhe office jaana hai'
+    ok: 2.091s wav, 9.0s wall
+
+--- 10 [pure_roman] mera naam Arjun hai aur mai Bengaluru se hu ---
+DEBUG-PATCH: ref_chars=70 gen_chars=35 ref_frames=628 gen_frames=314 text='mera naam Arjun hai aur mai Bengaluru se hu'
+    ok: 3.339s wav, 10.5s wall
+
+--- 11 [pure_roman] yaar tu kal kya kar raha tha ---
+DEBUG-PATCH: ref_chars=70 gen_chars=22 ref_frames=628 gen_frames=197 text='yaar tu kal kya kar raha tha'
+    ok: 2.091s wav, 9.4s wall
+
+--- 12 [pure_roman] kya tu bhi aaj party me aa raha hai? ---
+DEBUG-PATCH: ref_chars=70 gen_chars=28 ref_frames=628 gen_frames=251 text='kya tu bhi aaj party me aa raha hai?'
+    ok: 2.667s wav, 10.4s wall
+
+--- 13 [pure_roman] abe yaar jaldi reply kar, mai wait kar raha hu ---
+DEBUG-PATCH: ref_chars=70 gen_chars=37 ref_frames=628 gen_frames=331 text='abe yaar jaldi reply kar, mai wait kar raha hu'
+    ok: 3.520s wav, 11.4s wall
+
+--- 14 [pure_roman] kal raat ka movie tha bohot bakwaas, paisa bilkul waste ---
+DEBUG-PATCH: ref_chars=70 gen_chars=46 ref_frames=628 gen_frames=412 text='kal raat ka movie tha bohot bakwaas, paisa bilkul '
+    ok: 4.384s wav, 12.4s wall
+
+--- 15 [pure_roman] tera laptop kab tak deliver hoga bhai? ---
+DEBUG-PATCH: ref_chars=70 gen_chars=32 ref_frames=628 gen_frames=287 text='tera laptop kab tak deliver hoga bhai?'
+    ok: 3.051s wav, 10.4s wall
+
+--- 16 [pure_roman] yaar tu bohot lucky hai, mujhe nahi mila ticket! ---
+DEBUG-PATCH: ref_chars=70 gen_chars=40 ref_frames=628 gen_frames=358 text='yaar tu bohot lucky hai, mujhe nahi mila ticket!'
+    ok: 3.808s wav, 11.4s wall
+
+--- 17 [mixed_script] Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an issue. ---
+DEBUG-PATCH: ref_chars=70 gen_chars=44 ref_frames=628 gen_frames=394 text='Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an is'
+    ok: 4.192s wav, 11.6s wall
+
+--- 18 [mixed_script] Mera presentation tomorrow है, और मैं nervous हूं। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=43 ref_frames=628 gen_frames=385 text='Mera presentation tomorrow है, और मैं nervous हूं।'
+    ok: 4.096s wav, 11.7s wall
+
+--- 19 [mixed_script] Bhai please मेरा homework कर दे, मैं तुझे ₹100 दूंगा। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=44 ref_frames=628 gen_frames=394 text='Bhai please मेरा homework कर दे, मैं तुझे ₹100 दूं'
+    ok: 4.192s wav, 11.8s wall
+
+--- 20 [mixed_script] Tumne वो new restaurant try kiya jo Connaught Place में khul ---
+DEBUG-PATCH: ref_chars=70 gen_chars=55 ref_frames=628 gen_frames=493 text='Tumne वो new restaurant try kiya jo Connaught Plac'
+    ok: 5.248s wav, 12.9s wall
+
+--- 21 [mixed_script] कल का event cancel हो गया, सबको message कर देना please। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=45 ref_frames=628 gen_frames=403 text='कल का event cancel हो गया, सबको message कर देना pl'
+    ok: 4.288s wav, 12.4s wall
+
+--- 22 [mixed_script] Boss को बता देना kal मैं leave पर रहूँगा, kuch personal काम  ---
+DEBUG-PATCH: ref_chars=70 gen_chars=51 ref_frames=628 gen_frames=457 text='Boss को बता देना kal मैं leave पर रहूँगा, kuch per'
+    ok: 4.864s wav, 12.6s wall
+
+--- 23 [mixed_script] Ye file को quickly review करो, deadline बहुत close है। ---
+DEBUG-PATCH: ref_chars=70 gen_chars=45 ref_frames=628 gen_frames=403 text='Ye file को quickly review करो, deadline बहुत close'
+    ok: 4.288s wav, 12.2s wall
+
+--- 24 [english_with_NE] My friend Aishwarya from Chennai is visiting Bengaluru next  ---
+DEBUG-PATCH: ref_chars=70 gen_chars=56 ref_frames=628 gen_frames=502 text='My friend Aishwarya from Chennai is visiting Benga'
+    ok: 5.344s wav, 12.7s wall
+
+--- 25 [english_with_NE] Mr. Khanna will join the meeting after he finishes lunch wit ---
+DEBUG-PATCH: ref_chars=70 gen_chars=57 ref_frames=628 gen_frames=511 text='Mr. Khanna will join the meeting after he finishes'
+    ok: 5.440s wav, 12.8s wall
+
+--- 26 [english_with_NE] I love butter chicken from Karim's in Old Delhi. ---
+DEBUG-PATCH: ref_chars=70 gen_chars=40 ref_frames=628 gen_frames=358 text="I love butter chicken from Karim's in Old Delhi."
+    ok: 3.808s wav, 11.5s wall
+
+--- 27 [mixed_script] Office में सब log lunch के लिए बाहर गए, तू भी आ ja yaar. ---
+DEBUG-PATCH: ref_chars=70 gen_chars=43 ref_frames=628 gen_frames=385 text='Office में सब log lunch के लिए बाहर गए, तू भी आ ja'
+    ok: 4.096s wav, 11.7s wall
+
+--- 28 [english_with_NE] Rohan is flying from Mumbai to Bengaluru tomorrow morning fo ---
+DEBUG-PATCH: ref_chars=70 gen_chars=57 ref_frames=628 gen_frames=511 text='Rohan is flying from Mumbai to Bengaluru tomorrow '
+    ok: 5.440s wav, 12.8s wall
+
+--- 29 [english_with_NE] Let's grab biryani from Paradise in Hyderabad this weekend. ---
+DEBUG-PATCH: ref_chars=70 gen_chars=51 ref_frames=628 gen_frames=457 text="Let's grab biryani from Paradise in Hyderabad this"
+    ok: 4.864s wav, 12.7s wall
+
+--- 30 [english_with_NE] She just got hired at Tata Consultancy Services in Pune. ---
+DEBUG-PATCH: ref_chars=70 gen_chars=47 ref_frames=628 gen_frames=421 text='She just got hired at Tata Consultancy Services in'
+    ok: 4.480s wav, 12.5s wall

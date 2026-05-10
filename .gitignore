@@ -1,0 +1,15 @@
+# Python virtual environments
+venv-scoring/
+venv-scoring-py311/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Large zip archives
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db

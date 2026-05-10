@@ -1,0 +1,122 @@
+[
+ {
+  "model": "indicf5",
+  "id": "18",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.6875, WER_rom=0.625 -> mostly wrong words; UTMOS=2.982 vs SQUIM_MOS=4.442 disagree>0.7 so mean~3.7 drop to 3; PESQ=3.043 -> 3; transcript missing 'presentation', 'tomorrow', 'nervous' (>20% words) so silence_or_skip=TRUE; wer_en_forced=1.0 -> not anglicized."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "18",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.6458, WER_rom=0.5 -> >50% errors; UTMOS=3.225 vs SQUIM_MOS=4.469 disagree>0.7 so mean~3.85 drop to 3; PESQ=3.622 -> 4; transcript missing English content words ('presentation', 'tomorrow', 'nervous') >20% so skip=TRUE; end_pop_db=-74.28 -> no pop."
+ },
+ {
+  "model": "kokoro",
+  "id": "19",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.1569 (Devanagari mostly clear with 'Bhai'->'Bye' confusion), WER_rom=0.3; UTMOS=4.42 + SQUIM_MOS=4.457 mean=4.44 -> 4; PESQ=4.015 -> 5; end_pop_db=2.43 below threshold; wer_en_forced=1.0 so not anglicized."
+ },
+ {
+  "model": "indic_parler",
+  "id": "19",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.2941 (most words clear), WER_rom=1.2 noisy on Roman ASR; UTMOS=3.867 vs SQUIM_MOS=4.442 disagree>0.7 mean~4.15 drop to 3; PESQ=3.758 -> 4; end_pop_db=11.07 + terminal_sample_abs=0.0054 -> end pop TRUE."
+ },
+ {
+  "model": "indicf5",
+  "id": "19",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.4314, WER_rom=0.4 -> half wrong (homework dropped, '100' lost); UTMOS=3.648 vs SQUIM_MOS=4.456 disagree>0.7 mean~4.05 drop to 3; PESQ=4.047 -> 5; missing '₹100/एक सौ' content (>20% words) so skip=TRUE; end_pop_db=8.3 but terminal=0.0027<0.005 so no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "19",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.4706, WER_rom=0.4 -> ~half wrong; transcript drops English tokens ('please', 'homework') and currency '₹100' -> English-only handling failed entirely so code_switch=1; UTMOS=3.602 + SQUIM_MOS=4.194 mean=3.9 -> 4; PESQ=3.886 -> 4; missing English words >20% -> skip=TRUE."
+ },
+ {
+  "model": "kokoro",
+  "id": "20",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.4769, WER_rom=0.5 -> half unintelligible; UTMOS=4.432 + SQUIM_MOS=4.46 mean=4.45 -> 4; PESQ=4.098 -> 5; wer_en_forced=0.8333 not <0.30 so roman_treated=FALSE; end_pop_db=2.34 below threshold."
+ },
+ {
+  "model": "indic_parler",
+  "id": "20",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "transcript_hi empty (CER=1.0) but WER_rom=0.5833 used for mixed-row intelligibility -> 2; UTMOS=3.499 vs SQUIM_MOS=4.461 disagree>0.7 mean~3.98 drop to 3; PESQ=3.943 -> 4; wer_en_forced=0.6667 not below 0.30 so not anglicized; end_pop_db=9.34 but terminal=0.0031<0.005 so no pop."
+ },
+ {
+  "model": "indicf5",
+  "id": "20",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "duration_s=2.293 vs ground truth ~5s expected, transcript_hi empty and WER_rom=1.0 -> heavily truncated; UTMOS=3.872 + SQUIM_MOS=4.14 mean=4.01 -> 4; PESQ=4.01 -> 5 but penalize 1 rank for terminal_sample_abs=0.0051>0.005 -> 4; end_pop_db=10.77 + terminal=0.0051 -> end pop TRUE; severe truncation -> skip=TRUE."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "20",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=2.29 vs ~5s expected -> truncation; CER=0.8923, WER_rom=1.0 -> mostly wrong; UTMOS=3.345 vs SQUIM_MOS=4.439 disagree>0.7 mean~3.89 drop to 3; PESQ=4.073 -> 5; transcript missing >20% words (no 'restaurant', 'Connaught Place', 'khula') -> skip=TRUE; end_pop_db=-68.07 no pop."
+ }
+]

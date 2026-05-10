@@ -1,0 +1,98 @@
+[
+ {
+  "model": "human_groundtruth",
+  "id": "human_01",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.1364 places intel at 4; UTMOS=2.094 + SQUIM_MOS=2.72 mean=2.41 (diff 0.626<=0.7) -> naturalness=2; PESQ=2.187<2.5 -> speaker=1; end_pop_db=15.54 but terminal=0.0 (<0.005) so no pop flag."
+ },
+ {
+  "model": "human_groundtruth",
+  "id": "human_02",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 1,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2821 -> intel=3; UTMOS=1.674 + SQUIM_MOS=2.522 mean=2.098 with diff=0.848>0.7 -> drop 1 -> naturalness=1; PESQ=1.551 -> speaker=1; terminal=0.0 so end pop FALSE despite end_pop_db=9.05."
+ },
+ {
+  "model": "human_groundtruth",
+  "id": "human_03",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 1,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0>0.50 -> intel=1 (Groq returned Devanagari for Roman input, ASR-backend artifact applied per rubric); UTMOS=1.779 + SQUIM_MOS=2.698 mean=2.24 with diff=0.919>0.7 -> drop 1 -> naturalness=1; PESQ=1.559 -> speaker=1; wer_en_forced=1.4 not better than wer_rom=1.0 -> roman_treated=FALSE."
+ },
+ {
+  "model": "human_groundtruth",
+  "id": "human_04",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 1,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "TRUE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 -> intel=1; UTMOS=1.51 + SQUIM_MOS=2.456 mean=1.983 diff=0.946>0.7 -> drop 1 -> naturalness=1; PESQ=1.529 -> speaker=1; wer_en_forced=0.0 + 0.15 < wer_rom=1.0 AND wer_en_forced<0.30 -> roman_treated_as_english=TRUE."
+ },
+ {
+  "model": "human_groundtruth",
+  "id": "human_05",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "Devanagari-dominant transcript; CER=0.5192>0.50 -> intel=1; UTMOS=1.89 + SQUIM_MOS=2.306 mean=2.098 diff=0.416 -> naturalness=2; PESQ=1.425 -> speaker=1; end_pop_db=8.41 AND terminal=0.0259>0.005 -> end pop TRUE; no per-speaker pure baseline so code_switch=intel."
+ },
+ {
+  "model": "human_groundtruth",
+  "id": "human_06",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.1042 (Devanagari-dominant) -> intel=4; UTMOS=2.22 + SQUIM_MOS=2.799 mean=2.51 diff=0.579 -> naturalness=3; PESQ=1.802 -> speaker=1; wer_en_forced=0.75 not better than wer_rom=0.25 -> roman_treated=FALSE; terminal=0.0 -> no pop; no per-speaker pure baseline so code_switch=intel."
+ },
+ {
+  "model": "human_groundtruth",
+  "id": "human_07",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "WER_rom=0.0 + CER=0.0 -> intel=5; UTMOS=2.205 + SQUIM_MOS=2.517 mean=2.361 diff=0.312 -> naturalness=2; PESQ=1.335 -> speaker=1; end_pop_db=8.05 AND terminal=0.0236>0.005 -> end pop TRUE; english_with_NE so roman_treated=''; no per-speaker pure baseline so code_switch=intel."
+ },
+ {
+  "model": "human_groundtruth",
+  "id": "human_08",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 1,
+  "roman_treated_as_english": "",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "WER_rom=0.1 -> intel=4 baseline; +1 phonetic-not-wrong adjust for Indian proper noun Karim's->Kareem's -> intel=5; UTMOS=2.259 + SQUIM_MOS=3.604 mean=2.93 diff=1.345>0.7 -> drop 1 -> naturalness=2; PESQ=1.544 -> speaker=1; end_pop_db=12.49 AND terminal=0.0157>0.005 -> end pop TRUE."
+ }
+]

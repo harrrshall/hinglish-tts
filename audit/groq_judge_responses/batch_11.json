@@ -1,0 +1,122 @@
+[
+ {
+  "model": "indicf5",
+  "id": "28",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, WER_en=0.91 (Sinhala-detected garble) -> intelligibility=1; UTMOS=2.98 vs SQUIM_MOS=4.02 disagree>0.7 so mean rounded then -1 -> 3; PESQ=4.14 -> SQ=5; end_pop=11.08 but terminal=0.0 so no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "28",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, WER_en=1.0, CER=0.95 -> intelligibility=1; UTMOS=3.34 vs SQUIM_MOS=4.47 disagree>0.7, mean->4 then -1=3; PESQ=3.53 -> SQ=4."
+ },
+ {
+  "model": "kokoro",
+  "id": "29",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0, WER_en=0.0 -> perfect English NE rendering; UTMOS=4.52 + SQUIM_MOS=4.41 mean=4.46 -> 4; PESQ=3.79 -> SQ=4; no DSP flags."
+ },
+ {
+  "model": "indic_parler",
+  "id": "29",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0, WER_en=0.0 -> clean NE rendering; UTMOS=3.85 + SQUIM_MOS=4.43 mean=4.14 -> 4; PESQ=4.10 -> SQ=5; end_pop=10.75 but terminal=0.0006<0.005 so no pop flag."
+ },
+ {
+  "model": "indicf5",
+  "id": "29",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, WER_en=1.0, duration=1.78s truncated -> intelligibility=1; UTMOS=4.19 vs SQUIM_MOS=3.22 disagree>0.7, mean=3.71 -> 4 then -1=3; PESQ=3.54 -> SQ=4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "29",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, WER_en=1.0, 1.78s clip output Hindi garble for English text -> I=1; UTMOS=3.95 + SQUIM_MOS=4.44 mean=4.2 -> 4; PESQ=4.11 -> SQ=5."
+ },
+ {
+  "model": "kokoro",
+  "id": "30",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0, WER_en=0.0 on 'Tata Consultancy Services'/'Pune' -> intelligibility=5; UTMOS=4.47 + SQUIM_MOS=4.45 mean=4.46 -> 4; PESQ=3.66 -> SQ=4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "30",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.10 ('2019' substituted for 'Pune') -> I=4; UTMOS=3.62 vs SQUIM_MOS=4.46 disagree>0.7, mean=4.04 -> 4 then -1=3; PESQ=3.84 -> SQ=4; end_pop=15.22 but terminal=0.0047<0.005 so no pop."
+ },
+ {
+  "model": "indicf5",
+  "id": "30",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, WER_en=1.0, 1.69s truncated Hindi garble -> I=1; UTMOS=3.97 + SQUIM_MOS=4.43 mean=4.2 -> 4; PESQ=4.17 -> SQ=5."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "30",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, WER_en=1.0, 1.69s Arabic-detected garble for English NE prompt -> I=1; UTMOS=4.00 + SQUIM_MOS=4.43 mean=4.22 -> 4; PESQ=4.19 -> SQ=5."
+ }
+]

@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "11",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 (transcript 'या तू कल काय का रहस्य' diverges) → intel=1; UTMOS=4.308 + SQUIM_MOS=4.459 mean~4.38 → nat=4; PESQ=4.016 → spkr=5; wer_en_forced=0.857 (not <0.30) → roman_treated_as_english=FALSE; end_pop_db=-8.69 → no pop."
+ },
+ {
+  "model": "indic_parler",
+  "id": "11",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 → intel=1; UTMOS=3.287 vs SQUIM_MOS=4.439 disagree >0.7 → drop 1 from mean=3.86 → nat=3; PESQ=3.636 → spkr=4; wer_en_forced=1.0 → FALSE; end_pop_db=23.4 but terminal_sample_abs=0.0019 (<0.005) → end_pop=FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "11",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 2,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=0.832 with truncated transcript 'यह हो रहा' → silence_or_skip=TRUE; WER_rom=1.0 → intel=1; UTMOS=2.931 vs SQUIM_MOS=4.572 disagree>0.7 (drop 1) plus skip (drop 1) → nat=2; PESQ=2.937 → spkr=2; end_pop_db=10.97 but terminal=0.0029 (<0.005) → no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "11",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=0.832 with transcript 'और वाह वाह' (totally off) → silence_or_skip=TRUE; WER_rom=1.0 → intel=1; UTMOS=3.452 vs SQUIM_MOS=4.435 disagree>0.7 (drop 1 from mean~3.94) plus skip drop → nat=2; PESQ=3.672 → spkr=4; end_pop_db=-70.65 → no pop."
+ },
+ {
+  "model": "kokoro",
+  "id": "12",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.111 (transcript 'गाय तू बाई आज बाती में आ रहा है हाय' wrong) → intel=1; UTMOS=4.235 + SQUIM_MOS=4.449 mean=4.34 → nat=4; PESQ=3.823 → spkr=4; wer_en_forced=1.0 → FALSE; end_pop_db=1.91 → no pop."
+ },
+ {
+  "model": "indic_parler",
+  "id": "12",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.111 → intel=1; UTMOS=3.598 vs SQUIM_MOS=4.462 disagree>0.7 → drop 1 from mean~4.03 → nat=3; PESQ=4.1 → spkr=5; wer_en_forced=1.0 → FALSE; end_pop_db=14.57 but terminal=0.0012 (<0.005) → end_pop=FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "12",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.077 with truncated 'Hey oh रावय' for an 8-word target → silence_or_skip=TRUE; WER_rom=1.0 → intel=1; UTMOS=3.075 vs SQUIM_MOS=4.387 disagree>0.7 (drop 1) plus skip (drop 1) → nat=2; PESQ=3.778 → spkr=4; end_pop_db=9.36 but terminal=0.0003 (<0.005) → no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "12",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.077 with transcript 'और' (single word for 8-word target) → silence_or_skip=TRUE; WER_rom=1.0 → intel=1; UTMOS=3.225 vs SQUIM_MOS=4.225 disagree=1.0>0.7 (drop 1) plus skip (drop 1) → nat=2; PESQ=3.234 → spkr=3; end_pop_db=-70.09 → no pop."
+ },
+ {
+  "model": "kokoro",
+  "id": "13",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.8 (transcript 'एब यहाँ जल्दी reply का, मैं wait का राहूँ' partly there but >0.5) → intel=1; UTMOS=4.485 + SQUIM_MOS=4.447 mean=4.47 → nat=4; PESQ=4.15 → spkr=5; wer_en_forced=0.9 not <0.30 → FALSE; end_pop_db=2.37 → no pop."
+ },
+ {
+  "model": "indic_parler",
+  "id": "13",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 (transcript 'ABR Jaudi replied her, my weak arrowha' garbled) → intel=1; UTMOS=2.662 vs SQUIM_MOS=4.418 disagree>0.7 → drop 1 from mean~3.54 → nat=3; PESQ=3.841 → spkr=4; wer_en_forced=1.0 → FALSE; end_pop_db=12.89 but terminal=0.0025 (<0.005) → end_pop=FALSE."
+ }
+]

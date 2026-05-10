@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0244 (clean Devanagari) + UTMOS=4.177 + SQUIM_MOS=4.416 (mean~4.3) + PESQ=4.007 → strong baseline; end_pop_db=2.39 below threshold."
+ },
+ {
+  "model": "indic_parler",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0488 (just inside 5 anchor) + UTMOS=3.476 vs SQUIM_MOS=4.447 disagree by 0.97 → naturalness dropped one rank to 4; PESQ=3.902 → speaker_quality 4."
+ },
+ {
+  "model": "indicf5",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0244 + UTMOS=4.14 + SQUIM_MOS=4.467 (mean~4.3) → strong; PESQ=3.793 → speaker_quality 4; end_pop_db=9.59 but terminal=0.0 so pop=FALSE."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0244 + UTMOS=3.636 vs SQUIM_MOS=4.333 disagree by 0.70 (borderline, mean~4.0) → naturalness=4; PESQ=3.942 → speaker_quality 4."
+ },
+ {
+  "model": "kokoro",
+  "id": "07",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 (perfect Devanagari) + UTMOS=4.327 + SQUIM_MOS=4.456 → strong; PESQ=3.82 → speaker_quality 4; end_pop_db=1.81 below threshold."
+ },
+ {
+  "model": "indic_parler",
+  "id": "07",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.1471 (within 4 anchor 0.05-0.15) + UTMOS=3.798 vs SQUIM_MOS=4.435 disagree by 0.64 (mean~4.1) → naturalness=4; PESQ=4.005 → speaker_quality 4; end_pop_db=11.79 but terminal=0.0043<0.005 → pop=FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "07",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 + UTMOS=3.989 + SQUIM_MOS=4.453 (mean~4.2) → strong; PESQ=4.158 ≥ 4.0 → speaker_quality 5."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "07",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 + UTMOS=3.953 + SQUIM_MOS=4.452 (mean~4.2) → strong; PESQ=4.206 ≥ 4.0 → speaker_quality 5."
+ },
+ {
+  "model": "kokoro",
+  "id": "08",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.069 (within 4 anchor 0.05-0.15) + UTMOS=4.395 + SQUIM_MOS=4.459 (mean~4.4) → naturalness=4; PESQ=4.0 → speaker_quality 5."
+ },
+ {
+  "model": "indic_parler",
+  "id": "08",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2069 (within 3 anchor 0.15-0.30) — transcript dropped 'यार' → mild skip but <20%; UTMOS=3.518 vs SQUIM_MOS=4.476 disagree by 0.96 (mean~4.0) → naturalness dropped one rank to 4; PESQ=3.556 → speaker_quality 4."
+ }
+]

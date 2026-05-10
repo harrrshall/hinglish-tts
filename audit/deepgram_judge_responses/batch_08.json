@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "21",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 + WER_rom=0.0 (perfect mixed-script rendering); UTMOS=4.408, SQUIM_MOS=4.46, PESQ=4.197; wer_en_forced=0.64 not better than wer_rom so not anglicized."
+ },
+ {
+  "model": "indic_parler",
+  "id": "21",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.019, WER_rom=0.18 → strong intelligibility; UTMOS=2.727 vs SQUIM_MOS=4.469 disagree by >0.7 → naturalness penalty; end_pop_db=11.53 + terminal=0.006 → pop flagged; PESQ=3.837."
+ },
+ {
+  "model": "indicf5",
+  "id": "21",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.396, WER_rom=0.364 → 'event cancel' garbled to 'headanker'; UTMOS=4.048 + SQUIM_MOS=4.474 → mean ~4.26; PESQ=4.058; end_pop_db=8.99 but terminal=0.0041 < 0.005 → no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "21",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.585, WER_rom=0.727 → English content nouns dropped entirely; UTMOS=3.424 + SQUIM_MOS=4.475 disagree by >0.7 → drop one rank; PESQ=3.463."
+ },
+ {
+  "model": "kokoro",
+  "id": "22",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.164, WER_rom=0.231 → 'Boss/Bus' confusion but mostly clear; UTMOS=4.248 + SQUIM_MOS=4.459 → mean ~4.35; PESQ=4.034; no DSP flags."
+ },
+ {
+  "model": "indic_parler",
+  "id": "22",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.230, WER_rom=0.154 → 'leave' rendered as 'लीफ' but acceptable; UTMOS=3.942 + SQUIM_MOS=4.477 → mean ~4.2; PESQ=3.983; end_pop_db=10.19 but terminal=0.0033<0.005 so no pop."
+ },
+ {
+  "model": "indicf5",
+  "id": "22",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.426, WER_rom=0.539 → 'leave/personal' garbled to 'रुई/सरसन'; UTMOS=4.088 + SQUIM_MOS=4.471 → mean ~4.28; PESQ=4.175; terminal=0.0023<0.005 so no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "22",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.492, WER_rom=0.615 → English nouns dropped, Hindi mangled; UTMOS=3.76 + SQUIM_MOS=4.465 disagree by >0.7 → naturalness penalty; PESQ=4.027."
+ },
+ {
+  "model": "kokoro",
+  "id": "23",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.039, WER_rom=0.1 → near-perfect mixed-script rendering; UTMOS=4.347 + SQUIM_MOS=4.423 → mean ~4.39; PESQ=3.654; wer_en=0.5 not <0.30 so not anglicized."
+ },
+ {
+  "model": "indic_parler",
+  "id": "23",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.115 (4-tier) but WER_rom=0.4 worse → 'file/Yazad' confusion; UTMOS=3.776 + SQUIM_MOS=4.46 → mean ~4.1; PESQ=3.647; end_pop_db=9.96 + terminal=0.005 → pop flagged."
+ }
+]
