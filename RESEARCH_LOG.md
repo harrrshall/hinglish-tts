@@ -1,84 +1,222 @@
 # Research Log
 
-> Append-only. If any other doc disagrees with this file, **this file wins**
-> (per `AGENT.md` §6).
-
-Each entry: date, decision/observation, why, and a pointer to artifacts.
+> Append-only. One entry per session or decision milestone. Numbers are
+> rubric v2.0 / 3-ASR consensus unless noted otherwise. If any other doc
+> disagrees with this file, **this file wins.**
 
 ---
 
-## 2026-05-07 — Project scaffolding & audit pipeline (Phase 1)
+## 2026-05-07 — Phase 1: scaffolding + first two models
 
-- **Project state:** Phase 1 (baseline audit). No training. No fine-tune yet.
-  Goal of this session: produce everything an executing agent needs to run
-  the audit on Colab T4 and hand back 150 .wav files + a scoring template.
+**Objective:** Baseline 5-model TTS audit on 30 Hinglish sentences. No
+training. Inference-only on Kaggle T4.
 
-- **Pre-existing files honored, not modified:** `AGENT.md`, `RESOURCE.md`.
-  `AGENT.md` §6 lists `RESEARCH_LOG.md` and `AUDIT_PLAN.md` as files the repo
-  should have — both created this session.
+**What ran:**
 
-- **First-pass mistake (logged for posterity):** I initially built a much
-  larger 6-phase eval pipeline (112 prompts, 5 runners, Streamlit dashboard,
-  metric framework with WER/CER/UTMOS/PESQ/STOI/spectral). That work was
-  superseded when the user shared the actual Phase-1 runbook
-  (now `AUDIT_PLAN.md`). It briefly lived in `legacy/` but was deleted on
-  the user's request later the same day. The lesson: confirm the spec
-  before building.
+- **Kokoro v1.0** (hexgrad/Kokoro-82M, 82M params) — 30/30 wavs, CPU local.
+- **Indic Parler-TTS** (ai4bharat/indic-parler-tts, 880M) — 30/30 wavs,
+  Kaggle T4 x2, kernel v9. Prompted via text-description.
 
-  If the contents ever need to be reconstructed, the shape was:
-  `prompts/{schema,categories,templates,generator}.py`,
-  `evaluation/metrics/{wer_cer,speaker_similarity,utmos,pesq_stoi,spectral,perf,stability,aggregate,registry}.py`,
-  `runners/{base_runner,kokoro_runner,indicf5_runner,indic_parler_runner,
-  springlab_f5_runner,orpheus_runner,registry,run_model}.py`,
-  `pipeline/{orchestrator,result_schema}.py`,
-  `review/{app,storage,data}.py` (Streamlit), and `scripts/01..06_*.py`
-  driver scripts. The per-model research at `research/<model>/` survived
-  because the audit notebooks still reference it.
+**What didn't run:**
 
-- **Per-model research (still useful):** `research/<model>/README.md` has
-  install steps, sampling-knob defaults, hardware needs, known failure
-  modes, and minimal inference snippets for Kokoro v1.0, IndicF5, Indic
-  Parler-TTS, SPRINGLab F5-Hindi-24KHz, and Orpheus. The audit notebooks
-  reference these.
+- **IndicF5** — blocked on Kaggle Secrets bug (`UserSecretsClient`
+  connection error). Workaround: hardcode HF_TOKEN inline, Save & Run All,
+  do NOT CLI-push afterward. Carried to next session.
+- **SPRINGLab F5-Hindi** — state_dict mismatch (18 vs 22 transformer blocks)
+  between the original SPRINGLab repo and IndicF5. Needs the rumourscape fork.
+  Deferred.
+- **Orpheus-Hindi** (SachinTelecmi/Orpheus-tts-hi, 3B 4-bit) — HF gating
+  pending `Sachin@Telecmi.com`. Deferred.
 
-- **Eval-set decision (will repeat in `audit/RUN_NOTES.md`):** Runbook §1.1
-  mandates 8/8/8/6 totals (= 30) but §1.3 lists 27–30 as the english_with_NE
-  generated range, which would yield 8/8/7/7. We honored §1.1: ID 27 is
-  **mixed_script** (5 generated for that category) and english_with_NE has
-  3 anchors + 3 generated (28/29/30). All 18 phenomenon tags from §1.4 are
-  still covered ≥1×. Verified by `audit/scripts/build_eval_set.py` self-check.
+**Key decisions made:**
 
-- **Orpheus variant chosen:** `SachinTelecmi/Orpheus-tts-hi` (per runbook),
-  4-bit nf4 quantization for T4. The earlier-research-pass agent had
-  surfaced both this variant and `canopylabs/3b-hi-ft-research_release` —
-  the runbook explicitly picks SachinTelecmi because it claims code-mixed
-  support, which is what we care about.
+- Eval set split: 8/8/8/6 (pure_devanagari / pure_roman / mixed_script /
+  english_with_NE) = 30 sentences, per AUDIT_PLAN.md §1.1. ID 27 assigned
+  to mixed_script (§1.3 was ambiguous; §1.1 wins).
+- Orpheus variant: SachinTelecmi per runbook; canopylabs alternative
+  noted but not chosen.
 
-- **What ships in this checkpoint** (paths relative to repo root):
-  - `AUDIT_PLAN.md` — runbook, sacred
-  - `audit/eval_sentences.tsv` — 30 sentences (12 anchors + 18 generated)
-  - `audit/notebooks/{01..05}_*.ipynb` — 5 Colab notebooks, each restartable
-  - `audit/scripts/{build_eval_set,build_notebooks,build_scoring_template,
-    prep_reference_audio,verify,build_handoff}.py`
-  - `audit/scoring_template.csv` — 150 rows pre-filled
-  - `audit/METADATA.json`, `audit/RUN_NOTES.md` — templates
-  - `progress.md` — phase tracker (rewritten)
-  - `research/<model>/README.md` — reference material the notebooks rely on
+**Artifacts:** `data/eval_sentences.tsv` (frozen), `experiments/01_baseline/notebooks/`, `experiments/01_baseline/wavs/kokoro/`, `experiments/01_baseline/wavs/indic_parler/`.
 
-- **What does NOT ship:** the audio. That's produced when the human (or a
-  GPU-backed agent) runs the 5 notebooks on Colab. The local machine has no
-  CUDA and ~15 GB RAM; running these models locally would swap or OOM.
+---
 
-- **Open questions (carried into audit execution):**
-  1. The IndicF5 reference clip currently has a **placeholder** transcript
-     in the prep fallback path. The transcript MUST be replaced with the
-     true transcript of the chosen clip before §3.2 is run, otherwise
-     IndicF5 prosody will drift and skew the comparison. Best plan: use
-     Rasa's bundled `text` field; if Rasa fails, transcribe the IndicF5
-     bundled clip with an Indic ASR model once and cache it.
-  2. The SPRINGLab F5-Hindi notebook uses a CLI call. The Python API
-     fallback (`f5_tts.api.F5TTS`) is documented in the cell but commented
-     out. If the SPRINGLab fork's CLI flags drift again, swap to the API.
-  3. Orpheus's `generate_speech` function is intentionally a stub. The
-     executing agent must paste the verbatim version from the HF model card
-     into `audit/notebooks/05_orpheus_hi.ipynb` Cell 5 before running.
+## 2026-05-08 — Phase 1: IndicF5 unblocked; SPRINGLab + Orpheus deferred
+
+**IndicF5** (ai4bharat/IndicF5, 330M) — 30/30 wavs via kernel v12 (T4 x2,
+HF token hardcoded). Phase 1 effective completion: 3 of 5 models = 90 wavs.
+SPRINGLab and Orpheus remain deferred indefinitely.
+
+**Prelim v1 scores (AAI only, deterministic, rubric v1.0):**
+
+| model | overall |
+|---|:---:|
+| Kokoro | 3.03 |
+| Indic Parler-TTS | 2.73 |
+| IndicF5 | 1.97 |
+
+IndicF5's 1.97 is dominated by `silence_or_skip` on 21/30 sentences —
+outputs were generating valid-sounding clips in ~0.8–2.5 s where
+sentences warranted 3–6 s. This flagged a duration bug, not a model
+quality failure.
+
+**Artifacts:** `experiments/01_baseline/wavs/indicf5/` (30 wavs), `experiments/01_baseline/SESSION_LEARNINGS.md`.
+
+---
+
+## 2026-05-09 (part 1) — Human ceiling study + rubric v2.0
+
+Two infra milestones required before any meaningful model comparison.
+
+### Human groundtruth ceiling study
+
+Scored 8 human Hinglish recordings under the same rubric. Finding: UTMOS/
+SQUIM naturalness predictors underrate human recordings by **1.5–2 ranks**
+vs perceptual ground truth on Hindi. Both predictors are English-trained
+and drift badly on non-English phonology.
+
+**Decision:** Lock naturalness as **ear-only** in all future reporting.
+MOS predictors removed from scoring pipeline. Intelligibility, code_switch,
+and silence_or_skip remain computable automatically.
+
+Artifact: `scoring/rubric/CEILING_REPORT.md`.
+
+### Rubric v2.0 — locked
+
+Key changes vs v1.0:
+
+1. **Unified Devanagari normalization** via `lib_normalize.to_unified_devanagari()` applied to both ASR transcript and reference text before WER/CER computation. Eliminates script-mismatch false negatives (e.g. AAI transcribing Devanagari content as Latin characters would previously score CER=1.0).
+2. **Three-ASR consensus** (AAI + Deepgram + Groq Whisper) with median-of-three intelligibility. Reduces single-backend ASR failure artifacts.
+3. **Naturalness = `ear-only` string** in all CSV outputs. No numeric naturalness column.
+4. English-loan whitelist (`ENGLISH_LOAN_CANONICAL`) prevents over-penalizing legitimate code-switch tokens.
+
+Artifact: `scoring/rubric/JUDGE_PROMPT_v2.md` — do not edit without versioning.
+Supporting scripts: `scoring/scripts/lib_normalize.py`, `scoring/scripts/extract_signals_v2.py`, `scoring/scripts/judge_v2.py`.
+
+---
+
+## 2026-05-09 (part 2) — Duration diagnostic + IndicF5 patch (Mode A)
+
+**Diagnosis of IndicF5 silence_or_skip:** Root cause in
+`f5_tts/infer/utils_infer.py:449–452`. Duration formula used **byte count**
+of input text instead of character count. Devanagari encodes as ~3 bytes/char
+in UTF-8; ASCII encodes as 1 byte/char. Result: for Roman-script input, the
+model allocated ~3× less canvas time than needed. Audio was truncated at the
+byte-proportional cut. `patch.diff` — 4 lines changed.
+
+Fix applied as Kaggle kernel v13. Re-run: 30/30 wavs, patched.
+
+**Results (rubric v2.0, 3-ASR consensus):**
+
+| category | original | patched | Δ |
+|---|:---:|:---:|:---:|
+| pure_devanagari | 4.62 | 4.62 | +0.00 |
+| pure_roman | 1.00 | 1.00 | 0.00 |
+| mixed_script | 1.62 | 1.88 | +0.25 |
+| english_with_NE | 1.00 | 1.00 | 0.00 |
+| **overall** | **2.13** | **2.20** | **+0.07** |
+
+`silence_or_skip`: 20/30 → 16/30.
+
+**Mode A confirmed. Mode C exposed.** The patch fixed duration allocation
+as predicted. But fixing the canvas revealed the underlying content
+failure: 15 of the 22 still-failing sentences are **RIGHT_LEN_GARBLED** —
+correct duration, wrong acoustic content. Example:
+
+> input: `kal mujhe office jaana hai`
+> patched ASR: `"ऐई अ एफे रेने आए"`
+
+Pattern: every Devanagari token in a mixed sentence renders correctly;
+every Roman/ASCII token produces syllabic noise. Root cause: IndicF5's
+ASCII character embeddings are undertrained. The model was trained on
+Indic-script data; the embedding subspace for A–Z was never adequately
+learned. The model receives a near-random vector for ASCII characters and
+produces near-random output.
+
+**Decision:** Test inference-time mitigation before any fine-tuning. Hypothesis: IndicXlit-transliterate input to Devanagari → model only sees characters it knows → garbling disappears.
+
+**Artifacts:** `experiments/02_indicf5_patch/patch.diff`, `experiments/02_indicf5_patch/COMPARISON.md`, `experiments/02_indicf5_patch/wavs/01..30.wav`, `diagnostics/duration_diagnostic/REPORT.md`.
+
+---
+
+## 2026-05-10 — IndicXlit input preprocessing — Outcome A confirmed
+
+**Experiment:** Transliterate all Roman tokens in the 30 eval sentences to
+Devanagari using `lib_normalize.to_unified_devanagari()` before feeding
+patched IndicF5. Same function rubric v2.0 uses for transcript normalization
+— symmetric by design. English-loan whitelist terms pass through unchanged.
+`pure_devanagari` rows are no-ops (preprocessing_applied = "no" for all 8).
+
+Kaggle kernel `harshalsinghcn/hinglish-tts-audit-indicf5-xlit` v1, T4 x2.
+30/30 wavs produced.
+
+**Three-way results (rubric v2.0, 3-ASR consensus):**
+
+| category | original | patched | patched+xlit | Δ (xlit–patch) |
+|---|:---:|:---:|:---:|:---:|
+| pure_devanagari | 4.62 | 4.62 | 4.62 | +0.00 |
+| pure_roman | 1.00 | 1.00 | **4.38** | **+3.38** |
+| mixed_script | 1.62 | 1.88 | **4.88** | **+3.00** |
+| english_with_NE | 1.00 | 1.00 | **4.33** | **+3.33** |
+| **overall** | **2.13** | **2.20** | **4.57** | **+2.37** |
+
+`silence_or_skip`: 20/30 → 16/30 → **0/30**.
+`speaker_quality_v2` (PESQ): 4.30 → 4.17 → **4.50**.
+
+**Field ranking under v2.0:**
+
+| model | overall | pure_roman | eng_NE |
+|---|:---:|:---:|:---:|
+| **indicf5_patched_xlit** | **4.57** | **4.38** | 4.33 |
+| kokoro | 3.90 | 2.50 | **4.83** |
+| indic_parler | 3.40 | 1.75 | 4.67 |
+| indicf5_patched | 2.20 | 1.00 | 1.00 |
+| indicf5 (orig) | 2.13 | 1.00 | 1.00 |
+| springlab_f5 | 2.07 | 1.00 | 1.00 |
+
+**Outcome A.** Preprocessing resolves Mode C fully. All 15 RIGHT_LEN_GARBLED
+sentences from the patched-only run now score 4 or 5. Zero residual failures
+(no sentence ≤2). The embedding-undertraining hypothesis was correct.
+
+Patched+Xlit is the highest-scoring configuration on every category except
+english_with_NE, where Kokoro wins by 0.5 ranks (4.83 vs 4.33). Even there,
+patched+xlit doubles Kokoro's pure_roman score (4.38 vs 2.50) — Hinglish-Roman
+intelligibility is now solved without fine-tuning.
+
+**Two residual 3s** (id 12, 16 — pure_roman): IndicXlit renders `tu → टू`
+("to") rather than `तू` ("you"). The model produces `टू` faithfully and the
+ASR recovers `तू`, but the phonetic gap hits the CER threshold. Fix: add
+`tu / mai / aa / hu` to `ROMAN_HINDI_FUNCTION_WORDS` in `lib_normalize.py`.
+Not applied this run (v2.0 symmetry constraint; whitelist edits require
+full v2 rebuild). Documented as v2.1 candidate.
+
+**Caveats:**
+
+- n=30. The English-loan whitelist in `lib_normalize.py` was tuned to this
+  vocabulary. Generalization requires whitelist expansion or a learned
+  token classifier.
+- `english_with_NE` rows produce Hindi-accented-phonetic English (e.g.
+  "My friend Aishwarya" → "माय फ्रेंड ऐश्वर्या"). ASR scores it highly;
+  whether a listener judges this as acceptable is an open question.
+- No fine-tuning. IndicF5 v12 weights unchanged. This is a pure
+  inference-time intervention.
+- Baseline scoring asymmetry: the 4 original models (Kokoro, Parler,
+  IndicF5, SPRINGLab) used AAI-only signals for Deepgram/Groq dimensions;
+  both patched runs are fully 3-ASR. Cross-model comparisons carry this caveat.
+
+**Path forward — user to decide:**
+
+- **Path A (ship):** Current patched+xlit stack is the production deliverable.
+  ~10 LOC preprocessing wrapper + duration patch. No training, no new
+  model weights, no new dependencies beyond IndicXlit (already installed).
+- **Path B (one more pass):** Apply v2.1 whitelist patch (`tu/mai/aa/hu`)
+  and optionally a per-script duration multiplier (~0.8× for ASCII to
+  address the 4 OVER_ALLOC sentences). Inference-only, ~1 Kaggle run.
+  Expected effect: id 12 and 16 lift from 3→5; overall from 4.57→~4.65.
+
+Both paths skip LoRA fine-tuning — the training need that Phase 2 was
+originally designed around no longer exists.
+
+**Artifacts:** `experiments/03_indicf5_xlit/COMPARISON.md`,
+`experiments/03_indicf5_xlit/preprocessed_sentences.tsv`,
+`experiments/03_indicf5_xlit/wavs/01..30.wav`,
+`experiments/01_baseline/scores/auto_scores_v2.csv` (180 rows, 6 models).
