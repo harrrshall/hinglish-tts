@@ -1,9 +1,0 @@
-filename,native_sr,channels,duration_s,peak_amp,clipped,silence_share,snr_flag,dur_flag,resampled_to_hz,out_wav
-human_01.mp3,44100,2,3.709,0.7598,False,0.194,OK,OK,24000,audit/human_groundtruth/wavs/human_01.wav
-human_02.mp3,44100,2,6.348,0.7051,False,0.053,OK,OK,24000,audit/human_groundtruth/wavs/human_02.wav
-human_03.mp3,44100,2,3.318,0.7161,False,0.063,OK,OK,24000,audit/human_groundtruth/wavs/human_03.wav
-human_04.mp3,44100,2,3.762,0.4624,False,0.04,OK,OK,24000,audit/human_groundtruth/wavs/human_04.wav
-human_05.mp3,44100,2,5.198,0.906,False,0.152,OK,OK,24000,audit/human_groundtruth/wavs/human_05.wav
-human_06.mp3,44100,2,5.407,0.5791,False,0.034,OK,OK,24000,audit/human_groundtruth/wavs/human_06.wav
-human_07.mp3,44100,2,6.06,0.8262,False,0.031,OK,OK,24000,audit/human_groundtruth/wavs/human_07.wav
-human_08.mp3,44100,2,6.087,0.721,False,0.063,OK,OK,24000,audit/human_groundtruth/wavs/human_08.wav
