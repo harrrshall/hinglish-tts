@@ -1,3 +1,7 @@
+# Secrets — never commit
+.env
+.env.*
+
 # Python virtual environments
 venv-scoring/
 venv-scoring-py311/

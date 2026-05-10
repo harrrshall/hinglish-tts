@@ -1,78 +1,104 @@
-# Hinglish TTS — Phase 1 (Baseline Audit)
+# Hinglish TTS Research
 
-This repo holds the Phase-1 baseline audit for the Hinglish (Hindi-English
-code-mixed) TTS project. We are testing **5 open-source TTS models** on the
-**same 30 Hinglish sentences**, on Colab T4, to decide which model to fine-tune
-in Phase 2. **Inference only — no training.**
+Evaluating open-source TTS models on Hindi-English code-mixed (Hinglish) speech.
+Goal: identify the best model for Phase 2 fine-tuning.
 
-For project context, direction, and watch-list, read [`AGENT.md`](./AGENT.md).
-For the executable audit spec, read [`AUDIT_PLAN.md`](./AUDIT_PLAN.md). For
-the live Phase-1 checklist, read [`progress.md`](./progress.md). Every
-decision lives in [`RESEARCH_LOG.md`](./RESEARCH_LOG.md).
-
-## Models under audit
-
-| # | Model | HF repo | ~Params | Prompting |
-|---|---|---|---|---|
-| 1 | Kokoro v1.0 (Hindi) | `hexgrad/Kokoro-82M` | 82 M | voicepack |
-| 2 | IndicF5 | `ai4bharat/IndicF5` | 330 M | reference-audio + transcript |
-| 3 | Indic Parler-TTS | `ai4bharat/indic-parler-tts` | 880 M | text-description + prompt |
-| 4 | SPRINGLab F5-Hindi-24KHz | `SPRINGLab/F5-Hindi-24KHz` | 151 M | reference-audio + transcript |
-| 5 | Orpheus-Hindi | `SachinTelecmi/Orpheus-tts-hi` | 3 B (4-bit) | LLM-style prompt |
-
-## Quick start
-
-```bash
-# 1. Eval set (already validated; rebuild only if you edit sentences)
-python audit/scripts/build_eval_set.py
-
-# 2. Reference audio (one-time, needs network)
-python audit/scripts/prep_reference_audio.py
-
-# 3. On Colab T4, one notebook per model, fresh runtime each time:
-#    audit/notebooks/01_kokoro.ipynb
-#    audit/notebooks/02_indicf5.ipynb
-#    audit/notebooks/03_indic_parler.ipynb
-#    audit/notebooks/04_springlab_f5.ipynb
-#    audit/notebooks/05_orpheus_hi.ipynb
-
-# 4. Verify
-python audit/scripts/verify.py                      # must exit 0
-
-# 5. Handoff
-python audit/scripts/build_handoff.py
-zip -r "audit_phase1_$(date -u +%Y%m%d).zip" audit
-```
-
-## Layout
+## Project Structure
 
 ```
-audit/                Phase-1 active workspace
-  eval_sentences.tsv     30 sentences (12 anchors + 18 generated)
-  reference_audio/       hindi_ref.{wav,txt}    (populated by prep script)
-  notebooks/             01..05 Colab notebooks
-  results/<model>/       01.wav .. 30.wav + log.json   (filled by notebooks)
-  scoring_template.csv   150 rows, pre-filled, blank score columns
-  scripts/               build/verify/handoff helpers
-  METADATA.json          run metadata
-  RUN_NOTES.md           deviations & gotchas log
-
-research/<model>/      Per-model research: README, install.sh, inference_minimal.py
-                       (background reading; the notebooks reference this)
-
-AGENT.md / AUDIT_PLAN.md / progress.md / RESEARCH_LOG.md / RESOURCE.md
+hienglish/
+│
+├── data/                        # Shared, immutable eval data
+│   ├── eval_sentences.tsv       # 30 Hinglish sentences (4 categories)
+│   ├── reference_audio/         # Hindi reference wav + transcript
+│   └── human_recordings/        # 8 human Hinglish recordings (ground-truth ceiling)
+│
+├── scoring/                     # Scoring infrastructure (shared across experiments)
+│   ├── rubric/
+│   │   ├── JUDGE_PROMPT_v2.md   # Locked rubric (v2.0) — do not edit
+│   │   ├── JUDGE_PROMPT_v1_archive.md
+│   │   ├── CEILING_REPORT.md    # Human ground-truth ceiling study
+│   │   ├── V2_VALIDATION.md
+│   │   └── RUBRIC_V2_BUILD_PROMPT.md
+│   └── scripts/
+│       ├── lib_normalize.py     # IndicXlit normalization (used by rubric + preprocessing)
+│       ├── lib_audio.py / lib_asr*.py / lib_mos.py
+│       ├── extract_signals_v2.py  # Stage-1: 3-backend ASR + signal extraction
+│       ├── judge_v2.py            # Stage-2: Claude-as-judge (rubric v2.0)
+│       ├── preprocess_input.py    # IndicXlit input preprocessor
+│       └── v1_archive/            # Old v1 scripts (reference only)
+│
+├── experiments/                 # One folder per research experiment
+│   ├── 01_baseline/             # Phase 1: 5-model baseline
+│   │   ├── notebooks/           # 01_kokoro.ipynb … 05_orpheus_hi.ipynb
+│   │   ├── wavs/<model>/        # 30 wavs per model
+│   │   ├── scores/              # auto_scores_v1/v2.csv, signal_vectors_*, judge_cache_*
+│   │   └── scripts/             # Build/verify/handoff helpers
+│   │
+│   ├── 02_indicf5_patch/        # Phase 2a: IndicF5 duration patch (Mode A fix)
+│   │   ├── patch.diff
+│   │   ├── KAGGLE_CELLS.md      # Kaggle kernel cells (T4 GPU required)
+│   │   ├── wavs/                # 30 patched outputs
+│   │   ├── scores/
+│   │   ├── scoring_scripts/
+│   │   └── COMPARISON.md        # Patched vs original per category
+│   │
+│   └── 03_indicf5_xlit/         # Phase 2b: IndicXlit input preprocessing (Mode C)
+│       ├── KAGGLE_CELLS.md
+│       ├── preprocessed_sentences.tsv   # original + Devanagari side-by-side
+│       ├── wavs/
+│       ├── scores/
+│       ├── scoring_scripts/
+│       └── COMPARISON.md        # 3-way: original vs patched vs patched+xlit
+│
+├── diagnostics/
+│   └── duration_diagnostic/     # Mode A root-cause analysis (REPORT.md)
+│
+├── models/                      # Per-model research: install steps + minimal inference
+│   ├── kokoro/ indicf5/ indic_parler/ springlab_f5/ orpheus/
+│
+├── landscape/                   # Competitor / market analysis
+│
+├── papers/                      # Reference papers
+│
+├── docs/                        # Project planning docs
+│
+├── RESEARCH_LOG.md              # Append-only decision log — source of truth
+├── AGENT.md                     # Agent instructions for this codebase
+└── RESOURCE.md                  # Resource inventory (APIs, compute, HF tokens)
 ```
 
-## Why per-model Colab notebooks (not a single orchestrator)
+## Models Under Evaluation
 
-Pin conflicts between F5-TTS / Parler / Orpheus / vLLM / older
-`transformers` / `numpy<=1.26` make a single environment intractable. One
-notebook per model = one fresh Colab kernel = no transitive headaches. Each
-is independently restartable.
+| # | Model | Params | Status |
+|---|---|---|---|
+| 1 | Kokoro v1.0 (Hindi) | 82M | Phase 1 done |
+| 2 | IndicF5 | 330M | Phase 1 + patch + xlit experiments |
+| 3 | Indic Parler-TTS | 880M | Phase 1 done |
+| 4 | SPRINGLab F5-Hindi-24KHz | 151M | Phase 1 done |
+| 5 | Orpheus-Hindi | 3B (4-bit) | Deferred |
 
-## What does NOT run on the local machine
+## Scoring Pipeline (v2.0)
 
-Per `RESOURCE.md`: this laptop has no CUDA GPU and ~15 GB RAM. Even Kokoro
-82M is borderline locally. The 5 audit notebooks **must** run on Colab T4
-(or any 15+ GB CUDA GPU). Everything else (eval-set generation, scoring CSV,
-verification, handoff packaging) runs locally.
+```
+WAVs → scoring/scripts/extract_signals_v2.py   (AAI + Deepgram + Groq, 3-ASR consensus)
+     → scoring/scripts/judge_v2.py             (Claude-as-judge)
+     → experiments/<N>/scores/auto_scores_consensus.csv
+```
+
+Rubric dimensions: **intelligibility** (1–5), **naturalness** (ear-only), **code_switch**, **silence_or_skip**.
+
+## Adding a New Experiment
+
+1. Create `experiments/NN_<name>/` with `README.md`, `wavs/`, `scores/`
+2. Run scoring against `data/eval_sentences.tsv` using scripts in `scoring/scripts/`
+3. Write `COMPARISON.md` vs `experiments/01_baseline/scores/auto_scores_v2.csv`
+4. Append findings to `RESEARCH_LOG.md`
+
+## Key Files
+
+| File | Purpose |
+|---|---|
+| `data/eval_sentences.tsv` | The 30-sentence eval set — never modify |
+| `scoring/rubric/JUDGE_PROMPT_v2.md` | Locked rubric — changes require versioning |
+| `RESEARCH_LOG.md` | Every decision with reasoning — append only |
