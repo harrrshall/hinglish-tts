@@ -1,0 +1,122 @@
+[
+ {
+  "model": "indicf5",
+  "id": "18",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.71, WER_rom=0.625 (transcript drops 'presentation', 'tomorrow', 'nervous'); UTMOS=2.98 vs SQUIM_MOS=4.44 disagree>0.7 so naturalness mean rounded then -1; PESQ=3.04; transcript missing >20% of expected words so silence_or_skip=TRUE."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "18",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.67, WER_rom=0.625 (English content words 'presentation/tomorrow/nervous' missing); UTMOS=3.23 vs SQUIM_MOS=4.47 disagree>0.7 → -1 penalty; PESQ=3.62; WER_en=1.0 not better than WER_rom; end_pop_db=-74 clean."
+ },
+ {
+  "model": "kokoro",
+  "id": "19",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.37, WER_rom=0.4 → ~half clear; UTMOS=4.42 + SQUIM_MOS=4.46 mean=4.44; PESQ=4.02 ≥4.0 → speaker=5; WER_en=0.8 not better than WER_rom=0.4 so FALSE; silence_mid=0.42<0.5."
+ },
+ {
+  "model": "indic_parler",
+  "id": "19",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.53, WER_rom=1.0 → mostly wrong; UTMOS=3.87 + SQUIM_MOS=4.44 mean=4.16; PESQ=3.76; WER_en=1.0 equal to WER_rom; end_pop_db=11.07 + terminal=0.0054>0.005 → pop TRUE; transcript clearly missing >20% words."
+ },
+ {
+  "model": "indicf5",
+  "id": "19",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.45, WER_rom=0.4 → half-intelligible; UTMOS=3.65 vs SQUIM_MOS=4.46 disagree>0.7 → mean 4.05 -1 = 3; PESQ=4.05 ≥4.0; WER_en=1.0 not better; end_pop=8.3 but terminal=0.0027<0.005 → no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "19",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.45, WER_rom=0.4 → half intelligible (homework→'अलग'); UTMOS=3.60 + SQUIM_MOS=4.19 mean=3.9; PESQ=3.89; end_pop_db=-71 clean; WER_en=1.0 not better."
+ },
+ {
+  "model": "kokoro",
+  "id": "20",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.78, WER_rom=0.83 → mostly wrong (Tumne→टमनी, hai→हाए); UTMOS=4.43 + SQUIM_MOS=4.46 mean=4.45; PESQ=4.10 ≥4.0; WER_en=0.83 equal to WER_rom; end_pop=2.34 below threshold."
+ },
+ {
+  "model": "indic_parler",
+  "id": "20",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.46, WER_rom=0.75 → about half-wrong (multiple words dropped: 'Tumne','new','Connaught'); UTMOS=3.50 vs SQUIM_MOS=4.46 disagree>0.7 → mean 3.98 -1 = 3; PESQ=3.94; transcript missing >20% so skip TRUE; end_pop=9.34 + terminal=0.0031<0.005 → no pop."
+ },
+ {
+  "model": "indicf5",
+  "id": "20",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.89, WER_rom=1.0 → mostly noise; duration=2.29s suggests truncation, transcript missing >20% words → skip TRUE and -1 naturalness from mean(UTMOS=3.87,SQUIM_MOS=4.14)=4 → 3; PESQ=4.01 ≥4.0 but terminal=0.0051>0.005 with end_pop=10.77 → pop TRUE → speaker -1 = 4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "20",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 2,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.89, WER_rom=1.0, detected_lang=ur (transcript_roman is Urdu script) → mostly wrong; duration=2.29s shows truncation, transcript missing >20% → skip TRUE; UTMOS=3.35 vs SQUIM_MOS=4.44 disagree>0.7, mean 3.89→4, -1 disagreement, -1 truncation = 2; PESQ=4.07 ≥4.0; end_pop_db=-68 clean."
+ }
+]

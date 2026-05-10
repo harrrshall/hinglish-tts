@@ -1,0 +1,31 @@
+id	category	text	expected_pronunciation_notes	tested_phenomenon
+1	pure_devanagari	कल मुझे दिल्ली जाना है।	Standard Hindi declarative.	baseline_devanagari
+2	pure_devanagari	क्या आप मुझे पानी दे सकते हैं?	Polite Hindi question.	question_devanagari
+3	pure_devanagari	मेरा भाई आज स्कूल नहीं गया क्योंकि उसकी तबीयत खराब है।	Long Hindi sentence with English loanword \"स्कूल\" written in Devanagari.	loanword_in_devanagari
+4	pure_devanagari	"मेरे पास सिर्फ़ तीन सौ रुपये हैं, बस इतने में चला लो।"	Numerals expressed in Devanagari words; casual register.	numbers_devanagari
+5	pure_devanagari	"जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।"	Casual imperative with informal pronoun \"तेरा\".	imperative_devanagari
+6	pure_devanagari	"आज बहुत थक गया हूँ, बस सीधा सोना चाहता हूँ।"	Casual declarative; common contraction \"सीधा\".	baseline_devanagari
+7	pure_devanagari	तुझे पता है कल मीटिंग कितने बजे है?	Informal question; \"मीटिंग\" is an English loanword in Devanagari.	question_devanagari
+8	pure_devanagari	"अरे यार, मेरा फ़ोन कहाँ रखा था?!"	Exclamative question; everyday casual reaction.	imperative_devanagari
+9	pure_roman	kal mujhe office jaana hai	"Should sound Hindi, NOT English. \""office\"" is the only English word."	roman_hindi_with_english_loan
+10	pure_roman	mera naam Arjun hai aur mai Bengaluru se hu	"\""hai\"" is Hindi \""is\"", NOT \""hi\"" greeting. \""Bengaluru\"" must be pronounced Indian, not anglicized."	homograph_hai_hi
+11	pure_roman	yaar tu kal kya kar raha tha	"Casual Hinglish, common words yaar/tu/kya."	casual_roman_hindi
+12	pure_roman	kya tu bhi aaj party me aa raha hai?	Roman-script Hindi question with English loan \"party\".	roman_question
+13	pure_roman	"abe yaar jaldi reply kar, mai wait kar raha hu"	Roman-Hindi imperative; \"reply\" and \"wait\" must NOT be re-anglicized in pronunciation.	roman_imperative
+14	pure_roman	"kal raat ka movie tha bohot bakwaas, paisa bilkul waste"	Casual film reaction; multiple English loans inside Roman-Hindi.	casual_roman_hindi
+15	pure_roman	tera laptop kab tak deliver hoga bhai?	Roman-Hindi question with English nouns \"laptop\" / \"deliver\".	roman_hindi_with_english_loan
+16	pure_roman	"yaar tu bohot lucky hai, mujhe nahi mila ticket!"	"Casual exclamation; \""hai\"" must read as Hindi \""is\"", not \""hi\""."	casual_roman_hindi
+17	mixed_script	"Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an issue."	The hardest case — script switches mid-sentence.	mixed_script_hard
+18	mixed_script	"Mera presentation tomorrow है, और मैं nervous हूं।"	Hindi grammar around English content words.	mixed_script_grammar
+19	mixed_script	"Bhai please मेरा homework कर दे, मैं तुझे ₹100 दूंगा।"	Currency symbol + Devanagari numerals/script switch.	mixed_script_currency
+20	mixed_script	Tumne वो new restaurant try kiya jo Connaught Place में khula hai?	Mid-sentence script switch with question intonation.	mixed_script_question
+21	mixed_script	"कल का event cancel हो गया, सबको message कर देना please।"	English content nouns inside Hindi grammatical frame.	mixed_script_grammar
+22	mixed_script	"Boss को बता देना kal मैं leave पर रहूँगा, kuch personal काम है।"	Heavy code-switching; office register; double script switches.	mixed_script_hard
+23	mixed_script	"Ye file को quickly review करो, deadline बहुत close है।"	Imperative with English verb embedded in Hindi auxiliary structure.	mixed_script_grammar
+24	english_with_NE	My friend Aishwarya from Chennai is visiting Bengaluru next week.	Three Indian named entities in pure-English sentence.	english_with_indian_NE
+25	english_with_NE	Mr. Khanna will join the meeting after he finishes lunch with Priya.	Indian surname + first name in English context.	english_with_indian_names
+26	english_with_NE	I love butter chicken from Karim's in Old Delhi.	"Restaurant + locality, Indian food name."	english_with_food_locality
+27	mixed_script	"Office में सब log lunch के लिए बाहर गए, तू भी आ ja yaar."	Office casual register; English content nouns inside Hindi frame.	mixed_script_grammar
+28	english_with_NE	Rohan is flying from Mumbai to Bengaluru tomorrow morning for work.	"Three Indian named entities (one personal, two cities) in English."	english_with_indian_NE
+29	english_with_NE	Let's grab biryani from Paradise in Hyderabad this weekend.	Indian food + restaurant + city in English context.	english_with_food_locality
+30	english_with_NE	She just got hired at Tata Consultancy Services in Pune.	Indian company brand in pure-English sentence.	english_with_indian_brand

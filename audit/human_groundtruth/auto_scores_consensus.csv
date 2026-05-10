@@ -1,0 +1,9 @@
+model,id,category,text,intelligibility_1to5,naturalness_1to5,code_switch_handling_1to5,speaker_quality_1to5,roman_treated_as_english,silence_or_skip,end_of_clip_pop,notes
+human_groundtruth,human_01,pure_devanagari,कल मुझे दिल्ली जाना है।,5,2,5,1,FALSE,FALSE,FALSE,"3-ASR consensus: intel=[5,5,4]; nat=[2,2,2]; silence=[FALSE,FALSE,FALSE]"
+human_groundtruth,human_02,pure_devanagari,"जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।",3,1,3,1,FALSE,FALSE,FALSE,"3-ASR consensus: intel=[3,4,3]; nat=[1,1,1]; silence=[FALSE,FALSE,FALSE]"
+human_groundtruth,human_03,pure_roman,kal mujhe office jaana hai,1,1,1,1,FALSE,FALSE,FALSE,"3-ASR consensus: intel=[1,1,1]; nat=[1,1,1]; silence=[FALSE,FALSE,FALSE]"
+human_groundtruth,human_04,pure_roman,yaar tu kal kya kar raha tha,1,1,1,1,FALSE,FALSE,FALSE,"3-ASR consensus: intel=[1,1,1]; nat=[1,1,1]; silence=[FALSE,FALSE,FALSE]"
+human_groundtruth,human_05,mixed_script,"Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an issue.",2,2,2,1,FALSE,FALSE,TRUE,"3-ASR consensus: intel=[2,2,1]; nat=[2,2,2]; silence=[FALSE,FALSE,FALSE]"
+human_groundtruth,human_06,mixed_script,"Mera presentation tomorrow है, और मैं nervous हूं।",4,3,4,1,FALSE,FALSE,FALSE,"3-ASR consensus: intel=[1,4,4]; nat=[3,3,3]; silence=[FALSE,FALSE,FALSE]"
+human_groundtruth,human_07,english_with_NE,My friend Aishwarya from Chennai is visiting Bengaluru next week.,5,2,5,1,,FALSE,TRUE,"3-ASR consensus: intel=[5,4,5]; nat=[2,2,2]; silence=[FALSE,FALSE,FALSE]"
+human_groundtruth,human_08,english_with_NE,I love butter chicken from Karim's in Old Delhi.,5,2,5,1,,FALSE,TRUE,"3-ASR consensus: intel=[5,4,5]; nat=[2,2,2]; silence=[FALSE,FALSE,FALSE]"

@@ -1,0 +1,82 @@
+{
+  "audit_date_utc": "2026-05-08",
+  "agent": "Claude Opus 4.7 (1M context) via Claude Code",
+  "compute": {
+    "platform": "Kaggle (kernels) + local CPU",
+    "gpu": "Tesla T4 x2 (Kaggle)",
+    "vram_gb": 16,
+    "notes": "Kaggle default GPU is P100 (sm_60) and is incompatible with pre-installed PyTorch (sm_70+). Switched all kernels to T4 x2 via UI. Kokoro ran locally on CPU."
+  },
+  "models": [
+    {
+      "name": "kokoro_v1",
+      "hf_repo": "hexgrad/Kokoro-82M",
+      "params_M": 82,
+      "voice": "hf_alpha",
+      "device": "cpu",
+      "status": "complete"
+    },
+    {
+      "name": "indicf5",
+      "hf_repo": "ai4bharat/IndicF5",
+      "params_M": 330,
+      "device": "cuda (T4 x2)",
+      "status": "complete",
+      "fix_history": "v10/v11 blocked on Kaggle UserSecretsClient transient bug + P100 sm_60 incompat; resolved in v12 by (a) hardcoding token in os.environ.get('HF_TOKEN', '<token>') fallback default and (b) switching kernel-level GPU to T4 x2 before Save Version. Required pins: transformers==4.49.0, accelerate==0.33.0, safetensors==0.4.3 (HF discussion #16)."
+    },
+    {
+      "name": "indic_parler",
+      "hf_repo": "ai4bharat/indic-parler-tts",
+      "params_M": 880,
+      "device": "cuda (T4 x2)",
+      "description_prompt": "A female speaker delivers a clear, moderately-paced Hindi speech with neutral expression. The recording is high quality with no background noise.",
+      "status": "complete"
+    },
+    {
+      "name": "springlab_f5",
+      "hf_repo": "SPRINGLab/F5-Hindi-24KHz",
+      "params_M": 151,
+      "device": "cuda (T4 x2)",
+      "status": "complete",
+      "fix_history": "v1/v2 misdiagnosed: 'f5_tts module not found' was actually missing matplotlib transitive dep, not a packaging bug. v3 fix: rumourscape fork install + explicit matplotlib + F5TTS_small_model_cfg dict (dim=768, depth=18, heads=12, ff_mult=2, text_dim=512, conv_layers=4) + indic=True flag in infer_process. Model is CC-BY-4.0 (NOT gated) so no HF token needed. Set machine_shape='NvidiaTeslaT4' in kernel-metadata.json (CLI accepts this — no UI step)."
+    },
+    {
+      "name": "orpheus_hi",
+      "hf_repo": "SachinTelecmi/Orpheus-tts-hi",
+      "params_M": 3000,
+      "quantization": "4bit_nf4",
+      "status": "deferred_phase2",
+      "blocker": "HF gating manual review by Sachin@Telecmi.com still pending as of 2026-05-08."
+    }
+  ],
+  "reference_audio": {
+    "path": "reference_audio/hindi_ref.wav",
+    "transcript_path": "reference_audio/hindi_ref.txt",
+    "source": "ai4bharat/Rasa (Hindi split) or fallback chain — see audit/scripts/prep_reference_audio.py",
+    "sample_rate_hz": 24000
+  },
+  "eval_set": {
+    "path": "eval_sentences.tsv",
+    "n_sentences": 30,
+    "categories": {
+      "pure_devanagari": 8,
+      "pure_roman": 8,
+      "mixed_script": 8,
+      "english_with_NE": 6
+    }
+  },
+  "success_counts": {
+    "kokoro": 30,
+    "indicf5": 30,
+    "indic_parler": 30,
+    "springlab_f5": 30,
+    "orpheus_hi": 0
+  },
+  "phase1_outcome": {
+    "complete": 4,
+    "blocked": 0,
+    "deferred_phase2": 1,
+    "wavs_landed": 120,
+    "wavs_target": 150
+  }
+}

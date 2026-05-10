@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "16",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.11 + WER_en=0.67 → no English handling, both fail; UTMOS=4.42 + SQUIM_MOS=4.44 mean=4.43 strong; SQUIM_PESQ=3.96 → speaker 4; end_pop_db=1.99 no pop."
+ },
+ {
+  "model": "indic_parler",
+  "id": "16",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "WER_rom=1.00 + WER_en=1.33 → both fail badly, no anglicization; UTMOS=3.20 + SQUIM_MOS=4.44 disagree>0.7 mean=3.82 drop one→3, but transcript_en=English garble suggests TTS leaned English; end_pop_db=7.25 + terminal=0.0058 → pop TRUE; SQUIM_PESQ=3.50 → speaker 4."
+ },
+ {
+  "model": "indicf5",
+  "id": "16",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.45 truncated vs 4s target; WER_rom=1.0 + WER_en=1.0 unintelligible; UTMOS=4.15 + SQUIM_MOS=4.26 mean=4.21 → 4; SQUIM_PESQ=4.06 → speaker 5; transcript missing >20% words → silence_or_skip TRUE; terminal=0 so no pop."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "16",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=1.45 severely truncated; WER_rom=1.0 + WER_en=1.0; detected_lang=Urdu; UTMOS=3.73 + SQUIM_MOS=4.47 disagree>0.7 mean=4.10 drop→3, but content missing→1; SQUIM_PESQ=3.40 → speaker 3 (no pop, end_pop_db=-72)."
+ },
+ {
+  "model": "kokoro",
+  "id": "17",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "mixed_script row: CER=0.58 / WER_rom=0.45 → intelligibility 2; WER_en_forced=0.45 equals WER_rom, no anglicization; UTMOS=4.38 + SQUIM_MOS=4.46 mean=4.42 → 4; SQUIM_PESQ=3.56 → speaker 4; end_pop_db=2.32 no pop."
+ },
+ {
+  "model": "indic_parler",
+  "id": "17",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.79 / WER_rom=0.73 → 1; WER_en=0.73 same, not anglicized; UTMOS=3.81 + SQUIM_MOS=4.46 disagree>0.7 mean=4.14 drop→3, but content failure→4 still reasonable; SQUIM_PESQ=3.64 → speaker 4; end_pop_db=15.04 + terminal=0.0073 → pop TRUE → speaker drops to 3."
+ },
+ {
+  "model": "indicf5",
+  "id": "17",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "duration_s=2.54 truncated vs 4.5s target; CER=0.62 / WER_rom=1.0 → 1; UTMOS=4.10 + SQUIM_MOS=4.44 mean=4.27 → 4; SQUIM_PESQ=3.90 → speaker 4; end_pop_db=8.69 but terminal=0 so technically end_of_clip_pop FALSE per rule (terminal>0.005 required)."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "17",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "duration_s=2.54 truncated; CER=0.71 / WER_rom=0.82 → 1; UTMOS=4.14 + SQUIM_MOS=4.45 mean=4.29 → 4; SQUIM_PESQ=3.69 → speaker 4; end_pop_db=-68.65 no pop."
+ },
+ {
+  "model": "kokoro",
+  "id": "18",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "mixed_script row: CER=0.10 → 4 (Devanagari-dominant grammar); WER_rom=0.25 / WER_en=0.75 → not anglicized; UTMOS=4.45 + SQUIM_MOS=4.47 mean=4.46 → 4; SQUIM_PESQ=3.97 → speaker 4; end_pop_db=2.26 no pop."
+ },
+ {
+  "model": "indic_parler",
+  "id": "18",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.67 / WER_rom=0.75 → 1; WER_en=0.75 same → not anglicized; UTMOS=3.98 + SQUIM_MOS=4.47 mean=4.23 → 4; SQUIM_PESQ=3.78 → speaker 4; end_pop_db=8.29 but terminal=0.0023 < 0.005 → pop FALSE per strict rule."
+ }
+]

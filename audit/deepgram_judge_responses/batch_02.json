@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0488 (≤0.05) + UTMOS=4.18 + SQUIM_MOS=4.42 → mean=4.30, no disagreement; PESQ=4.01 → 5; end_pop_db=2.39 (no pop)."
+ },
+ {
+  "model": "indic_parler",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0488 (≤0.05) → 5; UTMOS=3.48 vs SQUIM_MOS=4.45 disagree by 0.97 (>0.7), mean=3.96 dropped 1 rank → 4; PESQ=3.90 → 4."
+ },
+ {
+  "model": "indicf5",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0488 → 5; UTMOS=4.14 + SQUIM_MOS=4.47 mean=4.30 → 4; PESQ=3.79 → 4; end_pop_db=9.59 but terminal_sample_abs=0.0 (no pop)."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "06",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0488 → 5; UTMOS=3.64 + SQUIM_MOS=4.33 disagree by 0.70 (boundary), mean=3.98 → 4; PESQ=3.94 → 4; end_pop_db=-68.92 (silent)."
+ },
+ {
+  "model": "kokoro",
+  "id": "07",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2059 but loanword 'meeting' rendered in Latin (ASR artifact, not pronunciation error) → +1 to 4; UTMOS=4.33 + SQUIM_MOS=4.46 mean=4.39 → 4; PESQ=3.82 → 4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "07",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.3824 with stutter 'तुझे तुझे' visible in transcript → 3; UTMOS=3.80 vs SQUIM_MOS=4.44 disagree=0.64, mean=4.12 → 4; PESQ=4.01 → 4 (no DC penalty, terminal=0.0043); end_pop_db=11.79 + terminal=0.0043 → marginal but flagged TRUE."
+ },
+ {
+  "model": "indicf5",
+  "id": "07",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2059 inflated by Latin 'meeting' loanword (ASR artifact), +1 → 4; UTMOS=3.99 + SQUIM_MOS=4.45 mean=4.22 → 4; PESQ=4.16 → 5."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "07",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2059 inflated by 'meeting' loanword script artifact, +1 → 4; UTMOS=3.95 + SQUIM_MOS=4.45 mean=4.20 → 4; PESQ=4.21 → 5; end_pop_db=-68.67 (clean)."
+ },
+ {
+  "model": "kokoro",
+  "id": "08",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.2069 mostly from 'phone' rendered in Latin (ASR artifact on loanword), +1 → 4; UTMOS=4.40 + SQUIM_MOS=4.46 mean=4.43 → 4; PESQ=4.00 → 5."
+ },
+ {
+  "model": "indic_parler",
+  "id": "08",
+  "intelligibility_1to5": 3,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 3,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.3448 with 'यार' dropped from transcript (>20% words missing borderline) → 3; UTMOS=3.52 vs SQUIM_MOS=4.48 disagree=0.96 (>0.7), mean=4.00 dropped 1 rank → 3; PESQ=3.56 → 4; end_pop_db=7.46 but terminal=0.0001 < 0.005 → no pop."
+ }
+]

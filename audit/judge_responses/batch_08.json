@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "21",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.45, WER_rom=0.36; transcript_hi cleanly renders English nouns phonetically (इवेंट/कांसल/मैसेज/प्लीज); UTMOS=4.41+SQUIM_MOS=4.46 → naturalness 4; PESQ=4.20 → speaker 5; WER_en=0.64 not better than WER_rom → FALSE anglicization."
+ },
+ {
+  "model": "indic_parler",
+  "id": "21",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.45, WER_rom=0.64; UTMOS=2.73 vs SQUIM_MOS=4.47 disagree>0.7 → naturalness dropped to 3; end_pop_db=11.53 + terminal=0.006 → pop TRUE, PESQ=3.84 dropped 1 rank to 3; WER_en=0.64 = WER_rom → FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "21",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.49 (near threshold) but transcript_hi missing 'event cancel message please' (>20% loss) → skip TRUE, intelligibility floored to 1; UTMOS=4.05+SQUIM_MOS=4.47 → 4; PESQ=4.06 → 5; WER_en=1.0 > WER_rom=0.55 → FALSE."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "21",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.58 → intelligibility 1; transcript drops 'event/cancel/message/please' entirely → skip TRUE; UTMOS=3.42 vs SQUIM_MOS=4.48 disagree>0.7 → naturalness 3; PESQ=3.46 → speaker 3; end_pop_db=-71 → no pop."
+ },
+ {
+  "model": "kokoro",
+  "id": "22",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.43, WER_rom=0.54; transcript_hi covers all tokens phonetically (बॉस/लीफ/पर्सनल); UTMOS=4.25+SQUIM_MOS=4.46 → 4; PESQ=4.03 → 5; WER_en=0.69 > WER_rom=0.54 → FALSE anglicization."
+ },
+ {
+  "model": "indic_parler",
+  "id": "22",
+  "intelligibility_1to5": 2,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 2,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.46, WER_rom=0.54; UTMOS=3.94+SQUIM_MOS=4.48 → naturalness 4; end_pop_db=10.19 but terminal=0.0033 < 0.005 → pop FALSE; PESQ=3.98 → speaker 4; WER_en=0.85 > WER_rom → FALSE anglicization."
+ },
+ {
+  "model": "indicf5",
+  "id": "22",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.44 but transcript drops 'Boss/kuch personal' and mangles 'leave' → skip TRUE, intelligibility 1; UTMOS=4.09+SQUIM_MOS=4.47 → 4; PESQ=4.18 → 5; terminal=0.0023 < 0.005 → pop FALSE; WER_en=1.0 > WER_rom=0.54 → FALSE."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "22",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.51, WER_rom=1.0 (transcript flagged as Urdu, lang=ur); transcript drops 'Boss/leave/kuch personal' → skip TRUE; UTMOS=3.76 vs SQUIM_MOS=4.47 disagree>0.7 → naturalness 3; PESQ=4.03 → speaker 5; end_pop_db=-71 → no pop."
+ },
+ {
+  "model": "kokoro",
+  "id": "23",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.62, WER_rom=0.7 → intelligibility 1; WER_en=0.5 not <0.30 so FALSE anglicization; UTMOS=4.35+SQUIM_MOS=4.42 → naturalness 4; PESQ=3.65 → speaker 4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "23",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.67, WER_rom=0.6 → intelligibility 1; UTMOS=3.78 vs SQUIM_MOS=4.46 disagree>0.7 → naturalness dropped to 3; PESQ=3.65 → 4; end_pop_db=9.96 but terminal=0.005 (not >0.005) → pop FALSE; WER_en=WER_rom=0.6 → FALSE."
+ }
+]

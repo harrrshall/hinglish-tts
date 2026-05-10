@@ -1,0 +1,242 @@
+[
+  {
+    "id": "01",
+    "category": "pure_devanagari",
+    "text": "कल मुझे दिल्ली जाना है।",
+    "duration_s": 1.803,
+    "elapsed_s": 8.123771905899048,
+    "status": "ok"
+  },
+  {
+    "id": "02",
+    "category": "pure_devanagari",
+    "text": "क्या आप मुझे पानी दे सकते हैं?",
+    "duration_s": 2.283,
+    "elapsed_s": 8.80202317237854,
+    "status": "ok"
+  },
+  {
+    "id": "03",
+    "category": "pure_devanagari",
+    "text": "मेरा भाई आज स्कूल नहीं गया क्योंकि उसकी तबीयत खराब है।",
+    "duration_s": 4.192,
+    "elapsed_s": 10.577861309051514,
+    "status": "ok"
+  },
+  {
+    "id": "04",
+    "category": "pure_devanagari",
+    "text": "मेरे पास सिर्फ़ तीन सौ रुपये हैं, बस इतने में चला लो।",
+    "duration_s": 4.0,
+    "elapsed_s": 10.593247175216675,
+    "status": "ok"
+  },
+  {
+    "id": "05",
+    "category": "pure_devanagari",
+    "text": "जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।",
+    "duration_s": 3.147,
+    "elapsed_s": 9.756180763244629,
+    "status": "ok"
+  },
+  {
+    "id": "06",
+    "category": "pure_devanagari",
+    "text": "आज बहुत थक गया हूँ, बस सीधा सोना चाहता हूँ।",
+    "duration_s": 3.243,
+    "elapsed_s": 9.920991659164429,
+    "status": "ok"
+  },
+  {
+    "id": "07",
+    "category": "pure_devanagari",
+    "text": "तुझे पता है कल मीटिंग कितने बजे है?",
+    "duration_s": 2.667,
+    "elapsed_s": 9.513025522232056,
+    "status": "ok"
+  },
+  {
+    "id": "08",
+    "category": "pure_devanagari",
+    "text": "अरे यार, मेरा फ़ोन कहाँ रखा था?!",
+    "duration_s": 2.475,
+    "elapsed_s": 9.631592512130737,
+    "status": "ok"
+  },
+  {
+    "id": "09",
+    "category": "pure_roman",
+    "text": "kal mujhe office jaana hai",
+    "duration_s": 2.091,
+    "elapsed_s": 9.04106593132019,
+    "status": "ok"
+  },
+  {
+    "id": "10",
+    "category": "pure_roman",
+    "text": "mera naam Arjun hai aur mai Bengaluru se hu",
+    "duration_s": 3.339,
+    "elapsed_s": 10.499816417694092,
+    "status": "ok"
+  },
+  {
+    "id": "11",
+    "category": "pure_roman",
+    "text": "yaar tu kal kya kar raha tha",
+    "duration_s": 2.091,
+    "elapsed_s": 9.420686721801758,
+    "status": "ok"
+  },
+  {
+    "id": "12",
+    "category": "pure_roman",
+    "text": "kya tu bhi aaj party me aa raha hai?",
+    "duration_s": 2.667,
+    "elapsed_s": 10.414930820465088,
+    "status": "ok"
+  },
+  {
+    "id": "13",
+    "category": "pure_roman",
+    "text": "abe yaar jaldi reply kar, mai wait kar raha hu",
+    "duration_s": 3.52,
+    "elapsed_s": 11.382642269134521,
+    "status": "ok"
+  },
+  {
+    "id": "14",
+    "category": "pure_roman",
+    "text": "kal raat ka movie tha bohot bakwaas, paisa bilkul waste",
+    "duration_s": 4.384,
+    "elapsed_s": 12.415252923965454,
+    "status": "ok"
+  },
+  {
+    "id": "15",
+    "category": "pure_roman",
+    "text": "tera laptop kab tak deliver hoga bhai?",
+    "duration_s": 3.051,
+    "elapsed_s": 10.416118383407593,
+    "status": "ok"
+  },
+  {
+    "id": "16",
+    "category": "pure_roman",
+    "text": "yaar tu bohot lucky hai, mujhe nahi mila ticket!",
+    "duration_s": 3.808,
+    "elapsed_s": 11.354904651641846,
+    "status": "ok"
+  },
+  {
+    "id": "17",
+    "category": "mixed_script",
+    "text": "Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an issue.",
+    "duration_s": 4.192,
+    "elapsed_s": 11.574267625808716,
+    "status": "ok"
+  },
+  {
+    "id": "18",
+    "category": "mixed_script",
+    "text": "Mera presentation tomorrow है, और मैं nervous हूं।",
+    "duration_s": 4.096,
+    "elapsed_s": 11.660365581512451,
+    "status": "ok"
+  },
+  {
+    "id": "19",
+    "category": "mixed_script",
+    "text": "Bhai please मेरा homework कर दे, मैं तुझे ₹100 दूंगा।",
+    "duration_s": 4.192,
+    "elapsed_s": 11.84889531135559,
+    "status": "ok"
+  },
+  {
+    "id": "20",
+    "category": "mixed_script",
+    "text": "Tumne वो new restaurant try kiya jo Connaught Place में khula hai?",
+    "duration_s": 5.248,
+    "elapsed_s": 12.857193946838379,
+    "status": "ok"
+  },
+  {
+    "id": "21",
+    "category": "mixed_script",
+    "text": "कल का event cancel हो गया, सबको message कर देना please।",
+    "duration_s": 4.288,
+    "elapsed_s": 12.363117933273315,
+    "status": "ok"
+  },
+  {
+    "id": "22",
+    "category": "mixed_script",
+    "text": "Boss को बता देना kal मैं leave पर रहूँगा, kuch personal काम है।",
+    "duration_s": 4.864,
+    "elapsed_s": 12.619487285614014,
+    "status": "ok"
+  },
+  {
+    "id": "23",
+    "category": "mixed_script",
+    "text": "Ye file को quickly review करो, deadline बहुत close है।",
+    "duration_s": 4.288,
+    "elapsed_s": 12.214260339736938,
+    "status": "ok"
+  },
+  {
+    "id": "24",
+    "category": "english_with_NE",
+    "text": "My friend Aishwarya from Chennai is visiting Bengaluru next week.",
+    "duration_s": 5.344,
+    "elapsed_s": 12.709213256835938,
+    "status": "ok"
+  },
+  {
+    "id": "25",
+    "category": "english_with_NE",
+    "text": "Mr. Khanna will join the meeting after he finishes lunch with Priya.",
+    "duration_s": 5.44,
+    "elapsed_s": 12.771286010742188,
+    "status": "ok"
+  },
+  {
+    "id": "26",
+    "category": "english_with_NE",
+    "text": "I love butter chicken from Karim's in Old Delhi.",
+    "duration_s": 3.808,
+    "elapsed_s": 11.51327896118164,
+    "status": "ok"
+  },
+  {
+    "id": "27",
+    "category": "mixed_script",
+    "text": "Office में सब log lunch के लिए बाहर गए, तू भी आ ja yaar.",
+    "duration_s": 4.096,
+    "elapsed_s": 11.696391344070435,
+    "status": "ok"
+  },
+  {
+    "id": "28",
+    "category": "english_with_NE",
+    "text": "Rohan is flying from Mumbai to Bengaluru tomorrow morning for work.",
+    "duration_s": 5.44,
+    "elapsed_s": 12.781241416931152,
+    "status": "ok"
+  },
+  {
+    "id": "29",
+    "category": "english_with_NE",
+    "text": "Let's grab biryani from Paradise in Hyderabad this weekend.",
+    "duration_s": 4.864,
+    "elapsed_s": 12.695907831192017,
+    "status": "ok"
+  },
+  {
+    "id": "30",
+    "category": "english_with_NE",
+    "text": "She just got hired at Tata Consultancy Services in Pune.",
+    "duration_s": 4.48,
+    "elapsed_s": 12.466768980026245,
+    "status": "ok"
+  }
+]

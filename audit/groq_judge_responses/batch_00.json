@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "01",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 (perfect Devanagari) + UTMOS=4.37/SQUIM_MOS=4.45 (mean 4.41) + PESQ=3.63 + silence=0.42s; clean baseline."
+ },
+ {
+  "model": "indic_parler",
+  "id": "01",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0909 (minor slur 'खल'/'दिल ली') + mean(UTMOS=3.96, SQUIM_MOS=4.46)=4.21 dropped 1 rank for silence_mid_clip_s=0.52>0.5; PESQ=3.67; end_pop_db=14.41 but terminal=0.002<0.005."
+ },
+ {
+  "model": "indicf5",
+  "id": "01",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 + mean(UTMOS=3.80, SQUIM_MOS=4.46)=4.13 with disagreement=0.65 (<0.7) → 4; PESQ=3.61; no DSP flags."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "01",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 + mean(UTMOS=3.83, SQUIM_MOS=4.13)=3.98 (disagreement 0.30) → 4; PESQ=4.09 → 5; end_pop_db=-67.49 clean."
+ },
+ {
+  "model": "kokoro",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 + mean(UTMOS=4.42, SQUIM_MOS=4.46)=4.44 → 4; PESQ=3.71; silence=0.38s; clean question prosody."
+ },
+ {
+  "model": "indic_parler",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 perfect; mean(UTMOS=3.54, SQUIM_MOS=4.44)=3.99 with disagreement=0.90>0.7 → uncertainty penalty drops to 3; PESQ=3.93; end_pop_db=9.2 but terminal=0.0033<0.005."
+ },
+ {
+  "model": "indicf5",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 + mean(UTMOS=4.26, SQUIM_MOS=4.46)=4.36 → 4; PESQ=4.23 → 5; end_pop_db=9.9 but terminal=0.0; strong baseline."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0 perfect; mean(UTMOS=3.40, SQUIM_MOS=4.46)=3.93 with disagreement=1.06>0.7 → uncertainty penalty drops to 3; PESQ=4.09 → 5; clean tail end_pop=-70.34."
+ },
+ {
+  "model": "kokoro",
+  "id": "03",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0189 (only schwa/matra delta on तबीयत/तबियत) + mean(UTMOS=4.42, SQUIM_MOS=4.46)=4.44 → 4; PESQ=3.97; loanword 'स्कूल' rendered cleanly."
+ },
+ {
+  "model": "indic_parler",
+  "id": "03",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.0189 (matra-level delta on तबीयत) + mean(UTMOS=3.54, SQUIM_MOS=4.45)=3.99 with disagreement=0.91>0.7 → drop to 3; PESQ=3.39 → 3; end_pop_db=15.08 but terminal=0.0031<0.005."
+ }
+]

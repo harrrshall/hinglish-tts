@@ -1,0 +1,31 @@
+model,id,category,text,intelligibility_1to5,naturalness_1to5,code_switch_handling_1to5,speaker_quality_1to5,roman_treated_as_english,silence_or_skip,end_of_clip_pop,notes
+indicf5_patched,01,pure_devanagari,कल मुझे दिल्ली जाना है।,5,4,5,5,FALSE,FALSE,FALSE,CER=0.00 WER_rom=0.00 WER_en=1.00 UTMOS=4.20 SQUIM=4.45 PESQ=4.12 silence_mid=0.20
+indicf5_patched,02,pure_devanagari,क्या आप मुझे पानी दे सकते हैं?,5,4,5,5,FALSE,FALSE,FALSE,CER=0.00 WER_rom=0.00 WER_en=1.00 UTMOS=4.25 SQUIM=4.45 PESQ=4.26 silence_mid=0.30
+indicf5_patched,03,pure_devanagari,मेरा भाई आज स्कूल नहीं गया क्योंकि उसकी तबीयत खराब है।,4,4,4,5,FALSE,FALSE,FALSE,CER=0.13 WER_rom=0.09 WER_en=1.00 UTMOS=4.19 SQUIM=4.45 PESQ=4.04 silence_mid=0.22
+indicf5_patched,04,pure_devanagari,"मेरे पास सिर्फ़ तीन सौ रुपये हैं, बस इतने में चला लो।",4,3,4,4,FALSE,FALSE,FALSE,CER=0.06 WER_rom=0.33 WER_en=1.00 UTMOS=3.68 SQUIM=4.46 PESQ=3.84 silence_mid=0.30
+indicf5_patched,05,pure_devanagari,"जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।",5,4,5,4,FALSE,FALSE,FALSE,CER=0.03 WER_rom=0.11 WER_en=1.00 UTMOS=4.10 SQUIM=4.46 PESQ=3.96 silence_mid=0.22
+indicf5_patched,06,pure_devanagari,"आज बहुत थक गया हूँ, बस सीधा सोना चाहता हूँ।",5,3,5,3,FALSE,FALSE,FALSE,CER=0.05 WER_rom=0.00 WER_en=1.00 UTMOS=3.40 SQUIM=4.47 PESQ=3.32 silence_mid=0.28
+indicf5_patched,07,pure_devanagari,तुझे पता है कल मीटिंग कितने बजे है?,3,4,3,4,FALSE,FALSE,FALSE,CER=0.21 WER_rom=0.12 WER_en=1.00 UTMOS=3.82 SQUIM=4.40 PESQ=3.96 silence_mid=0.26
+indicf5_patched,08,pure_devanagari,"अरे यार, मेरा फ़ोन कहाँ रखा था?!",3,4,3,4,FALSE,FALSE,FALSE,CER=0.21 WER_rom=0.14 WER_en=1.00 UTMOS=4.42 SQUIM=4.45 PESQ=3.81 silence_mid=0.22
+indicf5_patched,09,pure_roman,kal mujhe office jaana hai,1,3,1,4,FALSE,FALSE,FALSE,CER=0.88 WER_rom=2.00 WER_en=1.00 UTMOS=3.41 SQUIM=4.39 PESQ=3.56 silence_mid=0.12
+indicf5_patched,10,pure_roman,mera naam Arjun hai aur mai Bengaluru se hu,1,4,1,3,FALSE,FALSE,FALSE,CER=0.81 WER_rom=1.00 WER_en=1.00 UTMOS=4.04 SQUIM=4.45 PESQ=3.39 silence_mid=0.18
+indicf5_patched,11,pure_roman,yaar tu kal kya kar raha tha,1,3,1,4,FALSE,TRUE,FALSE,CER=1.00 WER_rom=1.00 WER_en=1.00 UTMOS=3.83 SQUIM=4.27 PESQ=3.94 silence_mid=0.22
+indicf5_patched,12,pure_roman,kya tu bhi aaj party me aa raha hai?,1,2,1,4,FALSE,TRUE,FALSE,CER=1.00 WER_rom=1.00 WER_en=1.00 UTMOS=3.19 SQUIM=4.42 PESQ=3.54 silence_mid=0.16
+indicf5_patched,13,pure_roman,"abe yaar jaldi reply kar, mai wait kar raha hu",1,2,1,4,FALSE,TRUE,FALSE,CER=1.00 WER_rom=1.00 WER_en=1.00 UTMOS=3.70 SQUIM=4.45 PESQ=3.81 silence_mid=0.28
+indicf5_patched,14,pure_roman,"kal raat ka movie tha bohot bakwaas, paisa bilkul waste",1,2,1,4,FALSE,TRUE,FALSE,CER=0.94 WER_rom=1.00 WER_en=1.00 UTMOS=3.03 SQUIM=4.46 PESQ=3.61 silence_mid=0.34
+indicf5_patched,15,pure_roman,tera laptop kab tak deliver hoga bhai?,1,4,1,4,FALSE,FALSE,FALSE,CER=0.73 WER_rom=1.00 WER_en=1.00 UTMOS=4.26 SQUIM=4.46 PESQ=3.96 silence_mid=0.18
+indicf5_patched,16,pure_roman,"yaar tu bohot lucky hai, mujhe nahi mila ticket!",1,3,1,4,FALSE,TRUE,FALSE,CER=1.00 WER_rom=1.00 WER_en=1.00 UTMOS=4.30 SQUIM=4.43 PESQ=3.87 silence_mid=0.36
+indicf5_patched,17,mixed_script,"Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an issue.",1,4,1,4,FALSE,FALSE,FALSE,CER=0.71 WER_rom=0.91 WER_en=1.00 UTMOS=4.03 SQUIM=4.46 PESQ=3.56 silence_mid=0.38
+indicf5_patched,18,mixed_script,"Mera presentation tomorrow है, और मैं nervous हूं।",1,4,1,4,FALSE,FALSE,FALSE,CER=0.65 WER_rom=0.75 WER_en=1.00 UTMOS=4.18 SQUIM=4.46 PESQ=3.92 silence_mid=0.40
+indicf5_patched,19,mixed_script,"Bhai please मेरा homework कर दे, मैं तुझे ₹100 दूंगा।",2,4,1,4,FALSE,FALSE,FALSE,CER=0.45 WER_rom=0.40 WER_en=1.00 UTMOS=3.95 SQUIM=4.18 PESQ=3.98 silence_mid=0.40
+indicf5_patched,20,mixed_script,Tumne वो new restaurant try kiya jo Connaught Place में khula hai?,1,4,1,4,FALSE,FALSE,FALSE,CER=0.74 WER_rom=0.83 WER_en=0.92 UTMOS=3.81 SQUIM=4.45 PESQ=3.62 silence_mid=0.26
+indicf5_patched,21,mixed_script,"कल का event cancel हो गया, सबको message कर देना please।",2,4,1,4,FALSE,FALSE,FALSE,CER=0.42 WER_rom=0.36 WER_en=1.00 UTMOS=4.39 SQUIM=4.46 PESQ=3.90 silence_mid=0.34
+indicf5_patched,22,mixed_script,"Boss को बता देना kal मैं leave पर रहूँगा, kuch personal काम है।",2,4,1,5,FALSE,FALSE,FALSE,CER=0.43 WER_rom=0.38 WER_en=1.00 UTMOS=4.29 SQUIM=4.47 PESQ=4.31 silence_mid=0.40
+indicf5_patched,23,mixed_script,"Ye file को quickly review करो, deadline बहुत close है।",1,4,1,5,FALSE,FALSE,FALSE,CER=0.81 WER_rom=0.60 WER_en=1.00 UTMOS=3.88 SQUIM=4.47 PESQ=4.14 silence_mid=0.28
+indicf5_patched,24,english_with_NE,My friend Aishwarya from Chennai is visiting Bengaluru next week.,1,4,1,4,FALSE,FALSE,FALSE,CER=0.91 WER_rom=1.60 WER_en=1.00 UTMOS=4.31 SQUIM=4.45 PESQ=3.68 silence_mid=0.32
+indicf5_patched,25,english_with_NE,Mr. Khanna will join the meeting after he finishes lunch with Priya.,1,2,1,5,FALSE,TRUE,FALSE,CER=1.00 WER_rom=1.00 WER_en=1.00 UTMOS=3.43 SQUIM=3.33 PESQ=4.06 silence_mid=0.38
+indicf5_patched,26,english_with_NE,I love butter chicken from Karim's in Old Delhi.,1,3,1,4,FALSE,FALSE,FALSE,CER=0.87 WER_rom=1.00 WER_en=1.00 UTMOS=3.47 SQUIM=4.46 PESQ=3.65 silence_mid=0.38
+indicf5_patched,27,mixed_script,"Office में सब log lunch के लिए बाहर गए, तू भी आ ja yaar.",2,4,1,5,FALSE,FALSE,FALSE,CER=0.41 WER_rom=0.36 WER_en=1.00 UTMOS=4.00 SQUIM=4.46 PESQ=4.01 silence_mid=0.32
+indicf5_patched,28,english_with_NE,Rohan is flying from Mumbai to Bengaluru tomorrow morning for work.,1,3,1,4,FALSE,FALSE,FALSE,CER=0.89 WER_rom=1.00 WER_en=1.00 UTMOS=3.18 SQUIM=4.46 PESQ=3.76 silence_mid=0.28
+indicf5_patched,29,english_with_NE,Let's grab biryani from Paradise in Hyderabad this weekend.,1,4,1,4,FALSE,FALSE,FALSE,CER=0.86 WER_rom=1.00 WER_en=1.00 UTMOS=4.01 SQUIM=4.45 PESQ=3.88 silence_mid=0.30
+indicf5_patched,30,english_with_NE,She just got hired at Tata Consultancy Services in Pune.,1,4,1,4,FALSE,FALSE,FALSE,CER=0.85 WER_rom=1.00 WER_en=1.00 UTMOS=4.09 SQUIM=4.45 PESQ=3.96 silence_mid=0.30

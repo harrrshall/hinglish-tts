@@ -1,0 +1,122 @@
+[
+ {
+  "model": "indicf5",
+  "id": "23",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "TRUE",
+  "notes": "CER=0.6538, WER_rom=0.70 -> mostly wrong words on mixed_script. UTMOS=4.02 + SQUIM_MOS=4.44 -> nat=4. end_pop_db=6.21 + terminal=0.006 -> pop TRUE. PESQ=3.67 -> speaker=4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "23",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.75, WER_rom=1.0 -> output drifted to Urdu. UTMOS=2.99 vs SQUIM_MOS=4.46 disagree>0.7 -> nat dropped to 3. PESQ=3.74 -> speaker=4. end_pop_db=-74.28 -> no pop."
+ },
+ {
+  "model": "kokoro",
+  "id": "24",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0 + WER_en=0.0 -> perfect intel on Indian NEs. UTMOS=4.50 + SQUIM_MOS=4.47 -> nat=5 but silence_mid_clip_s=0.54>0.5 dropped to 4 and skip flagged. PESQ=3.80 -> speaker=4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "24",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0 + WER_en=0.0 -> clean NE rendering. UTMOS=3.84 + SQUIM_MOS=4.47 (disagree 0.63 within tolerance) -> mean=4.15 -> nat=4. PESQ=3.92 -> speaker=4."
+ },
+ {
+  "model": "indicf5",
+  "id": "24",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, WER_en=1.0, CER=0.97 + duration=1.96s (truncated from 4.5s expected) -> intel=1. UTMOS=3.70 vs SQUIM_MOS=4.46 disagree 0.76 -> nat dropped to 3. PESQ=3.42 -> speaker=3. Heavy truncation = skip TRUE."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "24",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, CER=0.94 + duration=1.96s vs 4.5s expected -> truncated, skip TRUE. UTMOS=3.64 vs SQUIM_MOS=4.38 disagree 0.74 -> nat dropped to 3. PESQ=3.61 -> speaker=4."
+ },
+ {
+  "model": "kokoro",
+  "id": "25",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0 -> Khanna and Priya rendered cleanly. UTMOS=4.51 + SQUIM_MOS=4.45 -> mean=4.48 -> nat=4. silence_mid=0.46<0.5. PESQ=3.66 -> speaker=4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "25",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0833 -> Khanna->Kanna phonetic NE substitution, +1 adjust gives intel=5. UTMOS=3.97 + SQUIM_MOS=4.42 -> nat=4. end_pop_db=11.23 but terminal=0.002<0.005 -> pop FALSE. PESQ=3.91 -> speaker=4."
+ },
+ {
+  "model": "indicf5",
+  "id": "25",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, CER=0.95 + duration=2.06s vs 4.45s -> truncated content, skip TRUE. UTMOS=3.46 vs SQUIM_MOS=4.41 disagree 0.95 -> nat dropped to 3. end_pop_db=9.1 but terminal=0.0 -> pop FALSE. PESQ=3.82 -> speaker=4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "25",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, CER=0.97 + duration=2.06s vs 4.45s -> truncated, skip TRUE. UTMOS=3.53 vs SQUIM_MOS=4.39 disagree 0.86 -> nat dropped to 3. PESQ=4.07 -> speaker=5."
+ }
+]

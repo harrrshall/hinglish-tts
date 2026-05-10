@@ -1,0 +1,6 @@
+{"ts":"2026-05-07T11:49:42.571Z","cmd":"status","args":"","origin":"http://127.0.0.1:34567/welcome","durationMs":5,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-07T11:49:59.556Z","cmd":"goto","args":"https://colab.research.google.com/","origin":"https://colab.research.google.com/","durationMs":3235,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-07T11:49:59.831Z","cmd":"snapshot","args":"-i","origin":"https://colab.research.google.com/","durationMs":142,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-07T11:50:10.593Z","cmd":"click","args":"@e1","origin":"https://colab.research.google.com/","durationMs":237,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-07T11:50:10.875Z","cmd":"snapshot","args":"-i","origin":"https://colab.research.google.com/","durationMs":170,"status":"ok","hasCookies":false,"mode":"headed"}
+{"ts":"2026-05-07T11:50:34.473Z","cmd":"click","args":"@c25","origin":"https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fcolab.research.google.com%2F&dsh=S1294006994%3A1778154631480841&ec=GAZAqQM&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin&ifkv=AWa2Paux1uXrVI5BhxygA0cZ_QNzs3IQYkpRm62t53wj18v8gBx4ogiSgGV9VkE1KVO9w9THyIuv5g","durationMs":3272,"status":"ok","hasCookies":false,"mode":"headed"}

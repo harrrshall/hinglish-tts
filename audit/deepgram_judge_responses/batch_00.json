@@ -1,0 +1,122 @@
+[
+ {
+  "model": "kokoro",
+  "id": "01",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 + UTMOS=4.37 + SQUIM_MOS=4.45 (mean 4.41) → clean Devanagari; PESQ=3.63 → 4; silence_mid=0.42 under threshold."
+ },
+ {
+  "model": "indic_parler",
+  "id": "01",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 → 5 intel; UTMOS=3.96 + SQUIM_MOS=4.46 mean 4.21→4 then -1 for silence_mid=0.52>0.5; PESQ=3.67→4; end_pop=14.41 but terminal=0.002<0.005 so pop FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "01",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 + UTMOS=3.80 + SQUIM_MOS=4.46 (mean 4.13) → 4; PESQ=3.61→4; silence_mid=0.18 clean."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "01",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 + UTMOS=3.83 + SQUIM_MOS=4.13 (mean 3.98) → 4; PESQ=4.09 → 5; end_pop=-67.49 dB silent tail."
+ },
+ {
+  "model": "kokoro",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 + UTMOS=4.42 + SQUIM_MOS=4.46 (mean 4.44) → 4; PESQ=3.71→4; silence_mid=0.38 clean."
+ },
+ {
+  "model": "indic_parler",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 → 5 intel; UTMOS=3.54 vs SQUIM_MOS=4.44 disagreement=0.90>0.7 → mean 3.99 dropped to 3; PESQ=3.93→4; end_pop=9.2 but terminal=0.0033<0.005 so pop FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 + UTMOS=4.26 + SQUIM_MOS=4.46 (mean 4.36) → 4; PESQ=4.23→5; end_pop=9.9 but terminal=0.0<0.005 so pop FALSE."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "02",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.00 → 5 intel; UTMOS=3.40 vs SQUIM_MOS=4.46 disagreement=1.06>0.7 → mean 3.93 dropped to 3; PESQ=4.09→5; end_pop=-70.3 silent tail."
+ },
+ {
+  "model": "kokoro",
+  "id": "03",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.1321 (loanword 'school' rendered Roman by ASR, phonetically correct) → 4; UTMOS=4.42 + SQUIM_MOS=4.46 mean 4.44→4; PESQ=3.97→4."
+ },
+ {
+  "model": "indic_parler",
+  "id": "03",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 3,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "CER=0.1321 (loanword 'school') → 4 intel; UTMOS=3.54 vs SQUIM_MOS=4.45 disagreement=0.91>0.7 → mean 3.99 dropped to 3; PESQ=3.39→3; end_pop=15.08 but terminal=0.0031<0.005 so pop FALSE."
+ }
+]

@@ -1,0 +1,122 @@
+[
+ {
+  "model": "indicf5",
+  "id": "28",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 + transcript_roman gibberish ('रहेंश में नुड़छोड़ने') for English NE sentence; duration=2.027s suggests truncation, silence_or_skip TRUE; SQUIM_PESQ=4.14 strong, terminal=0.0 so no pop; UTMOS=2.98 vs SQUIM_MOS=4.02 disagree>0.7 → mean~3.5 dropped to 4 then -1 for truncation = naturalness 4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "28",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, transcript_roman='और उसे और रहनहर हुआ' — Hindi gibberish for English-NE prompt; duration=2.03s vs expected ~4s → truncated/skip; UTMOS=3.34 vs SQUIM_MOS=4.47 disagree by 1.13>0.7, mean~3.9 → 4 minus 1 (truncation) = 3; SQUIM_PESQ=3.53 → 4."
+ },
+ {
+  "model": "kokoro",
+  "id": "29",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0 + WER_en=0.0 → perfect English-NE rendering ('Biryani', 'Hyderabad' correct); UTMOS=4.52 + SQUIM_MOS=4.41 → mean~4.46 → 4; SQUIM_PESQ=3.79 → 4; end_pop_db=1.45 no pop."
+ },
+ {
+  "model": "indic_parler",
+  "id": "29",
+  "intelligibility_1to5": 5,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 5,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.0 + WER_en=0.0 → flawless English+NE; UTMOS=3.85 + SQUIM_MOS=4.43 → mean~4.14 → 4; SQUIM_PESQ=4.10 → 5; end_pop_db=10.75 but terminal=0.0006<0.005 so no pop."
+ },
+ {
+  "model": "indicf5",
+  "id": "29",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 + transcript_roman='एड़िया इन ए रणन्सी' — clipped/wrong content; duration=1.78s vs expected ~4s → severe truncation, silence_or_skip TRUE; UTMOS=4.19 + SQUIM_MOS=3.22 disagree by 0.97>0.7, mean~3.7 → 4 minus 1 truncation but flagging mean→4; SQUIM_PESQ=3.54 → 4."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "29",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 3,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0, transcript_roman='और वही हमा न ग़ग़ा' — gibberish Hindi for English NE prompt; duration=1.78s vs ~4s expected → truncation, silence_or_skip TRUE; UTMOS=3.95 + SQUIM_MOS=4.44 mean~4.2 → 4 minus 1 truncation = 3; SQUIM_PESQ=4.11 → 5."
+ },
+ {
+  "model": "kokoro",
+  "id": "30",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.10 (only 'Pune'→'Puna' phonetic variant) + WER_en=0.0 → strong English+NE; UTMOS=4.47 + SQUIM_MOS=4.45 → mean~4.46 → 4; SQUIM_PESQ=3.66 → 4; silence_mid_clip_s=0.48 just under threshold."
+ },
+ {
+  "model": "indic_parler",
+  "id": "30",
+  "intelligibility_1to5": 4,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 4,
+  "speaker_quality_1to5": 4,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "FALSE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=0.10 ('Pune'→'Polite' minor) + WER_en=0.10 → good rendering; UTMOS=3.62 + SQUIM_MOS=4.46 disagree by 0.84>0.7, mean~4.04 → 4 minus 1 = 3, but no truncation; SQUIM_PESQ=3.84 → 4; end_pop_db=15.22 but terminal=0.0047<0.005 → no pop FALSE."
+ },
+ {
+  "model": "indicf5",
+  "id": "30",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 + transcript_roman='ऐ आओंड जी सर्वज है' (gibberish Hindi); duration=1.685s vs expected ~3.9s → truncation, silence_or_skip TRUE; UTMOS=3.97 + SQUIM_MOS=4.43 mean~4.2 → 4; SQUIM_PESQ=4.17 → 5."
+ },
+ {
+  "model": "springlab_f5",
+  "id": "30",
+  "intelligibility_1to5": 1,
+  "naturalness_1to5": 4,
+  "code_switch_handling_1to5": 1,
+  "speaker_quality_1to5": 5,
+  "roman_treated_as_english": "FALSE",
+  "silence_or_skip": "TRUE",
+  "end_of_clip_pop": "FALSE",
+  "notes": "WER_rom=1.0 + transcript_roman='पुरुषोत का हवनल देआ' (gibberish); duration=1.685s vs ~3.9s → truncation, silence_or_skip TRUE; UTMOS=4.00 + SQUIM_MOS=4.43 mean~4.22 → 4; SQUIM_PESQ=4.19 → 5."
+ }
+]
