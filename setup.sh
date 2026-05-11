@@ -122,9 +122,14 @@ fi
 # ---------------------------------------------------------------------------
 step "5/9  Install fairseq + requirements.txt"
 # ---------------------------------------------------------------------------
-# fairseq 0.12.2 PyPI sdist is missing fairseq/version.txt (known packaging
-# bug). The git clone fix is too large (~200 MB) and flaky. Instead: download
-# the sdist (~8 MB), inject the missing file, install from local directory.
+# fairseq 0.12.2 PyPI sdist has two known bugs:
+#   1. Missing fairseq/version.txt — causes FileNotFoundError during build
+#   2. Missing data_utils_fast.cpp — it's Cython-generated, absent from sdist
+# Fix: download sdist, inject version.txt, then build with Cython available.
+# Cython must be installed before the build (--no-build-isolation uses the
+# current venv, so if Cython is installed here, the build can transpile .pyx).
+pip install "Cython<3"
+
 _FSDIR=$(mktemp -d)
 pip download "fairseq==0.12.2" --no-deps -d "$_FSDIR" -q
 tar xzf "$_FSDIR/fairseq-0.12.2.tar.gz" -C "$_FSDIR"
