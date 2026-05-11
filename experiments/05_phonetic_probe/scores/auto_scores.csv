@@ -1,0 +1,19 @@
+output_id,sentence_id,variant,category,text,phonetic_distinction_tested,duration_s,mean_f0_hz,mean_spectral_centroid_hz,transcript_aai,transcript_dg,transcript_groq,transcripts_identical_across_asrs,transcripts_identical_across_variants,transcripts_identical_across_variants_aai,transcripts_identical_across_variants_deepgram,transcripts_identical_across_variants_groq
+1a,1,a,nukta_fricative,मेरा नाम ज़ारा है।,nukta /z/ vs plain /j/ — baseline with explicit nukta,1.419,148.4,1630.5,,मेरा नाम ज़ारा है.,मेरा नाम जारा है,False,False,,False,False
+1b,1,b,nukta_fricative,मेरा नाम जारा है।,no nukta: ज → /j/ stop,1.323,160.4,1568.1,,मेरा नाम जा रहा है.,मेरा नाम जा रहा है,False,False,,False,False
+1c,1,c,nukta_fricative,मेरा नाम ज़ारा है।,explicit nukta: ज़ → /z/ fricative,1.419,154.1,1819.5,,मेरा नाम ज़ारा है.,मेरा नाम जारा है.,False,False,,False,False
+2a,2,a,schwa_elision,कमल का फूल खिलता है।,"baseline: standard Devanagari, schwa elision implicit",1.515,179.4,1606.1,,कमल का फ़ूल खिलता है.,कमल का फूल खिलता है,False,False,,True,True
+2b,2,b,schwa_elision,कमल् का फूल खिल्ता है।,explicit halant on कमल् and खिल्ता: no schwa between ल and next consonant,1.707,168.7,1718.4,,कमल का फ़ूल खिलता है.,कमल का फूल खिलता है,False,False,,True,True
+2c,2,c,schwa_elision,कमल का फूल खिल्ता है।,"mixed: halant only on खिल्ता, not on कमल",1.611,172.1,1617.6,,कमल का फ़ूल खिलता है.,कमल का फूल खिलता है,False,False,,True,True
+3a,3,a,vowel_length,मिटी की किताब लिखी।,short i matra (ि) used in place of correct long ी,1.515,160.7,2013.9,,मिट्टी की किताब लिखी.,मिटी की किताब लिखी,False,False,,False,False
+3b,3,b,vowel_length,मीटी की कीताब लीखी।,all long i matra (ी) — over-long vowels,1.515,169.8,1906.9,,Meety की किताब लिखी.,मीटी की कीताब लिखी,False,False,,False,False
+3c,3,c,vowel_length,मिट्टी की किताब लिखी।,correct Hindi spelling (reference),1.707,181.0,1990.1,,मिट्टी की किताब लिखी.,मिट्टी की किताब लिखी,False,False,,False,False
+4a,4,a,aspiration,खाना खाओ,fully aspirated stops: ख /kʰ/ throughout,0.651,140.3,2200.6,,खाना खा,कानाका,False,False,,False,False
+4b,4,b,aspiration,काना काओ,unaspirated stops: क /k/ throughout,0.651,154.7,1630.1,,गाना खाओ.,काना काओ,False,False,,False,False
+4c,4,c,aspiration,खाना काओ,aspirated then unaspirated: both stops side by side,0.651,133.9,1607.4,,खाना खाओ.,खाना काओ,False,False,,False,False
+5a,5,a,script_register,मुझे office जाना है।,"Roman ""office"" in Devanagari context — NO preprocessing",1.611,171.5,1898.5,,मुझे आहे जाना है.,मुझे आहे जाना है,False,False,,False,False
+5b,5,b,script_register,मुझे ऑफिस जाना है।,standard Hinglish Devanagari rendering (ऑ vowel),1.419,174.8,2306.7,,मुझे office जाना है.,मुझे ओफिस जाना है.,False,False,,False,False
+5c,5,c,script_register,मुझे आफ़ीस जाना है।,"heavily Hindi-ized: long आ vowel, explicit nukta on फ़, long ई",1.515,165.9,2401.2,,मुझे office जाना है.,मुझे आफिस जाना है,False,False,,False,False
+6a,6,a,prosody_emphasis,मैं बहुत खुश हूं।,neutral declarative statement,1.323,150.7,2156.9,,मैं बहुत खुश हूं.,मैं बहुत खुश हूँ.,False,False,,False,False
+6b,6,b,prosody_emphasis,मैं बहुत बहुत खुश हूं।,intensifier repetition (natural Hindi emphasis),1.707,169.1,1827.9,,मैं बहुत बहुत खुश हूं.,मैं बहुत-बहुत खुश हूँ.,False,False,,False,False
+6c,6,c,prosody_emphasis,मैं... बहुत... खुश हूं!,ellipsis + exclamation — punctuation-driven pacing cue,1.899,146.4,2071.4,,मैं बहुत खुश हूं.,मैं बहुत खुश हूँ,False,False,,False,False
