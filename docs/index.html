@@ -378,7 +378,7 @@
 <nav class="topbar">
   <a class="site-name" href="https://x.com/harshalsinghCN/" target="_blank" rel="noopener">harrrshall</a>
   <div class="site-links">
-    <a href="https://github.com/harrrshall/hienglish" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/harrrshall/hinglish-tts" target="_blank" rel="noopener">GitHub</a>
     <a href="mailto:cybernovascnn@gmail.com">Contact</a>
   </div>
 </nav>
@@ -399,11 +399,10 @@
   <!-- TOC -->
   <div class="toc">
     <div class="toc-title">Contents</div>
-
     <ol>
-      <li><a href="#pivot">The Pivot: Why Hinglish?</a></li>
+      <li><a href="#why-hinglish">Why Hinglish?</a></li>
       <li><a href="#audit">The Audit: Testing What Already Existed</a></li>
-      <li><a href="#mistake1">Mistake #1: Single-ASR Scoring Is Broken</a></li>
+      <li><a href="#mistake1">Mistake #1: Single-ASR Scoring Is Broken for Hinglish</a></li>
       <li><a href="#duration-bug">The Duration Bug: Why IndicF5 Was Producing Silence</a></li>
       <li><a href="#mode-c">Mode C: The Undertrained Embedding Problem</a></li>
       <li><a href="#indicxlit">The IndicXlit Fix: 14 Lines of Code Total</a></li>
@@ -411,58 +410,63 @@
       <li><a href="#comparison">How It Compares to Everything Else</a></li>
       <li><a href="#utmos">The UTMOS Problem: When Auto-Metrics Lie on Hindi</a></li>
       <li><a href="#kaggle">The Kaggle Disasters</a></li>
-      <li><a href="#direction1">Direction 1: Does the Model Understand Phonetics?</a></li>
-      <li><a href="#direction2">Direction 2: Phonemes or Graphemes?</a></li>
+      <li><a href="#direction1">Direction 1: Does the Model Actually Understand Phonetics?</a></li>
+      <li><a href="#direction2">Direction 2: Is the Model Thinking in Phonemes or Graphemes?</a></li>
       <li><a href="#product">What the Product Actually Is</a></li>
-      <li><a href="#mistakes">Every Mistake, Summarized</a></li>
+      <li><a href="#eval-infra">The Eval Infrastructure: Reusable for Any Hinglish TTS</a></li>
+      <li><a href="#mistakes">Every Mistake, Summarised</a></li>
+      <li><a href="#next">What Comes Next</a></li>
       <li><a href="#meta">The Meta-Lesson</a></li>
     </ol>
   </div>
 
-  <p>I knew nothing about text-to-speech when I started this.</p>
-  <p>Not the models. Not the terminology. Not the difference between a vocoder and a flow-matching diffusion transformer. I had never heard the word "IndicXlit" and I did not know what a mel spectrogram was.</p>
-  <p>What I had was a goal: build the best open-source TTS model for English.</p>
-  <p>That goal lasted about three days before I realized I was solving the wrong problem entirely.</p>
-  <p>This is the story of what actually happened — every wrong turn, every <em>"wait, the metrics are lying to us,"</em> every 2 AM kernel crash on Kaggle. It ends with a system that scores <strong>4.70/5.0</strong> on a rigorous three-ASR evaluation rubric and beats every other open-source Hinglish-capable TTS model. Built with 14 lines of code. No training, no fine-tuning, no GPU budget.</p>
+  <p>I knew nothing about text-to-speech when I started.</p>
+  <p>Nothing. Not the models, not the terminology, not the difference between a vocoder and a flow-matching diffusion transformer. I had never heard the word "IndicXlit". I did not know what a mel spectrogram was.</p>
+  <p>I had one goal: build the best open-source TTS model for English.</p>
+  <p>That goal lasted three days. Then I realised I was solving the wrong problem.</p>
+  <p>This is the story of what actually happened. Every wrong turn, every "wait, the metrics are lying to us", every 2 AM kernel crash on Kaggle. It ends with a system that scores 4.70 out of 5.0 on a rigorous three-ASR evaluation rubric and beats every other open-source Hinglish-capable TTS model on the planet. And it was built with 14 lines of code. No training, no fine-tuning, no GPU budget.</p>
+  <p>Here is everything.</p>
 
   <hr />
 
-  <h2 id="pivot">The Pivot: Why Hinglish?</h2>
+  <h2 id="why-hinglish">Why Hinglish?</h2>
 
-  <p>The original goal was English TTS. State of the art, best open-source model. Then I looked at what actually exists. English TTS is solved. Kokoro-82M produces natural English at 82M parameters. ElevenLabs does it commercially at scale. The field is crowded, mature, and the open/closed gap is shrinking fast.</p>
-  <p>Where is the real gap? <strong>India.</strong> 600 million Hindi speakers. Another several hundred million who speak Hindi mixed with English — what linguists call "Hinglish," what everyone in Indian cities just calls "talking."</p>
-  <p>Hinglish is not pidgin. It is not broken English. It is a fully developed code-switching register. A native speaker switches mid-sentence — sometimes mid-phrase — between Devanagari-script Hindi and Roman-script English:</p>
+  <p>Hinglish is not pidgin. It is not broken English. It is a fully developed code-switching register with its own grammar. A native speaker switches mid-sentence, sometimes mid-phrase, between Devanagari-script Hindi and Roman-script English. It looks like this:</p>
 
   <blockquote>
     <p><em>"<span class="deva">Boss को बता देना</span> kal <span class="deva">मैं</span> leave <span class="deva">पर रहूँगा, kuch personal काम है।</span>"</em></p>
   </blockquote>
 
-  <p>One sentence. Three scripts. Two languages. How 100 million urban Indians text each other every day. No open-source TTS model handles it well. That became the problem I decided to solve.</p>
+  <p>One sentence. Three scripts. Two languages. This is how 100 million urban Indians write to each other every day on WhatsApp.</p>
+  <p>No open-source TTS model handles it well.</p>
+  <p><strong>That became the problem I decided to solve.</strong></p>
 
   <hr />
 
   <h2 id="audit">The Audit: Testing What Already Existed</h2>
 
-  <p>The first step was not building anything. It was measuring everything that already existed. I picked four candidate models and a 30-sentence eval set designed to stress every dimension of the problem:</p>
+  <p>The first real step was not building anything. It was measuring what already existed.</p>
+  <p>I picked four candidate models and a 30-sentence eval set designed to stress every dimension of the problem:</p>
 
   <div class="table-wrap">
   <table>
     <tr><th>Category</th><th class="num">Count</th><th>What it tests</th></tr>
     <tr><td><code>pure_devanagari</code></td><td class="num">8</td><td>Standard Hindi in Devanagari script</td></tr>
-    <tr><td><code>pure_roman</code></td><td class="num">8</td><td>Colloquial Hinglish in Roman script</td></tr>
+    <tr><td><code>pure_roman</code></td><td class="num">8</td><td>Colloquial Hinglish written in Roman script</td></tr>
     <tr><td><code>mixed_script</code></td><td class="num">9</td><td>Mid-sentence script switching</td></tr>
     <tr><td><code>english_with_NE</code></td><td class="num">6</td><td>English with Indian names and places</td></tr>
   </table>
   </div>
 
-  <p>The four models, run on free-tier Kaggle T4 GPUs (zero budget):</p>
+  <p>The four models I tested:</p>
   <ol>
-    <li><strong>Kokoro v1.0</strong> (hexgrad, 82M params) — the English TTS champion, with a Hindi mode</li>
-    <li><strong>Indic Parler-TTS</strong> (AI4Bharat, 880M params) — large, Indic-focused, text-description conditioned</li>
-    <li><strong>IndicF5</strong> (AI4Bharat, 330M params) — flow-matching TTS, trained on Indic-script audio</li>
-    <li><strong>SPRINGLab F5-Hindi</strong> — another Indic F5-TTS variant</li>
+    <li><strong>Kokoro v1.0</strong> (hexgrad, 82M parameters), the English TTS champion, with a Hindi mode</li>
+    <li><strong>Indic Parler-TTS</strong> (AI4Bharat, 880M parameters), large, Indic-focused, text-description conditioned</li>
+    <li><strong>IndicF5</strong> (AI4Bharat, 330M parameters), flow-matching TTS, trained on Indic-script audio</li>
+    <li><strong>SPRINGLab F5-Hindi</strong> (another Indic F5-TTS variant)</li>
   </ol>
 
+  <p>I ran everything on Kaggle T4 GPUs (free tier, zero budget for this project).</p>
   <p>First results, scored with a single ASR system (AssemblyAI):</p>
 
   <div class="table-wrap">
@@ -470,95 +474,116 @@
     <tr><th>Model</th><th class="num">Overall score</th></tr>
     <tr><td>Kokoro v1.0</td><td class="num">3.03</td></tr>
     <tr><td>Indic Parler-TTS</td><td class="num">2.73</td></tr>
-    <tr><td>IndicF5</td><td class="num">1.97</td></tr>
-    <tr><td>SPRINGLab F5-Hindi</td><td class="num">~2.07</td></tr>
+    <tr><td><strong>IndicF5</strong></td><td class="num"><strong>1.97</strong></td></tr>
+    <tr><td>SPRINGLab F5-Hindi</td><td class="num">similar</td></tr>
   </table>
   </div>
 
-  <p>Kokoro wins. Case closed. Ship Kokoro for Hindi. Then I listened to the outputs.</p>
-  <p><strong>IndicF5 did not sound worse than Kokoro on Hindi. It sounded better.</strong> The vowels were right, the aspiration was right, the rhythm was right. Something was wrong with the numbers. First lesson: on Hindi audio, auto-metrics lie.</p>
+  <p>Kokoro wins. Case closed. Ship Kokoro for Hindi.</p>
+  <p>Then I actually listened to the outputs.</p>
+  <p><strong>IndicF5 did not sound worse than Kokoro on Hindi sentences. It sounded better.</strong> The vowels were right. The aspiration was right. The rhythm was right. Something was wrong with the numbers.</p>
+  <p>Lesson: <strong>on Hindi audio, auto-metrics lie.</strong></p>
 
   <hr />
 
   <h2 id="mistake1">Mistake #1: Single-ASR Scoring Is Broken for Hinglish</h2>
 
-  <p>ASR models are trained on specific data distributions. A single model's failure becomes your score. Worse: when the TTS output is Devanagari but the reference text is Roman, character error rate comparison is meaningless. <code>kya</code> and <code class="deva">क्या</code> mean the same thing and sound identical, but CER between them is 1.0 — maximum error, as if they share no characters.</p>
-  <p>I spent a week trusting numbers that were measuring ASR bias, not model quality. The fix:</p>
+  <p>Here is the problem with scoring TTS on a language like Hinglish using a single ASR system.</p>
+  <p>ASR models are trained on specific data distributions. AssemblyAI's Universal-2 is excellent on English and handles Hindi reasonably, but it is not equally good across every category. For pure Hinglish in Roman script (<code>yaar tu kal kya kar raha tha</code>), a model trained mostly on formal text will produce a different transcript than one trained on conversational data. And a single model's failure becomes your score.</p>
+  <p>Worse: when the TTS output is Devanagari but the reference text is Roman (or vice versa), character error rate is meaningless. <code>kya</code> and <code class="deva">क्या</code> mean the same thing and sound identical, but CER between them is 1.0. Maximum error. As if they share no characters.</p>
+  <p>I learned this the hard way. Spent a week trusting numbers that were measuring ASR bias, not model quality.</p>
+  <p><strong>The fix:</strong></p>
   <ol>
-    <li><strong>Three-ASR consensus.</strong> AssemblyAI Universal-2 + Deepgram Nova-3 + Groq Whisper-large-v3. Majority vote. Each backend has different failure modes; the consensus is dramatically more reliable.</li>
-    <li><strong>Script normalization before scoring.</strong> Normalize both the reference text and the ASR transcript to unified Devanagari via IndicXlit before computing any error rate. <code>office</code> → <code class="deva">ऑफिस</code>. Now both sides speak the same script.</li>
+    <li><strong>Three-ASR consensus.</strong> AssemblyAI Universal-2 + Deepgram Nova-3 + Groq Whisper-large-v3. Majority vote across all three. Each system fails differently, so the consensus is dramatically more reliable.</li>
+    <li><strong>Script normalisation before scoring.</strong> Before computing any error rate, normalise both the reference text and the ASR transcript to unified Devanagari using a transliteration library called IndicXlit. <code>kya</code> → <code class="deva">क्या</code>, <code>office</code> → <code class="deva">ऑफिस</code>. Now both sides of the comparison speak the same script, and CER measures what it is supposed to measure.</li>
   </ol>
-  <p>These two changes made the pipeline trustworthy. They also revealed how bad things actually were.</p>
+  <p>These two changes fixed the scoring pipeline. The numbers became trustworthy.</p>
+  <p>But they also revealed how bad things actually were.</p>
 
   <hr />
 
   <h2 id="duration-bug">The Duration Bug: Why IndicF5 Was Producing Silence</h2>
 
-  <p>With the corrected pipeline, IndicF5 re-scored at <strong>2.13/5.0</strong>. Not because it sounded bad — because 21 of 30 outputs were truncated to 0.8–2.5 seconds when the sentence needed 3–6 seconds. I went looking for the bug.</p>
-  <p>Inside <code>f5_tts/infer/utils_infer.py</code> around line 451:</p>
+  <p>With the corrected eval pipeline running on the full 30-sentence set, IndicF5 re-scored at <strong>2.13 out of 5.0</strong>.</p>
+  <p>Not because it sounded bad. Because 21 out of 30 outputs were either silent or truncated to 0.8 to 2.5 seconds when the sentence needed 3 to 6 seconds of audio.</p>
+  <p>Something was fundamentally broken. Not in the model weights. In the inference code.</p>
+  <p>I went looking for the bug.</p>
+  <p>Inside <code>f5_tts/infer/utils_infer.py</code> around line 451, the duration calculation looked like this:</p>
 
-<pre><code class="language-python"># Original IndicF5 code — this is the bug
+<pre><code class="language-python"># This is the original IndicF5 code — this is the bug
 ref_text_len = len(ref_text.encode("utf-8"))   # BUG
 gen_text_len = len(gen_text.encode("utf-8"))   # BUG
 duration = ref_audio_len + int(ref_audio_len / ref_text_len * gen_text_len / speed)</code></pre>
 
-  <p>The model uses UTF-8 byte counts to estimate audio canvas time. The logic is reasonable — but breaks badly on script mixing:</p>
-  <ul>
-    <li>Devanagari characters encode as <strong>~3 bytes each</strong> in UTF-8</li>
-    <li>ASCII characters encode as <strong>1 byte each</strong></li>
-  </ul>
-  <p>Reference clip transcript: 100 Devanagari chars × 3 bytes = 300 bytes → 3 seconds of audio. Generation text in Roman Hinglish: 100 chars × 1 byte = 100 bytes. Canvas allocated: <code>3s × (100/300) = 1 second</code>. The model fills that 1 second correctly, then stops. The sentence is 66% truncated.</p>
+  <p>The model is using UTF-8 byte counts to estimate how much audio canvas time to allocate. The idea: if the reference text is <code>ref_text_len</code> bytes long, and the audio for it is <code>ref_audio_len</code> frames, then a generation text of <code>gen_text_len</code> bytes should need a proportional amount of time.</p>
+  <p><strong>The flaw:</strong> Devanagari characters encode as roughly 3 bytes each in UTF-8. ASCII characters encode as 1 byte each.</p>
+  <p>The reference clip is Hindi audio with a Devanagari transcript. 100 characters × 3 bytes = 300 bytes. The reference audio is, say, 3 seconds.</p>
+  <p>The generation text is Roman-script Hinglish. 100 characters × 1 byte = 100 bytes.</p>
+  <p>So the model allocates: <code>3 seconds × (100/300)</code> = <strong>1 second of canvas</strong> for a sentence that needs 3 seconds.</p>
+  <p>The model fills that 1 second correctly. Then the audio just stops. The sentence is 66% truncated. This is what "silence or skip" actually was. Not silence, just truncated audio the ASR could not decode.</p>
+  <p><strong>The fix was 4 lines:</strong></p>
 
-  <p><strong>The fix — 4 lines:</strong></p>
-
-<pre><code class="language-python"># Count characters, not bytes
-ref_text_len = sum(1 for c in ref_text if not c.isspace())
+<pre><code class="language-python"># Fixed version — count characters, not bytes
+ref_text_len = sum(1 for c in ref_text if not c.isspace())  # count non-whitespace chars
 gen_text_len = sum(1 for c in gen_text if not c.isspace())
 duration = ref_audio_len + int(ref_audio_len / ref_text_len * gen_text_len / speed)
-print(f"DEBUG-PATCH: ref={ref_text_len} gen={gen_text_len} frames={duration - ref_audio_len}")</code></pre>
+print(f"DEBUG-PATCH: ref_chars={ref_text_len} gen_chars={gen_text_len} "
+      f"ref_frames={ref_audio_len} gen_frames={duration - ref_audio_len} "
+      f"text={gen_text[:50]!r}")</code></pre>
 
-  <p>One <code class="deva">क</code> is one character. One <code>k</code> is one character. Canvas allocation becomes script-agnostic. After the patch, silence dropped from 20/30 to 16/30. But the overall score only moved from 2.13 to 2.20. Something else was wrong.</p>
+  <p>Character counts are script-agnostic. One <code class="deva">क</code> is one character. One <code>k</code> is one character. The canvas allocation becomes proportional to the actual content length, not an artifact of how many bytes the encoding uses.</p>
+  <p>I called this <strong>Mode A failure</strong>. The model produces the right content but on a truncated canvas. The patch is applied at import time, automatically rewriting the site-packages file, so users never have to touch it manually.</p>
+  <p>After the patch, <code>silence_or_skip</code> dropped from 20/30 to 16/30. Progress. But the overall score only moved from 2.13 to 2.20.</p>
+  <p>Something else was wrong.</p>
 
   <hr />
 
   <h2 id="mode-c">Mode C: The Undertrained Embedding Problem</h2>
 
-  <p>With the correct canvas size, outputs were now the right length. But listen to what came out for Roman-script input:</p>
+  <p>With the correct canvas size, the outputs were now the right length. But listen to what came out for Roman-script input:</p>
 
   <blockquote>
     <p><strong>Input:</strong> <code>kal mujhe office jaana hai</code><br/>
-    <strong>ASR of output:</strong> <code class="deva">ऐई अ एफे रेने आए</code></p>
+    <strong>ASR transcript of output:</strong> <code class="deva">ऐई अ एफे रेने आए</code></p>
   </blockquote>
 
-  <p>Syllabic noise. The Devanagari tokens in the same sentence (<code class="deva">मुझे, जाना, है</code>) rendered perfectly. Only the ASCII tokens produced garbage.</p>
-  <p>Root cause: IndicF5 was trained on Indic-script audio with Devanagari inputs. The embedding matrix has entries for every Unicode character, including A–Z. But those entries were never trained on meaningful data. The model receives a near-random vector for <code>k</code> and produces near-random acoustic output. Not a bug in the weights — a gap in the training distribution.</p>
-  <p>My first instinct was fine-tuning: train the ASCII embedding rows on Roman-script Hindi data. That would have taken weeks, cost hundreds of GPU-hours, and required labeled data I didn't have. <strong>I didn't fine-tune. I preprocessed instead.</strong></p>
+  <p>That is syllabic noise. The model is producing audio that sounds vaguely Hindi-shaped but is completely unintelligible. The Devanagari tokens in the same sentence (<code class="deva">मुझे</code>, <code class="deva">जाना</code>, <code class="deva">है</code>) render perfectly. Only the Roman/ASCII tokens produce garbage.</p>
+  <p>This is <strong>Mode C failure</strong>: the model fills the correct canvas with garbled content because the input character embeddings for ASCII characters are undertrained.</p>
+  <p>IndicF5 was built and trained on Indic-script audio with Devanagari text inputs. The embedding matrix has entries for every Unicode character, including A to Z. But those entries were never trained on meaningful data. The model receives a near-random vector for the character <code>k</code> and produces near-random acoustic output.</p>
+  <p>It is not a bug in the weights. It is a gap in the training distribution.</p>
+  <p><strong>My first instinct was fine-tuning.</strong> Train the ASCII embedding rows on Roman-script Hindi data. That would have taken weeks, cost hundreds of GPU-hours, and required labelled data I did not have.</p>
+  <p><strong>I did not fine-tune. I preprocessed instead.</strong></p>
 
   <hr />
 
   <h2 id="indicxlit">The IndicXlit Fix: 14 Lines of Code Total</h2>
 
-  <p>If the model can't handle ASCII input, don't give it ASCII input. IndicXlit is an open-source bidirectional transliteration library from AI4Bharat. <code>kal</code> → <code class="deva">कल</code>. <code>office</code> → <code class="deva">ऑफिस</code>. <code>yaar</code> → <code class="deva">यार</code>.</p>
-  <p>The key insight: the evaluation pipeline was already using IndicXlit to normalize transcripts for scoring. Apply the same normalization to the <em>inputs</em> before they reach the model.</p>
+  <p>If the model can't handle ASCII input, don't give it ASCII input.</p>
+  <p>IndicXlit is an open-source bidirectional transliteration library from AI4Bharat. It converts Roman-script text to Devanagari. <code>kal</code> → <code class="deva">कल</code>. <code>office</code> → <code class="deva">ऑफिस</code>. <code>yaar</code> → <code class="deva">यार</code>.</p>
+  <p>The insight: the evaluation pipeline was already using IndicXlit to normalise transcripts for scoring. Apply the same normalisation to the <em>inputs</em> before they go to the model.</p>
 
-<pre><code class="language-python">def to_unified_devanagari(text: str) -> str:
+<pre><code class="language-python">from ai4bharat.transliteration import XlitEngine
+
+engine = XlitEngine("hi", beam_width=4, src_script_type="en")
+
+def to_unified_devanagari(text: str) -> str:
+    """Convert Hinglish text (any script mix) to Devanagari for IndicF5 input."""
     out = []
     for token in tokenize(text):
         if is_devanagari(token):
-            out.append(token)           # pass through unchanged
+            out.append(token)          # pass through unchanged
         elif is_ascii_alpha(token):
-            out.append(transliterate(token))  # Roman → Devanagari
+            out.append(translate(token))   # Roman → Devanagari
         else:
-            out.append(token)           # punctuation, digits: unchanged
+            out.append(token)          # punctuation, numbers: pass through
     return "".join(out)</code></pre>
 
-  <p>The preprocessing is symmetric: the same function normalizes both scoring reference and TTS input. No asymmetry between what the model gets and what the score measures.</p>
-
-  <p><strong>Results after preprocessing (rubric v2.0, three-ASR):</strong></p>
+  <p>The preprocessing is symmetric. The same function that normalises the scoring reference also normalises the TTS input. No asymmetry between what the model gets and what the score measures.</p>
+  <p><strong>Results after adding preprocessing (rubric v2.0, three-ASR):</strong></p>
 
   <div class="table-wrap">
   <table>
-    <tr><th>Category</th><th class="num">Original</th><th class="num">+Patch</th><th class="num">+Preprocessing</th><th class="num">Δ</th></tr>
+    <tr><th>Category</th><th class="num">Original</th><th class="num">+Duration Patch</th><th class="num">+Preprocessing</th><th class="num">Change</th></tr>
     <tr><td>pure_devanagari</td><td class="num">4.62</td><td class="num">4.62</td><td class="num">4.62</td><td class="num">+0.00</td></tr>
     <tr><td>pure_roman</td><td class="num">1.00</td><td class="num">1.00</td><td class="num"><strong>4.38</strong></td><td class="num"><strong>+3.38</strong></td></tr>
     <tr><td>mixed_script</td><td class="num">1.62</td><td class="num">1.88</td><td class="num"><strong>4.88</strong></td><td class="num"><strong>+3.00</strong></td></tr>
@@ -574,36 +599,46 @@ print(f"DEBUG-PATCH: ref={ref_text_len} gen={gen_text_len} frames={duration - re
 
   <h2 id="whitelist">When IndicXlit Gets It Wrong</h2>
 
-  <p>IndicXlit is not perfect. On short tokens it applies English phonetics instead of Hindi:</p>
+  <p>IndicXlit is not perfect. On a handful of short tokens, it applies English phonetics instead of Hindi phonetics.</p>
+  <p>The worst offenders:</p>
 
   <div class="table-wrap">
   <table>
-    <tr><th>Token</th><th>Meaning</th><th>IndicXlit gives</th><th>Should be</th></tr>
-    <tr><td><code>mai</code></td><td>I (1st person)</td><td><code class="deva">माई</code> — "my" in English</td><td><code class="deva">मैं</code></td></tr>
-    <tr><td><code>tu</code></td><td>you (informal)</td><td><code class="deva">टू</code> — "to" in English</td><td><code class="deva">तू</code></td></tr>
+    <tr><th>Roman token</th><th>Meaning</th><th>IndicXlit output</th><th>What it should be</th></tr>
+    <tr><td><code>mai</code></td><td>I (first person)</td><td><code class="deva">माई</code> ("my" in English)</td><td><code class="deva">मैं</code></td></tr>
+    <tr><td><code>tu</code></td><td>you (informal)</td><td><code class="deva">टू</code> ("to" in English)</td><td><code class="deva">तू</code></td></tr>
     <tr><td><code>aa</code></td><td>come</td><td><code class="deva">एए</code></td><td><code class="deva">आ</code></td></tr>
-    <tr><td><code>hu</code></td><td>am (1st person)</td><td><code class="deva">हू</code> (drops nasal)</td><td><code class="deva">हूं</code></td></tr>
+    <tr><td><code>hu</code></td><td>am (first person)</td><td><code class="deva">हू</code> (drops nasal)</td><td><code class="deva">हूं</code></td></tr>
   </table>
   </div>
 
-  <p><code>mai ghar aa raha hu</code> (I am coming home) becomes <code class="deva">माई घर एए रहा हू</code> — four wrong words. The fix is a lookup table that intercepts before IndicXlit sees the token:</p>
+  <p>These are the most common Hindi function words written in Roman script. IndicXlit sees them and guesses English. A sentence like <code>mai ghar aa raha hu</code> (I am coming home) becomes <code class="deva">माई घर एए रहा हू</code>. Four wrong words.</p>
+  <p>The fix is a lookup table that runs before IndicXlit sees the token:</p>
 
 <pre><code class="language-python">ROMAN_HINDI_FUNCTION_WORDS = {
-    "mai": "मैं",   "tu": "तू",
-    "aa":  "आ",    "hu": "हूं",
-}
+    "mai": "मैं",   # "I" — IndicXlit gives "माई"
+    "tu":  "तू",    # "you" — IndicXlit gives "टू"
+    "aa":  "आ",    # "come" — IndicXlit gives "एए"
+    "hu":  "हूं",   # "am" — IndicXlit gives "हू"
+}</code></pre>
 
-ENGLISH_LOAN_CANONICAL = {
-    "office": "ऑफिस", "laptop": "लैपटॉप",
-    "leave":  "लीव",   "boss":   "बॉस",
+  <p>Similarly, English loanwords common in Hinglish have fixed canonical Devanagari forms that IndicXlit may not produce consistently:</p>
+
+<pre><code class="language-python">ENGLISH_LOAN_CANONICAL = {
+    "office":       "ऑफिस",
+    "laptop":       "लैपटॉप",
+    "presentation": "प्रेज़ेंटेशन",
+    "leave":        "लीव",
+    "boss":         "बॉस",
+    "party":        "पार्टी",
     # ... 36 entries total
 }</code></pre>
 
-  <p>Adding these and re-running (rubric v2.1):</p>
+  <p>Adding these and re-running the evaluation (now rubric v2.1):</p>
 
   <div class="table-wrap">
   <table>
-    <tr><th>Category</th><th class="num">v2.0</th><th class="num">v2.1</th><th class="num">Δ</th></tr>
+    <tr><th>Category</th><th class="num">v2.0</th><th class="num">v2.1</th><th class="num">Change</th></tr>
     <tr><td>pure_roman</td><td class="num">4.38</td><td class="num"><strong>4.75</strong></td><td class="num">+0.38</td></tr>
     <tr><td>mixed_script</td><td class="num">4.88</td><td class="num"><strong>4.88</strong></td><td class="num">+0.00</td></tr>
     <tr><td>english_with_NE</td><td class="num">4.33</td><td class="num"><strong>4.50</strong></td><td class="num">+0.17</td></tr>
@@ -612,13 +647,13 @@ ENGLISH_LOAN_CANONICAL = {
   </table>
   </div>
 
-  <p><strong>4.70 / 5.0. Final score.</strong></p>
+  <p><strong>4.70 out of 5.0. Final score.</strong></p>
 
   <hr />
 
   <h2 id="comparison">How It Compares to Everything Else</h2>
 
-  <p>Same 30 sentences, same rubric, same three-ASR pipeline, five models:</p>
+  <p>Same 30 sentences. Same rubric. Same three-ASR pipeline. Five models:</p>
 
   <div class="table-wrap">
   <table>
@@ -631,40 +666,60 @@ ENGLISH_LOAN_CANONICAL = {
   </table>
   </div>
 
-  <p>The gap is largest on <code>pure_roman</code> — the dominant input format for Indian chat, WhatsApp, and voice interfaces. +2.25 ranks over Kokoro on the category that matters most. Kokoro leads on <code>english_with_NE</code> (4.83 vs 4.50) because it has deeper English training and pronounces Indian place names with an English accent; this package pronounces them with Hindi phonetics. Both approaches score well by ASR — the preference is listener-dependent.</p>
+  <p>The gap is largest on <code>pure_roman</code>, the dominant input format for Indian chat, WhatsApp, and voice interfaces. <strong>+2.25 points over Kokoro on the thing that matters most.</strong></p>
+  <p>Kokoro leads on <code>english_with_NE</code> (4.83 vs 4.50) because it has deeper English training and handles English-mode proper-noun phonetics natively. Our package transliterates "Bengaluru" to Hindi phonetics. Kokoro says it with an English accent. Both score well by ASR, but a listener who expects Indian-English pronunciation of place names may prefer Kokoro for that category.</p>
+
+  <p>Sample outputs from the final system (all from <code>experiments/04_indicf5_xlit_v2/wavs/</code>):</p>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>Input</th><th>Category</th><th class="num">Score</th></tr>
+    <tr><td><span class="deva">कल मुझे दिल्ली जाना है।</span></td><td>Pure Devanagari</td><td class="num">5/5</td></tr>
+    <tr><td><code>yaar tu kal kya kar raha tha</code></td><td>Pure Roman</td><td class="num">5/5</td></tr>
+    <tr><td><code>kal mujhe office jaana hai</code></td><td>Pure Roman (loan word)</td><td class="num">5/5</td></tr>
+    <tr><td><span class="deva">Boss को बता देना</span> kal <span class="deva">मैं</span> leave <span class="deva">पर रहूँगा</span></td><td>Mixed script</td><td class="num">5/5</td></tr>
+    <tr><td>Mera presentation tomorrow <span class="deva">है, और मैं</span> nervous <span class="deva">हूं।</span></td><td>Mixed script</td><td class="num">5/5</td></tr>
+    <tr><td>My friend Aishwarya from Chennai is visiting Bengaluru</td><td>English with NE</td><td class="num">4/5</td></tr>
+  </table>
+  </div>
 
   <hr />
 
   <h2 id="utmos">The UTMOS Problem: When Auto-Metrics Lie on Hindi</h2>
 
-  <p>Standard TTS evaluation uses UTMOS and SQUIM-MOS — automatic naturalness predictors trained on English studio speech. I recorded 8 human Hindi speakers reading the same evaluation sentences, then ran both human recordings and TTS outputs through both predictors:</p>
+  <p>One of the strangest findings of the whole project.</p>
+  <p>Standard TTS evaluation uses automatic naturalness predictors. UTMOS and SQUIM-MOS are the two most common. They score how "natural" audio sounds on a 1 to 5 scale. They are trained on English studio speech datasets.</p>
+  <p>I recorded 8 human Hindi speakers reading the same sentences used in the eval. Then I ran both the human recordings and the TTS outputs through UTMOS and SQUIM.</p>
 
   <div class="table-wrap">
   <table>
-    <tr><th>Source</th><th class="num">UTMOS</th><th class="num">SQUIM-MOS</th></tr>
+    <tr><th>Source</th><th class="num">UTMOS score</th><th class="num">SQUIM-MOS score</th></tr>
     <tr><td>IndicF5 TTS outputs</td><td class="num">3.2 – 3.8</td><td class="num">3.5 – 4.1</td></tr>
     <tr><td>Human native Hindi speakers</td><td class="num"><strong>1.7 – 2.4</strong></td><td class="num"><strong>1.8 – 2.6</strong></td></tr>
   </table>
   </div>
 
-  <p>The machine scored synthetic TTS as <strong>more natural than real human voices.</strong> This is predictor inversion. UTMOS and SQUIM are calibrated on English studio recordings; they penalize audio that doesn't match English studio speech patterns. A real Hindi speaker producing natural conversational speech gets penalized for not sounding like an English studio recording.</p>
-  <p>This means: every naturalness claim backed by UTMOS/SQUIM on Hindi is meaningless, and potentially inverted. If someone tells you their Hindi TTS scores 4.0 on UTMOS, they may be telling you it sounds <em>worse</em> than natural Hindi. I declared naturalness as ear-only for this project. No UTMOS. No SQUIM. Listen to the outputs.</p>
+  <p>The machine scored synthetic TTS as <strong>more natural than real human voices.</strong></p>
+  <p>This is called predictor inversion. UTMOS and SQUIM are calibrated on English studio recordings that sound "clean" in ways that differ from how natural conversational Hindi sounds. The breath patterns, the pitch contour statistics, the formant trajectories are all different. The models have learned to associate "English studio speech features" with "naturalness" and they penalise audio that does not match.</p>
+  <p>A real Hindi speaker producing natural speech gets penalised for sounding like a real Hindi speaker.</p>
+  <p><strong>This means:</strong> every naturalness claim backed by UTMOS/SQUIM on Hindi audio is meaningless, possibly inverted. If someone tells you their Hindi TTS scores 4.0 on UTMOS, they may be telling you it sounds <em>worse</em> than natural Hindi, not better.</p>
+  <p><strong>What I did:</strong> declared naturalness as ear-only for this project. No UTMOS. No SQUIM. Listen to the outputs. The human ear is the metric.</p>
 
   <hr />
 
   <h2 id="kaggle">The Kaggle Disasters</h2>
 
-  <p>The project ran entirely on free-tier Kaggle T4 GPUs. Education included:</p>
+  <p>The project ran entirely on free-tier Kaggle T4 GPUs. This came with its own education.</p>
 
-  <p><strong>Disaster 1: The P100 trap.</strong> F5-family TTS models fail on P100 with <code>cudaErrorNoKernelImageForDevice</code> — the GPU is too old. I spent four hours debugging a failing kernel before discovering the machine shape. Always explicitly request T4.</p>
+  <p><strong>Disaster 1: The P100 trap.</strong> Kaggle offers both P100 and T4 GPUs. F5-family TTS models fail on P100 with <code>cudaErrorNoKernelImageForDevice</code>. The GPU is too old for the CUDA kernels the model requires. I spent four hours debugging a failing kernel before figuring out the machine shape was wrong. The fix: always explicitly request T4 in kernel settings. The Kaggle CLI does not default to T4.</p>
 
-  <p><strong>Disaster 2: Kaggle Secrets don't work from CLI.</strong> API keys stored in the Kaggle vault are inaccessible to kernels pushed via <code>kaggle kernels push</code>. They only work when running from the web UI. Workaround: hardcode the HuggingFace token inline.</p>
+  <p><strong>Disaster 2: Kaggle Secrets do not work from CLI.</strong> If you push a notebook via <code>kaggle kernels push</code> from the CLI, the Secrets (API keys stored in the Kaggle vault) are not accessible to the running kernel. Only kernels run from the web UI can read them. Workaround: hardcode the HuggingFace token inline in the notebook before pushing. Not ideal, but it works.</p>
 
-  <p><strong>Disaster 3: "Successful" does not mean wavs were produced.</strong> The status API returns <code>"status": "complete"</code> regardless of what the kernel actually produced. Check output contents, not status codes.</p>
+  <p><strong>Disaster 3: "Successful" does not mean wavs were produced.</strong> The Kaggle status API returns <code>"status": "complete"</code> when the kernel finishes, whether it produced outputs or not. After every run I had to pull the output, check the logs for inference errors, and count the wavs. Automated "did this work?" checking requires looking at output contents, not at kernel status.</p>
 
-  <p><strong>Disaster 4: <code>source .env</code> doesn't propagate to subprocesses.</strong></p>
+  <p><strong>Disaster 4: <code>source .env</code> does not propagate to subprocesses.</strong> I spent hours debugging why my scoring scripts could not find the AssemblyAI API key. The issue: calling <code>source .env</code> in a shell session only exports variables to that shell. A background subprocess (like the Python scoring script) does not inherit them. The fix:</p>
 
-<pre><code class="language-bash"># Wrong — child process doesn't inherit:
+<pre><code class="language-bash"># Wrong:
 source .env && python scoring/scripts/run_scoring.py
 
 # Right:
@@ -674,41 +729,44 @@ export $(grep -v '^#' .env | xargs) && python scoring/scripts/run_scoring.py</co
 
   <h2 id="direction1">Direction 1: Does the Model Actually Understand Phonetics?</h2>
 
-  <p>After reaching 4.70, I got curious: does the model actually respond to fine phonetic markers — vowel length, aspiration, nukta (a dot that turns <code class="deva">ज</code> /j/ into <code class="deva">ज़</code> /z/), the halant consonant cluster mark? I designed 18 clips: 6 phonetic distinctions × 3 variants each, bypassing preprocessing entirely — raw Devanagari fed directly to the model.</p>
+  <p>After the 4.70 result, I got curious. The model is handling Devanagari script well. But does it actually <em>understand</em> phonetics? Does it respond to fine-grained markers like vowel length, aspiration, the nukta (a dot that changes sounds), or the halant (a consonant cluster mark)?</p>
+  <p>I designed 18 test clips: 6 phonetic distinctions × 3 variants each. Each set of 3 uses the same sentence with one phonetic marker changed. I bypassed preprocessing entirely and fed raw Devanagari text directly to the model.</p>
+  <p>The six distinctions:</p>
 
   <div class="table-wrap">
   <table>
-    <tr><th>#</th><th>Marker tested</th><th>Example</th></tr>
+    <tr><th>#</th><th>What's being tested</th><th>Example variants</th></tr>
     <tr><td>1</td><td>Vowel length (<span class="deva">ि</span> vs <span class="deva">ी</span>)</td><td>short-i vs long-i</td></tr>
-    <tr><td>2</td><td>Halant / schwa elision (् mark)</td><td><span class="deva">खिल्ता</span> vs <span class="deva">खिलता</span></td></tr>
-    <tr><td>3</td><td>Nukta (<span class="deva">ज</span> vs <span class="deva">ज़</span>)</td><td>/j/ vs /z/</td></tr>
-    <tr><td>4</td><td>Aspiration (<span class="deva">ख</span> vs <span class="deva">क</span>)</td><td>/kʰ/ vs /k/</td></tr>
+    <tr><td>2</td><td>Halant / schwa elision (् mark)</td><td><span class="deva">खिल्ता</span> vs <span class="deva">खिलता</span> vs <span class="deva">खिलाता</span></td></tr>
+    <tr><td>3</td><td>Nukta (<span class="deva">ज</span> vs <span class="deva">ज़</span>)</td><td>Zara vs Jara</td></tr>
+    <tr><td>4</td><td>Aspiration (<span class="deva">ख</span> vs <span class="deva">क</span>)</td><td>khana vs kana</td></tr>
     <tr><td>5</td><td>Script register</td><td>Roman <code>office</code> vs <span class="deva">ऑफिस</span> vs <span class="deva">आफिस</span></td></tr>
-    <tr><td>6</td><td>Prosody / punctuation</td><td>plain vs ellipsis + exclamation</td></tr>
+    <tr><td>6</td><td>Prosody / punctuation</td><td>plain vs ellipsis vs exclamation</td></tr>
   </table>
   </div>
 
-  <p>The auto-metrics (ASR, F0 analysis) said: <strong>3 of 6 distinctions</strong> produced different output. Then I listened. <strong>The ear said: 6 of 6.</strong> Three cases where auto-metrics failed:</p>
+  <p>The auto-metrics (ASR, F0 analysis) said: <strong>3 out of 6 distinctions</strong> produced different output. Outcome B, partial sensitivity.</p>
+  <p>Then I listened.</p>
+  <p><strong>The ear said: 6 out of 6.</strong> Every distinction produced acoustically different output.</p>
+  <p>Three cases where the auto-metrics missed it:</p>
 
   <ul>
-    <li><strong>Halant:</strong> ASR transcripts were identical, but the consonant cluster quality in <code class="deva">खिल्ता</code> was measurably different — spectral centroid shifted +112 Hz. ASR is lexical; it can't detect sub-phonemic consonant quality changes.</li>
-    <li><strong>Aspiration:</strong> Clips were 0.65 seconds — below reliable Hindi ASR floor. Every backend produced garbage. But the difference between <code class="deva">ख</code> (aspirated) and <code class="deva">क</code> (unaspirated) was completely clear to the ear.</li>
-    <li><strong>Prosody:</strong> <code class="deva">मैं... बहुत... खुश हूं!</code> and the plain version produced identical ASR transcripts. But the ellipsis+exclamation version was <strong>44% longer</strong> (1.90s vs 1.32s), had slower pacing, and a rising terminal pitch. ASR can't measure prosody when words don't change.</li>
+    <li><strong>Halant:</strong> The ASR transcripts were identical, but the consonant cluster quality (the acoustic sound of <code>kh</code> in <code class="deva">खिल्ता</code>) was measurably different. Spectral centroid shifted +112 Hz. The ASR sees the same words. The ear hears a different sound.</li>
+    <li><strong>Aspiration:</strong> The clips were 0.65 seconds long. Too short for reliable Hindi ASR. Every backend produced garbage transcripts. But on listening, the difference between <code class="deva">ख</code> (aspirated) and <code class="deva">क</code> (unaspirated) was completely clear.</li>
+    <li><strong>Prosody:</strong> The sentence <code class="deva">मैं... बहुत... खुश हूं!</code> and the plain version <code class="deva">मैं बहुत खुश हूं।</code> produced identical ASR transcripts (same words). But the ellipsis+exclamation version was <strong>44% longer</strong> (1.90s vs 1.32s), had slower pacing, and a rising pitch at the end. The ASR cannot measure any of that. It only reads words.</li>
   </ul>
 
-  <p>Lesson: ASR-based metrics are lexical. For phonetic sensitivity — aspiration, tone, prosody, vowel quality — the ear is not just useful, it is irreplaceable.</p>
+  <p><strong>Lesson:</strong> ASR-based metrics are lexical. They measure what words were said, not how they were said. For phonetic sensitivity experiments (aspiration, tone, prosody, vowel quality), the ear is not just useful. It is irreplaceable.</p>
 
   <hr />
 
   <h2 id="direction2">Direction 2: Is the Model Thinking in Phonemes or Graphemes?</h2>
 
-  <p>When the model produces <code class="deva">क</code> (Devanagari ka) and Roman <code>k</code>, are they routed through the same internal phoneme representation — or treated as unrelated graphemes that happen to produce similar sounds? I tested this with MFCC cosine similarity on the acoustic onset of /k/ across 32 clips.</p>
-
-  <p><strong>Within Devanagari:</strong> /k/ across 8 vowel contexts showed mean pairwise MFCC similarity of <strong>0.827</strong>. F0 varied systematically by vowel context (coarticulation — a real phonetic phenomenon). The model has phoneme-organized representations within Devanagari. It is not just memorizing grapheme→audio mappings independently.</p>
-
-  <p><strong>Cross-script (Roman <code>k</code> vs <span class="deva">क</span>):</strong> Mean similarity delta = +0.052 above the unrelated-pairs baseline. Very weak. Two Roman inputs hit Mode C entirely — garbled output with F0 stuck at 93 Hz. The model has no phoneme access path for Roman input; it routes directly to noise.</p>
-
-  <p>Conclusion: phoneme-mediated within Devanagari, grapheme-bound for Roman. IndicXlit preprocessing works precisely because it routes everything through the Devanagari path, where phoneme organization exists.</p>
+  <p>A deeper question: when the model produces the sound for <code class="deva">क</code> (the Devanagari letter ka) and the Roman letter <code>k</code>, are these routed through the same internal phoneme representation? Or are they treated as completely separate graphemes that happen to produce similar sounds?</p>
+  <p>I tested this with MFCC cosine similarity on the acoustic onset of the /k/ phoneme across 32 clips.</p>
+  <p><strong>Within Devanagari:</strong> The /k/ phoneme across 8 different vowel contexts (ka, ki, ku, ke, etc.) showed mean pairwise similarity of 0.827. F0 varied systematically by vowel (coarticulation, a real phonetic phenomenon). This is evidence that within Devanagari, the model has phoneme-organised representations. It is not just memorising grapheme to audio mappings independently.</p>
+  <p><strong>Cross-script (Roman <code>k</code> vs Devanagari <code class="deva">क</code>):</strong> Mean similarity delta = +0.052 above the unrelated-pairs baseline. Very weak. Two Roman inputs hit Mode C entirely. They produced garbled output with F0 stuck at 93 Hz (the garbage attractor pitch). The model has no phoneme access path for Roman input. It goes directly to noise.</p>
+  <p><strong>Conclusion:</strong> Phoneme-mediated within Devanagari. Grapheme-bound for Roman. The ASCII embedding subspace is undertrained and does not connect to the Devanagari phoneme layer at all. IndicXlit preprocessing works precisely because it routes all input through the Devanagari path, where phoneme organisation exists.</p>
 
   <hr />
 
@@ -721,13 +779,22 @@ export $(grep -v '^#' .env | xargs) && python scoring/scripts/run_scoring.py</co
     <div class="score-item"><span class="val">330M</span>model parameters</div>
   </div>
 
-  <p><strong>IndicF5 + duration patch + IndicXlit preprocessing = working Hinglish TTS.</strong></p>
-  <p>The package accepts any script-mixed Hinglish input, normalizes it to Devanagari, feeds it into the duration-patched model, and returns 24 kHz audio in any reference voice you supply.</p>
+  <p>Clean summary of what was built:</p>
+  <p><strong>IndicF5 + duration patch + IndicXlit preprocessing = working Hinglish TTS</strong></p>
+  <p>The product is an open-source package that:</p>
+  <ol>
+    <li>Accepts any script-mixed Hinglish input (Devanagari, Roman, mixed, or English with Indian names)</li>
+    <li>Normalises it to Devanagari using IndicXlit with hand-curated whitelists</li>
+    <li>Feeds normalised text into duration-patched IndicF5</li>
+    <li>Returns 24 kHz audio in any reference voice you supply</li>
+  </ol>
+
+  <p><strong>Usage:</strong></p>
 
 <pre><code class="language-python">from inference import load_model, synthesize
 import soundfile as sf
 
-model = load_model()  # downloads ~1.3 GB from HuggingFace on first run
+model = load_model()   # downloads ~1.3 GB weights from HuggingFace
 
 REF_AUDIO = "data/reference_audio/hindi_ref.wav"
 REF_TEXT  = open("data/reference_audio/hindi_ref.txt").read().strip()
@@ -738,60 +805,109 @@ sf.write("out.wav", audio, 24000)
 
 # Mixed script
 audio = synthesize(model,
-    "Boss को बता देना kal मैं leave पर रहूँगा", REF_AUDIO, REF_TEXT)
+    "Boss को बता देना kal मैं leave पर रहूँगा",
+    REF_AUDIO, REF_TEXT)
 
 # English with Indian named entities
 audio = synthesize(model,
-    "My friend Aishwarya from Chennai is visiting Bengaluru.", REF_AUDIO, REF_TEXT)</code></pre>
+    "My friend Aishwarya from Chennai is visiting Bengaluru next week.",
+    REF_AUDIO, REF_TEXT)</code></pre>
 
-<pre><code class="language-bash">git clone https://github.com/harrrshall/hienglish.git && cd hienglish
+  <p><strong>Installation (5 commands):</strong></p>
+
+<pre><code class="language-bash">git clone https://github.com/harrrshall/hinglish-tts.git && cd hinglish-tts
 pip install git+https://github.com/AI4Bharat/IndicF5.git \
-    "transformers==4.49.0" "accelerate==0.33.0" "numpy>=2.0,<2.1" soundfile
-# Accept gating: https://huggingface.co/ai4bharat/IndicF5
+    "transformers==4.49.0" "accelerate==0.33.0" \
+    "numpy>=2.0,<2.1" soundfile
+# Accept HuggingFace gating at https://huggingface.co/ai4bharat/IndicF5
 export HF_TOKEN=hf_your_token_here
 pip install ai4bharat-transliteration</code></pre>
 
-  <p>Hardware: any CUDA GPU with ≥ 6 GB VRAM. Kaggle T4 and Google Colab T4 both work.</p>
+  <p>Hardware: any CUDA GPU with ≥ 6 GB VRAM. Kaggle T4 works. Google Colab T4 works.</p>
 
   <hr />
 
-  <h2 id="mistakes">Every Mistake, Summarized</h2>
+  <h2 id="eval-infra">The Eval Infrastructure: Reusable for Any Hinglish TTS</h2>
+
+  <p>One thing that does not exist in the open-source Hinglish space is a reproducible, rigorous evaluation pipeline. Building one was a requirement for trusting any score.</p>
+  <p>The pipeline:</p>
+
+  <p><strong>Step 1: Script normalisation (IndicXlit)</strong></p>
+  <p>Both the reference text and the ASR transcript are passed through <code>to_unified_devanagari()</code> before comparison. This makes the scoring script-agnostic. <code>office</code> and <code class="deva">ऑफिस</code> are treated as the same token, because they are.</p>
+
+  <p><strong>Step 2: Three-ASR consensus</strong></p>
+  <p>Each output wav is transcribed by three systems:</p>
+  <ul>
+    <li><strong>AssemblyAI Universal-2:</strong> strict, conservative; good at formal Hindi</li>
+    <li><strong>Deepgram Nova-3 multi:</strong> mixed-language capable; better at code-switching</li>
+    <li><strong>Groq Whisper-large-v3:</strong> good at short clips and colloquial speech</li>
+  </ul>
+  <p>Intelligibility, code_switch, and silence_or_skip scores come from the median of the three. When all three disagree, that sentence goes into a manual review queue. Highest information density per minute of listening.</p>
+
+  <p><strong>Step 3: Scoring</strong></p>
+  <p>CER (character error rate) after Devanagari normalisation. Score 5 = CER ≤ 0.05. Score 4 = CER 0.05 to 0.15. Score 3 = CER 0.15 to 0.30. Score ≤ 2 = CER &gt; 0.30 or silence.</p>
+  <p>Naturalness: ear-only. Listen to the outputs. Write qualitative notes. Do not put a number on it unless you run a rated study with multiple native speakers.</p>
+  <p><strong>The 30-sentence eval set is frozen.</strong> It will never be modified, never used for training, never retroactively adjusted. Any future model can be scored on the same 30 sentences with the same rubric, and the comparison table above stays valid.</p>
+
+  <hr />
+
+  <h2 id="mistakes">Every Mistake, Summarised</h2>
+
+  <p>For future reference, mine and anyone else doing similar work:</p>
 
   <div class="table-wrap">
   <table>
     <tr><th>Mistake</th><th>What happened</th><th>What to do instead</th></tr>
-    <tr><td>Single-ASR scoring</td><td>Scores reflected ASR bias</td><td>Three-ASR consensus minimum</td></tr>
-    <tr><td>No script normalization</td><td>CER between <code>kya</code> / <span class="deva">क्या</span> = 1.0</td><td>Normalize to unified script first</td></tr>
-    <tr><td>Trusting UTMOS/SQUIM on Hindi</td><td>They rate synthetic above human</td><td>Ear-only for naturalness</td></tr>
-    <tr><td>Assuming fine-tuning was needed</td><td>Bug was in inference code, not weights</td><td>Diagnose failure mode before training</td></tr>
-    <tr><td>Single-ASR for phonetic experiments</td><td>Short clips + prosody = invisible to ASR</td><td>Ear evaluation for phonetic sensitivity</td></tr>
+    <tr><td>Single-ASR scoring</td><td>Scores reflected ASR bias, not model quality</td><td>Three-ASR consensus minimum</td></tr>
+    <tr><td>No script normalisation</td><td>CER between <code>kya</code> and <code class="deva">क्या</code> was 1.0</td><td>Normalise to unified script before any metric</td></tr>
+    <tr><td>Trusting UTMOS/SQUIM on Hindi</td><td>They rate synthetic <em>above</em> human on Hindi</td><td>Ear-only for naturalness on non-English TTS</td></tr>
+    <tr><td>Assuming fine-tuning was needed</td><td>The bug was in inference code, not weights</td><td>Diagnose the failure mode before training</td></tr>
+    <tr><td>Single-ASR for phonetic experiments</td><td>Short clips broke ASR; prosody is invisible to ASR</td><td>Ear evaluation for phonetic sensitivity</td></tr>
     <tr><td><code>source .env</code> for subprocesses</td><td>Vars not inherited</td><td><code>export $(grep -v '^#' .env | xargs)</code></td></tr>
     <tr><td>P100 on Kaggle for F5-family</td><td><code>cudaErrorNoKernelImageForDevice</code></td><td>Always specify T4</td></tr>
-    <tr><td>Kernel status = success</td><td>"complete" ≠ wavs produced</td><td>Check output contents, not status</td></tr>
+    <tr><td>Inferring kernel success from status</td><td>"complete" ≠ wavs produced</td><td>Check outputs, not status</td></tr>
   </table>
   </div>
 
   <hr />
 
-  <h2 id="meta">The Meta-Lesson</h2>
+  <h2 id="next">What Comes Next</h2>
 
-  <p>Three separate times on this project, auto-metrics pointed one direction and the human ear pointed another:</p>
+  <p>The 330M-parameter system is shipped. The next question is whether the same quality can be achieved in a model small enough to run in a browser.</p>
+  <p><strong>Path B</strong> is a research bet: a 40 to 50M parameter Hinglish TTS distilled from this system as teacher, using StyleTTS2-lite architecture with phoneme input. The Kokoro paper showed 82M English TTS beating much larger models. The question is whether that recipe ports to Hinglish.</p>
+  <p>Three-week de-risking phase before committing any real compute:</p>
   <ol>
-    <li><strong>Base model selection.</strong> Auto-rubric ranked Kokoro #1. Ear ranked IndicF5 better on Hindi naturalness. Trusting the ear flipped the model selection.</li>
-    <li><strong>Quality assessment.</strong> PESQ said quality improved with preprocessing. Ear said "still sounds like 90s TTS." Both true — they were measuring different things.</li>
-    <li><strong>Phonetic probe.</strong> Auto-metrics said 3/6 distinctions were sensitive. Ear said 6/6. Auto-metrics couldn't detect sub-phonemic changes or prosodic shifts without word changes.</li>
+    <li>Validate that espeak-ng + multilingual PL-BERT produces meaningful Hindi phoneme embeddings</li>
+    <li>Generate 1,000 sentences with Path A and verify quality consistency</li>
+    <li>Train 100 steps of a tiny StyleTTS2 on dummy data and verify it does not OOM or NaN</li>
   </ol>
-  <p>When you are working on a language that wasn't in your metrics' training distribution, build in a human evaluation step before trusting any number. UTMOS was trained on English. AssemblyAI is optimized for English. MFCC cosine similarity doesn't know what Hindi sounds like. These are good tools — for what they were built for. "Works on English" does not mean "works on Hindi."</p>
-  <p><strong>Measure your metrics before you trust your metrics.</strong></p>
+  <p>If those three gates pass, the training run starts. If not, the project closes with the 330M system as the primary deliverable.</p>
 
   <hr />
 
-  <div class="section-label">Links</div>
+  <h2 id="meta">The Meta-Lesson</h2>
+
+  <p>This project had one finding that matters more than the 4.70 score.</p>
+  <p>Three separate times, the auto-metrics pointed one way and the human ear pointed another:</p>
+  <ol>
+    <li><strong>Base model selection:</strong> Auto-rubric said Kokoro was best overall. Ear said IndicF5 was better on Hindi naturalness. Trusting the ear flipped the model selection.</li>
+    <li><strong>Quality assessment:</strong> PESQ said quality improved with preprocessing. Ear said "still sounds like 90s TTS, flat delivery." Both true. They were measuring different things.</li>
+    <li><strong>Phonetic probe:</strong> Auto-metrics said 3/6 distinctions were sensitive. Ear said 6/6. The auto-metrics could not detect sub-phonemic changes or prosodic shifts without word changes.</li>
+  </ol>
+  <p>The meta-lesson: <strong>when you are working on a language that was not in your metrics' training distribution, build in a human evaluation step before trusting any number.</strong> UTMOS was trained on English. AssemblyAI is optimised for English. MFCC cosine similarity does not know what Hindi sounds like.</p>
+  <p>This is not a criticism of those tools. They are good tools for what they were built for. But "works on English" does not mean "works on Hindi", and "works on Hindi" does not mean "works on Hinglish".</p>
+  <p>Measure your metrics before you trust your metrics.</p>
+
+  <hr />
+
+  <div class="section-label">Links and Artifacts</div>
   <ul>
     <li><strong>Code and eval set:</strong> <a href="https://github.com/harrrshall/hinglish-tts" target="_blank" rel="noopener">github.com/harrrshall/hinglish-tts</a></li>
-    <li><strong>Underlying model:</strong> <a href="https://huggingface.co/ai4bharat/IndicF5" target="_blank" rel="noopener">ai4bharat/IndicF5</a> — HuggingFace gating required</li>
-    <li><strong>Transliteration:</strong> <a href="https://github.com/AI4Bharat/IndicTransliteration" target="_blank" rel="noopener">AI4Bharat/IndicTransliteration</a></li>
-    <li><strong>Methodology:</strong> <a href="https://github.com/harrrshall/hinglish-tts/blob/main/EVALUATION_REPORT.md" target="_blank" rel="noopener">EVALUATION_REPORT.md</a> · <a href="https://github.com/harrrshall/hinglish-tts/blob/main/RESEARCH_LOG.md" target="_blank" rel="noopener">RESEARCH_LOG.md</a></li>
+    <li><strong>Underlying model:</strong> <a href="https://huggingface.co/ai4bharat/IndicF5" target="_blank" rel="noopener">ai4bharat/IndicF5</a> (HuggingFace gating required)</li>
+    <li><strong>Transliteration library:</strong> <a href="https://github.com/AI4Bharat/IndicTransliteration" target="_blank" rel="noopener">AI4Bharat/IndicTransliteration</a></li>
+    <li><strong>Detailed methodology:</strong> <code>EVALUATION_REPORT.md</code></li>
+    <li><strong>Full decision log:</strong> <code>RESEARCH_LOG.md</code></li>
+    <li><strong>Known limitations:</strong> <code>KNOWN_LIMITATIONS.md</code></li>
   </ul>
 
   <div class="section-label" style="margin-top:24px">Citation</div>
@@ -800,8 +916,12 @@ pip install ai4bharat-transliteration</code></pre>
   title        = {Hinglish TTS: IndicF5 with IndicXlit Preprocessing},
   year         = {2026},
   howpublished = {\url{https://github.com/harrrshall/hinglish-tts}},
-  note         = {Rubric v2.1: three-ASR consensus, Devanagari-normalised CER. 4.70/5.0.}
+  note         = {30-sentence Hinglish eval set (4 categories).
+                  Rubric v2.1: three-ASR consensus, Devanagari-normalised CER,
+                  ear-only naturalness. 4.70/5.0 mean intelligibility.}
 }</code></pre>
+
+  <p style="margin-top:20px; font-size:13px; color:var(--muted)"><em>Questions, bug reports, and collaboration inquiries: <a href="mailto:cybernovascnn@gmail.com">cybernovascnn@gmail.com</a></em></p>
 
   <!-- WIP SECTION -->
   <div class="wip-section">
