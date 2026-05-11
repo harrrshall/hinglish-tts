@@ -73,6 +73,7 @@ $SUDO apt-get install -y --no-install-recommends \
   build-essential \
   git \
   curl \
+  wget \
   espeak-ng \
   libsndfile1 \
   ffmpeg
@@ -112,20 +113,27 @@ if [ -n "$TORCH_INDEX" ]; then
   pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1" \
     --index-url "$TORCH_INDEX" --timeout 300
 else
-  log "Installing CPU-only torch 2.5.1 (~180 MB)..."
-  # IMPORTANT: Do NOT use --index-url https://download.pytorch.org/whl/cpu here.
-  # The index redirects all wheel downloads to download-r2.pytorch.org (Cloudflare R2).
-  # R2 is unreachable from many corporate/restricted networks. Instead we install
-  # from direct S3-hosted URLs (download.pytorch.org) which bypass the R2 redirect.
-  # Pinned to 2.5.1+cpu cp311 linux_x86_64 — matches the Python 3.11 venv we create.
-  # GPU users: set TORCH_INDEX=https://download.pytorch.org/whl/cu124 before running.
+  log "Installing CPU-only torch 2.5.1 (~175 MB)..."
+  # IMPORTANT: The pytorch.org CDN throttles after ~14 MB per connection.
+  # Using wget -c (HTTP Range / resume) so each retry starts from the last
+  # stall point instead of from zero. Each fresh connection gets a new burst
+  # allowance, so 30 retries × 14 MB = 420 MB of capacity >> 175 MB needed.
+  # GPU users: set TORCH_INDEX=https://download.pytorch.org/whl/cu124 to bypass.
   _TORCH_BASE="https://download.pytorch.org/whl/cpu"
   _TORCH_ABI="cp311-cp311-linux_x86_64"
-  pip install \
-    "${_TORCH_BASE}/torch-2.5.1%2Bcpu-${_TORCH_ABI}.whl" \
-    "${_TORCH_BASE}/torchaudio-2.5.1%2Bcpu-${_TORCH_ABI}.whl" \
-    "numpy<2.1" \
-    --timeout 300
+  _TORCH_WHL=$(mktemp --suffix=.whl)
+  _AUDIO_WHL=$(mktemp --suffix=.whl)
+  log "  Downloading torch wheel (may retry several times — CDN throttle workaround)..."
+  wget -c --tries=30 --waitretry=3 --timeout=30 \
+    -O "$_TORCH_WHL" \
+    "${_TORCH_BASE}/torch-2.5.1%2Bcpu-${_TORCH_ABI}.whl" 2>&1 | \
+    grep -E "saved|error|Error|retry|%" | tail -5 || true
+  log "  Downloading torchaudio wheel..."
+  wget -c --tries=10 --waitretry=3 --timeout=30 \
+    -O "$_AUDIO_WHL" \
+    "${_TORCH_BASE}/torchaudio-2.5.1%2Bcpu-${_TORCH_ABI}.whl" 2>&1 | tail -3 || true
+  pip install "numpy<2.1" "$_TORCH_WHL" "$_AUDIO_WHL" --timeout 60
+  rm -f "$_TORCH_WHL" "$_AUDIO_WHL"
 fi
 
 # ---------------------------------------------------------------------------
