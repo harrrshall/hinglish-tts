@@ -264,6 +264,60 @@
       main { padding: 28px 18px 60px; }
       .post-header h1 { font-size: 22px; }
     }
+
+    /* ── GLOSSARY TERMS ── */
+    .term {
+      border-bottom: 1px dashed #999;
+      cursor: help;
+      text-decoration: none;
+    }
+    .term:hover { border-bottom-color: #333; }
+
+    /* ── TOOLTIP POPUP ── */
+    #gloss-tip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #bbb;
+      padding: 10px 13px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      max-width: 300px;
+      z-index: 9999;
+      display: none;
+      pointer-events: none;
+      color: #111;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    #gloss-tip .tip-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: #888;
+      margin-bottom: 4px;
+      display: block;
+    }
+    #gloss-tip .tip-body { color: #222; }
+
+    /* Mobile: slide up from bottom */
+    @media (max-width: 640px) {
+      #gloss-tip {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: auto !important;
+        max-width: 100% !important;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        border-radius: 0;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        padding: 14px 18px 22px;
+        pointer-events: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -705,7 +759,213 @@ pip install ai4bharat-transliteration</code></pre>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+    annotateTerms();
+    initTooltip();
   });
+
+  // ── GLOSSARY ──────────────────────────────────────────────────────────────
+  const GLOSSARY = {
+    "Text-to-Speech (TTS)":           "A system that converts written text into spoken audio.",
+    "flow-matching diffusion transformer": "A modern AI model that gradually generates speech step by step from noise into clean audio.",
+    "mel spectrogram":                "A picture-like representation of sound showing frequencies over time in a way closer to human hearing.",
+    "Automatic Speech Recognition":   "AI that converts spoken audio into text.",
+    "Character Error Rate":           "A metric showing how many characters are wrong compared to the correct sentence.",
+    "MFCC cosine similarity":         "A way to compare how similar two speech sounds are mathematically.",
+    "F0 analysis":                    "Analysis of voice pitch over time.",
+    "embedding matrix":               "A table of learned number vectors representing characters or words inside a model.",
+    "phoneme embeddings":             "Numeric representations of speech sounds learned by AI.",
+    "multilingual PL-BERT":           "A language model trained on multiple languages to understand pronunciation and text relationships.",
+    "StyleTTS2-lite":                 "A smaller, lighter version of StyleTTS2 optimized for deployment.",
+    "StyleTTS2":                      "A modern open-source TTS architecture focused on natural-sounding speech.",
+    "teacher distillation":           "Training a small model using outputs from a larger, stronger model.",
+    "naturalness predictors":         "AI systems that try to estimate how human-like speech sounds.",
+    "SQUIM-MOS":                      "A model that predicts speech quality without human listeners.",
+    "predictor inversion":            "When an evaluation metric gives higher scores to worse outputs than real human speech.",
+    "acoustic onset":                 "The beginning portion of a sound.",
+    "coarticulation":                 "When nearby sounds affect each other during speech.",
+    "spectral centroid":              "A value representing how 'bright' or 'sharp' a sound is.",
+    "sub-phonemic changes":           "Tiny sound differences smaller than full phoneme changes.",
+    "phonetic sensitivity":           "Whether a model reacts correctly to small pronunciation differences.",
+    "phonetic markers":               "Writing symbols that change pronunciation.",
+    "vowel length":                   "Difference between short and long vowel sounds.",
+    "schwa elision":                  "Dropping weak vowel sounds during pronunciation.",
+    "garbage attractor pitch":        "A repeated pitch pattern produced during broken model outputs.",
+    "consonant cluster":              "Multiple consonants together without vowels between them.",
+    "lexical metrics":                "Metrics focused only on words and text correctness.",
+    "code-switching register":        "A speaking style where people naturally switch languages.",
+    "script normalization":           "Converting multiple writing styles into one standard format.",
+    "UTF-8 byte counts":              "Number of bytes used to store text characters digitally.",
+    "function words":                 "Common grammar words like 'is', 'the', 'mai', 'hu' that carry grammatical meaning.",
+    "named entities":                 "Specific names like people, cities, and companies in text.",
+    "code-switching":                 "Alternating between languages during speech or writing within the same conversation.",
+    "pidgin":                         "A simplified mixed language formed between groups with different native languages.",
+    "fine-tuning":                    "Further training a pre-trained model on specialized data to improve performance.",
+    "evaluation rubric":              "A defined set of rules and scoring criteria used to evaluate model outputs.",
+    "evaluation pipeline":            "An automated workflow used to systematically test model performance.",
+    "HuggingFace gating":             "Restricted model access on HuggingFace requiring account approval before download.",
+    "frozen eval set":                "A fixed test dataset that is never modified or used for training.",
+    "de-risking phase":               "An early testing stage designed to catch potential failures cheaply before committing resources.",
+    "pairwise similarity":            "A similarity score computed between every pair of items in a set.",
+    "transliteration":                "Converting text from one script into another while keeping pronunciation similar.",
+    "IndicXlit":                      "AI4Bharat's open-source transliteration library for converting Roman-script Indian languages to Devanagari.",
+    "unified Devanagari":             "Converting all script-mixed input into Devanagari script for consistency before model inference.",
+    "vocoder":                        "A model that converts internal sound features (like mel spectrograms) into actual audio waveforms.",
+    "prosody":                        "Rhythm, stress, emotion, and intonation patterns in speech.",
+    "phoneme":                        "The smallest sound unit in speech — e.g. the /k/ in 'kal' or the /aa/ in 'jaana'.",
+    "grapheme":                       "The written symbol representing a sound — e.g. the letter 'k' or the Devanagari character क.",
+    "phoneme-mediated":               "Processing based on speech sounds rather than written letters.",
+    "grapheme-bound":                 "Processing based directly on written characters instead of pronunciation.",
+    "phoneme organization":           "Internal grouping of sounds by pronunciation similarity inside a model.",
+    "pitch contour":                  "The rise and fall of voice pitch across a sentence.",
+    "formant trajectories":           "Frequency movement patterns that shape vowel sounds.",
+    "syllabic noise":                 "Speech-like sound that has rhythm but no clear meaning — a common model failure mode.",
+    "aspiration":                     "Extra burst of air released with certain consonants — e.g. the difference between 'kh' (aspirated) and 'k' (unaspirated).",
+    "nukta":                          "A dot added below a Devanagari character to change its pronunciation — e.g. ज (j) becomes ज़ (z).",
+    "halant":                         "A Devanagari symbol (्) that removes the inherent vowel from a consonant, creating consonant clusters.",
+    "UTMOS":                          "An automatic speech naturalness scoring system — trained on English, unreliable on Hindi.",
+    "ASR":                            "Automatic Speech Recognition: AI that converts spoken audio into text.",
+    "CER":                            "Character Error Rate: fraction of characters wrong vs. the reference sentence. Lower is better.",
+    "MFCC":                           "Mel-Frequency Cepstral Coefficients: a compact numerical representation of sound used in speech analysis.",
+    "TTS":                            "Text-to-Speech: a system that converts written text into spoken audio.",
+    "OOM":                            "Out Of Memory — error when GPU or RAM runs out during a computation.",
+    "NaN":                            "'Not a Number' — a value produced during broken or invalid mathematical operations.",
+    "CUDA":                           "NVIDIA's parallel computing technology for running AI workloads on GPUs.",
+    "T4 GPU":                         "An NVIDIA GPU commonly used for AI inference on cloud platforms like Kaggle and Colab.",
+    "P100":                           "An older NVIDIA data-center GPU — not compatible with some modern AI model kernels.",
+    "site-packages":                  "The folder where Python libraries are installed (e.g. inside a virtual environment).",
+    "inference code":                 "Code used to run a trained model and generate outputs — distinct from training code.",
+    "phonetics":                      "The study of speech sounds: how they are produced, transmitted, and perceived.",
+    "code-switch":                    "A single instance of switching from one language to another mid-sentence.",
+    "acoustic output":                "The generated speech audio waveform produced by the model."
+  };
+
+  // ── TERM ANNOTATOR ────────────────────────────────────────────────────────
+  function annotateTerms() {
+    const main = document.querySelector('main');
+    if (!main) return;
+
+    const SKIP_TAGS = new Set(['CODE', 'PRE', 'A', 'SCRIPT', 'STYLE', 'H1', 'NAV']);
+    const used = new Set();
+
+    // Sort longest first so multi-word terms match before sub-terms
+    const termList = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+
+    // Collect eligible text nodes
+    const walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let node;
+    while ((node = walker.nextNode())) {
+      let skip = false;
+      let p = node.parentElement;
+      while (p && p !== main) {
+        if (SKIP_TAGS.has(p.tagName) || p.classList.contains('term')) { skip = true; break; }
+        p = p.parentElement;
+      }
+      if (!skip) nodes.push(node);
+    }
+
+    nodes.forEach(textNode => {
+      const text = textNode.textContent;
+      if (!text.trim()) return;
+
+      const lc = text.toLowerCase();
+      const hits = [];
+
+      for (const term of termList) {
+        if (used.has(term)) continue;
+        const idx = lc.indexOf(term.toLowerCase());
+        if (idx === -1) continue;
+        // Avoid matching inside already-scheduled ranges
+        const overlaps = hits.some(h => idx < h.end && idx + term.length > h.start);
+        if (!overlaps) hits.push({ term, idx, end: idx + term.length });
+      }
+
+      if (hits.length === 0) return;
+      hits.sort((a, b) => a.idx - b.idx);
+
+      const frag = document.createDocumentFragment();
+      let cursor = 0;
+      for (const h of hits) {
+        if (h.idx > cursor) frag.appendChild(document.createTextNode(text.slice(cursor, h.idx)));
+        const span = document.createElement('span');
+        span.className = 'term';
+        span.dataset.def = GLOSSARY[h.term];
+        span.dataset.label = h.term;
+        span.textContent = text.slice(h.idx, h.end);
+        frag.appendChild(span);
+        used.add(h.term);
+        cursor = h.end;
+      }
+      if (cursor < text.length) frag.appendChild(document.createTextNode(text.slice(cursor)));
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+
+  // ── TOOLTIP ───────────────────────────────────────────────────────────────
+  function initTooltip() {
+    const tip = document.createElement('div');
+    tip.id = 'gloss-tip';
+    tip.innerHTML = '<span class="tip-label"></span><span class="tip-body"></span>';
+    document.body.appendChild(tip);
+
+    const tipLabel = tip.querySelector('.tip-label');
+    const tipBody  = tip.querySelector('.tip-body');
+    let activeEl = null;
+
+    function show(el, clientX, clientY) {
+      tipLabel.textContent = el.dataset.label;
+      tipBody.textContent  = el.dataset.def;
+      tip.style.display = 'block';
+      position(clientX, clientY);
+      activeEl = el;
+    }
+
+    function hide() {
+      tip.style.display = 'none';
+      activeEl = null;
+    }
+
+    function position(cx, cy) {
+      const isMobile = window.innerWidth <= 640;
+      if (isMobile) return; // CSS handles mobile fixed-bottom
+      const pad = 14;
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      const ww = window.innerWidth,  wh = window.innerHeight;
+      let x = cx + pad;
+      let y = cy - th - pad;
+      if (x + tw > ww - pad) x = ww - tw - pad;
+      if (y < pad)            y = cy + pad;
+      if (x < pad)            x = pad;
+      tip.style.left = x + 'px';
+      tip.style.top  = y + 'px';
+    }
+
+    // Desktop: hover
+    document.addEventListener('mouseover', e => {
+      const el = e.target.closest('.term');
+      if (el) show(el, e.clientX, e.clientY);
+    });
+    document.addEventListener('mousemove', e => {
+      if (activeEl) position(e.clientX, e.clientY);
+    });
+    document.addEventListener('mouseout', e => {
+      if (!e.relatedTarget || !e.relatedTarget.closest('.term')) hide();
+    });
+
+    // Mobile / touch: tap to toggle
+    document.addEventListener('click', e => {
+      const el = e.target.closest('.term');
+      if (el) {
+        if (activeEl === el) { hide(); return; }
+        show(el, e.clientX, e.clientY);
+      } else {
+        hide();
+      }
+    });
+
+    // Close mobile tooltip when tapping the tooltip itself
+    tip.addEventListener('click', hide);
+  }
 </script>
 
 </body>
