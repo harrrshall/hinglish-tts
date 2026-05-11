@@ -80,35 +80,87 @@
     }
     .post-meta a { color: var(--muted); text-decoration: underline; }
 
-    /* ── DISCLAIMER / INTRO BOX ── */
-    .disclaimer {
-      font-size: 13px;
+    /* ── ABSTRACT ── */
+    .abstract { margin-bottom: 26px; }
+    .abstract-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .abstract p {
+      font-size: 14px;
       color: #444;
-      border-left: 3px solid var(--border);
-      padding: 8px 14px;
-      margin-bottom: 22px;
-      line-height: 1.5;
+      line-height: 1.6;
+      margin: 0;
     }
 
     /* ── TOC ── */
     .toc {
-      border: 1px solid var(--border);
-      padding: 14px 18px;
       margin-bottom: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
       font-size: 13px;
     }
     .toc-title {
       font-weight: 600;
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: .07em;
+      letter-spacing: .09em;
       color: var(--muted);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .toc ol { padding-left: 18px; }
-    .toc li { margin: 3px 0; line-height: 1.45; }
+    .toc li { margin: 3px 0; line-height: 1.5; }
     .toc a { color: var(--link); text-decoration: none; }
     .toc a:hover { text-decoration: underline; }
+
+    /* ── WIP SECTION ── */
+    .wip-section {
+      margin: 36px 0 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: #e4e4e4;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #333;
+      width: 20%;
+    }
+    .progress-pct {
+      font-weight: 600;
+      color: var(--text);
+      min-width: 32px;
+      font-variant-numeric: tabular-nums;
+    }
+    .wip-list { list-style: none; margin: 0; padding: 0; }
+    .wip-list li {
+      padding: 4px 0 4px 22px;
+      position: relative;
+      font-size: 14px;
+      color: #888;
+      line-height: 1.5;
+    }
+    .wip-list li::before { content: "○"; position: absolute; left: 0; color: #ccc; }
+    .wip-list li.done { color: #555; }
+    .wip-list li.done::before { content: "✓"; color: #777; }
+    .wip-list li.active { color: var(--text); font-weight: 500; }
+    .wip-list li.active::before { content: "→"; color: var(--text); }
 
     /* ── BODY TEXT ── */
     p {
@@ -324,7 +376,7 @@
 
 <!-- ── TOP NAV ── -->
 <nav class="topbar">
-  <a class="site-name" href="#">harrrshall</a>
+  <a class="site-name" href="https://x.com/harshalsinghCN/" target="_blank" rel="noopener">harrrshall</a>
   <div class="site-links">
     <a href="https://github.com/harrrshall/hienglish" target="_blank" rel="noopener">GitHub</a>
     <a href="mailto:cybernovascnn@gmail.com">Contact</a>
@@ -336,16 +388,18 @@
 
   <div class="post-header">
     <h1>How I Built an Open-Source Hinglish TTS That Beats Every Other Model</h1>
-    <div class="post-meta">May 2026 &nbsp;·&nbsp; <a href="mailto:cybernovascnn@gmail.com">Harshal Singh</a> &amp; Claude Code</div>
+    <div class="post-meta">May 2026 &nbsp;·&nbsp; <a href="https://x.com/harshalsinghCN/" target="_blank" rel="noopener">Harshal Singh</a> &amp; Claude Code</div>
   </div>
 
-  <div class="disclaimer">
-    This is a long read. It's a full walkthrough of building a working Hinglish TTS system starting from zero knowledge — every bug, every wrong turn, every metric that lied. Short version: two bugs in inference code + a preprocessing library + 14 lines of code = 4.70/5.0 intelligibility score, no training required.
+  <div class="abstract">
+    <span class="abstract-label">Abstract</span>
+    <p>This paper describes the construction of an open-source Hinglish text-to-speech system, built without prior knowledge of TTS or speech processing. The final system achieves 4.70/5.0 mean intelligibility across four input categories (pure Devanagari, pure Roman, mixed script, English with Indian named entities), outperforming all comparable open-source models. The core result: two bugs in upstream inference code and a 14-line preprocessing wrapper — no training, no fine-tuning, no labeled data — account for the full improvement from 2.13 to 4.70.</p>
   </div>
 
   <!-- TOC -->
   <div class="toc">
     <div class="toc-title">Contents</div>
+
     <ol>
       <li><a href="#pivot">The Pivot: Why Hinglish?</a></li>
       <li><a href="#audit">The Audit: Testing What Already Existed</a></li>
@@ -734,10 +788,10 @@ pip install ai4bharat-transliteration</code></pre>
 
   <div class="section-label">Links</div>
   <ul>
-    <li><strong>Code and eval set:</strong> <a href="https://github.com/harrrshall/hienglish" target="_blank" rel="noopener">github.com/harrrshall/hienglish</a></li>
+    <li><strong>Code and eval set:</strong> <a href="https://github.com/harrrshall/hinglish-tts" target="_blank" rel="noopener">github.com/harrrshall/hinglish-tts</a></li>
     <li><strong>Underlying model:</strong> <a href="https://huggingface.co/ai4bharat/IndicF5" target="_blank" rel="noopener">ai4bharat/IndicF5</a> — HuggingFace gating required</li>
     <li><strong>Transliteration:</strong> <a href="https://github.com/AI4Bharat/IndicTransliteration" target="_blank" rel="noopener">AI4Bharat/IndicTransliteration</a></li>
-    <li><strong>Methodology:</strong> <a href="https://github.com/harrrshall/hienglish/blob/main/EVALUATION_REPORT.md" target="_blank" rel="noopener">EVALUATION_REPORT.md</a> · <a href="https://github.com/harrrshall/hienglish/blob/main/RESEARCH_LOG.md" target="_blank" rel="noopener">RESEARCH_LOG.md</a></li>
+    <li><strong>Methodology:</strong> <a href="https://github.com/harrrshall/hinglish-tts/blob/main/EVALUATION_REPORT.md" target="_blank" rel="noopener">EVALUATION_REPORT.md</a> · <a href="https://github.com/harrrshall/hinglish-tts/blob/main/RESEARCH_LOG.md" target="_blank" rel="noopener">RESEARCH_LOG.md</a></li>
   </ul>
 
   <div class="section-label" style="margin-top:24px">Citation</div>
@@ -745,15 +799,41 @@ pip install ai4bharat-transliteration</code></pre>
   author       = {Harshal Singh},
   title        = {Hinglish TTS: IndicF5 with IndicXlit Preprocessing},
   year         = {2026},
-  howpublished = {\url{https://github.com/harrrshall/hienglish}},
+  howpublished = {\url{https://github.com/harrrshall/hinglish-tts}},
   note         = {Rubric v2.1: three-ASR consensus, Devanagari-normalised CER. 4.70/5.0.}
 }</code></pre>
+
+  <!-- WIP SECTION -->
+  <div class="wip-section">
+    <div class="section-label">Currently in progress</div>
+    <h2 style="margin-top:8px; border:none; padding:0; font-size:18px">Path B: Distilling Hinglish TTS to 40–50M Parameters</h2>
+    <p style="margin-top:8px">The open question after Path A: can the same Hinglish quality run in a browser via WebGPU or on mobile via ONNX? Path B is a StyleTTS2-lite model distilled from Path A as the teacher — same 30-sentence eval set, same rubric, targeting one-eighth the parameter count. The Kokoro paper showed 82M English TTS beating much larger models; this tests whether that recipe ports to Hinglish.</p>
+
+    <div class="progress-wrap">
+      <span>De-risking phase</span>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <span class="progress-pct">20%</span>
+    </div>
+
+    <ul class="wip-list">
+      <li class="done">Architecture decision — StyleTTS2-lite + espeak-ng G2P + iSTFTNet V2 vocoder (~40–50M total)</li>
+      <li class="done">Teacher validated — Path A (4.70/5.0) as synthetic data source; license-clean</li>
+      <li class="active">Week 1 — espeak-ng + multilingual PL-BERT frontend: do Hindi phoneme embeddings make sense?</li>
+      <li>Week 2 — Data generation pilot: 1,000 sentences through Path A, measure quality and throughput</li>
+      <li>Week 3 — Architecture shakedown: 100 training steps on dummy data, verify no OOM or NaN</li>
+      <li>Stage 1 training — 80M baseline (mel-L1 loss + GAN discriminator)</li>
+      <li>Stage 2 training — joint fine-tune + adversarial training</li>
+      <li>Shrinkage experiments — 80M → 40–50M, evaluate per checkpoint against Path A rubric</li>
+    </ul>
+
+    <p style="margin-top:14px; font-size:13px; color:var(--muted)">Gate: if the 80M baseline doesn't reach ≥ 4.0/5.0 overall or any category drops below 3.5, Path B stops and the project closes with Path A as the primary deliverable.</p>
+  </div>
 
 </main>
 
 <footer>
-  <a href="mailto:cybernovascnn@gmail.com">Harshal Singh</a> &amp; Claude Code · 2026 ·
-  <a href="https://github.com/harrrshall/hienglish" target="_blank" rel="noopener">github.com/harrrshall/hienglish</a>
+  <a href="https://x.com/harshalsinghCN/" target="_blank" rel="noopener">Harshal Singh</a> &amp; Claude Code · 2026 ·
+  <a href="https://github.com/harrrshall/hinglish-tts" target="_blank" rel="noopener">github.com/harrrshall/hinglish-tts</a>
 </footer>
 
 <script>
