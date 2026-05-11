@@ -223,6 +223,153 @@ originally designed around no longer exists.
 
 ---
 
+## 2026-05-11 — Direction 1 + Direction 2 synthesis: phonetic awareness profile of IndicF5
+
+**Headline:** IndicF5 has partial phonetic awareness — selective marker sensitivity
+(Direction 1) and weak cross-script representation sharing (Direction 2). The
+phoneme layer is more grapheme-bound than phoneme-mediated, but not purely
+grapheme-bound either.
+
+---
+
+### Background
+
+Two parallel probes ran concurrently on IndicF5 v12 weights + duration patch,
+bypassing IndicXlit preprocessing (feeds text verbatim to the model). The goal
+was to determine whether the model's internal representations are organized by
+phoneme or by grapheme — and therefore whether a pronunciation dictionary
+(Direction 3) can improve quality without retraining.
+
+**Direction 1** (`experiments/05_phonetic_probe`): 6 Devanagari phonetic
+distinctions × 3 variants each (18 clips total). Tests whether fine-grained
+markers — nukta, halant, vowel matras, aspiration, script register, punctuation
+— produce different acoustic output when fed to the model verbatim.
+
+**Direction 2** (`experiments/06_grapheme_phoneme_probe`): 32 clips across three
+tests. Test A: Devanagari vs Roman homophones (cross-script similarity). Test B:
+/k/ phoneme consistency within Hindi across 8 vowel contexts. Test C:
+cross-language /k/ phoneme transfer (Hindi / Roman Hindi / English).
+
+---
+
+### Finding 1 — Within Devanagari: phoneme-mediated organization (Direction 2, Test B)
+
+The /k/ phoneme onset across 8 distinct vowel contexts shows strong spectral
+consistency: mean pairwise onset-MFCC similarity = 0.827 (C1–C12, silence
+stripped), all 28 pairs positive, unimodal distribution. F0 varies systematically
+by vowel context (back-low vowels /ʌ,aː/ → ~93 Hz; front/round vowels → 121–219
+Hz), which is a textbook coarticulation pattern.
+
+Two independent measures — MFCC and F0 — agree: within the Devanagari embedding
+space, phoneme-level organization exists. The model has learned phonologically
+structured representations, not a flat lookup from grapheme to audio.
+
+### Finding 2 — Devanagari markers: selectively reactive, not uniformly sensitive (Direction 1)
+
+Of the 6 phonetic distinctions probed, the model produces measurably different
+acoustic output for 3, partial output for 2, and no difference for 1.
+
+| Marker | Result | Key evidence |
+|---|---|---|
+| Vowel length (ि vs ी) | Sensitive | All-long ī variants produce clearly distorted output; ASR (Deepgram, Groq) diverges across variants |
+| Nukta (ज़ vs ज) | Sensitive* | Nukta-absent जारा → model generates 'जा रहा है' (OOV collapse, not clean /j/→/z/) |
+| Script register (Roman vs Devanagari) | Sensitive | Roman "office" → Mode C garble; ऑ vs आ vowel audible across Devanagari variants |
+| Aspiration (ख vs क) | Partial | Groq captures ख/क contrast in mixed input (4c: खाना vs काओ); short clips limit ASR reliability |
+| Prosody / punctuation | Partial | Lexical repetition (बहुत बहुत) produces longer audio; punctuation marks are ignored |
+| Halant / schwa elision (्) | Insensitive | All three variants → identical transcripts on both ASR backends |
+
+*Nukta sensitivity is OOV-driven: the model reacts to the presence/absence of
+nukta not by switching phoneme /j/↔/z/ but by treating the nukta-absent form as
+an unknown token and generating a common alternative phrase. This is a lexical
+failure mode, not phoneme awareness.
+
+### Finding 3 — Cross-script access: grapheme-bound for novel Roman input (Direction 2, Tests A and C)
+
+Test A (cross-script homophones): mean cross-script MFCC similarity = 0.947
+vs baseline = 0.895 (unrelated Devanagari pairs). Delta = +0.052 — statistically
+present but small. Two Roman inputs (paani, kitna) hit Mode C (F0 ≈ 93 Hz,
+garbled output) despite the Devanagari equivalents producing clean 183–194 Hz
+speech. One pair (dhanyavaad/धन्यवाद) fell *below baseline* at 0.887 — no
+phoneme access detectable.
+
+Test C (cross-language /k/): no language segregation in MFCC space.
+Between-group Hindi/English similarity (0.916) exceeds within-group Hindi-Deva
+(0.901) — opposite of what language-specific phoneme inventories would predict.
+The Roman/ASCII embedding subspace produces language-indifferent output: similar
+spectral shape regardless of whether the input is Roman Hindi, mixed, or pure
+English.
+
+**The Mode C explanation is confirmed and generalized:** IndicF5 has
+well-organized Devanagari phoneme representations, but the ASCII → phoneme access
+path is uniformly undertrained. Novel Roman words don't connect to the Devanagari
+phoneme layer; they route into a low-energy garbage attractor. There is no
+detectable subset of "well-trained Roman words" that receive preferential phoneme
+access (an earlier v1 Direction 2 claim about dhanyavaad and namaste was retracted
+after v2 MFCC analysis).
+
+### Joint interpretation
+
+Combining both directions:
+
+- **The phoneme layer exists and is well-organized** — but only accessible through
+  Devanagari characters. The phonological organization evidenced in Direction 2
+  (Test B) means the model *can* attend to fine phonetic distinctions when the
+  right input representation is used.
+
+- **Devanagari marker sensitivity is real but partial.** Vowel length and
+  aspiration are exploitable levers (Directions 1 and 2 agree on this); halant is
+  not; nukta works but through OOV dynamics rather than clean phoneme switching.
+  This is consistent with a model that has partially phoneme-mediated Devanagari
+  representations — some distinctions are learned, others collapsed.
+
+- **The grapheme-bound ceiling comes from two different mechanisms.** For Roman
+  input: the ASCII embedding subspace is undertrained and doesn't connect to the
+  phoneme layer at all. For Devanagari input: some markers (halant) are ignored
+  even though the phoneme layer is accessible — suggesting that the *mapping* from
+  those specific graphemes to phoneme representations was not learned with
+  sufficient data.
+
+- **IndicXlit preprocessing works because it solves both problems.** It converts
+  Roman to Devanagari (bypassing the ASCII access failure) and produces canonical
+  Devanagari forms (removing marker ambiguity). The v2.1 score of 4.70 is the
+  ceiling of what IndicXlit + inference-time tricks can deliver.
+
+### Implications for Direction 3 (pronunciation dictionary)
+
+Direction 3 is viable and scoped. Build the dictionary around the responsive
+levers only:
+
+- **Include:** vowel length corrections (ि → ी for words where long vowel is
+  correct); nukta on high-frequency words where absence causes wrong lexical item
+  (फ→फ़, ज→ज़); aspiration on the most frequent minimal pairs (खाना vs काना).
+- **Exclude:** halant placement — the model ignores it.
+- **Do not expect:** nukta to produce a clean /z/ vs /j/ acoustic distinction for
+  rare proper nouns — the reaction is lexical, not phonemic.
+
+### Implications for Path B (LoRA fine-tune, if pursued)
+
+If naturalness improvement requires fine-tuning:
+
+- The LoRA target should include the ASCII character embedding rows (not just upper
+  DiT attention layers). The bottleneck for Roman input is at character →
+  phoneme-representation mapping, not at the acoustic generation stage.
+- All fine-tuning training inputs should be IndicXlit-preprocessed Devanagari.
+  Feeding Roman text as training input would reinforce the undertrained embedding
+  path.
+- External G2P (producing Devanagari phoneme tokens) feeding into the model's
+  Devanagari embedding space is the highest-viability phoneme-conditioning
+  architecture, given that the Devanagari phoneme layer exists and is well-organized.
+
+---
+
+**Artifacts:**
+- `experiments/05_phonetic_probe/FINDINGS.md` (Direction 1 full results)
+- `experiments/06_grapheme_phoneme_probe/FINDINGS.md` (Direction 2 full results, v2)
+- `experiments/05_phonetic_probe/scores/auto_scores.csv`
+- `experiments/06_grapheme_phoneme_probe/scores/analysis_results_v2.json`
+
+---
+
 ## 2026-05-11 — Rubric v2.1 whitelist fix + re-run (Path B completed)
 
 **Change:** Four tokens added to `ROMAN_HINDI_FUNCTION_WORDS` in
