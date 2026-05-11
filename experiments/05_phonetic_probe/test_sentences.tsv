@@ -1,0 +1,19 @@
+sentence_id	variant	category	text	phonetic_distinction_tested	expected_audible_difference
+1	a	nukta_fricative	मेरा नाम ज़ारा है।	nukta /z/ vs plain /j/ — baseline with explicit nukta	reference: /z/ fricative in ज़
+1	b	nukta_fricative	मेरा नाम जारा है।	no nukta: ज → /j/ stop	model should produce /j/ "jara", not /z/ "zara"
+1	c	nukta_fricative	मेरा नाम ज़ारा है।	explicit nukta: ज़ → /z/ fricative	model should produce /z/ "zara" — if 1b and 1c differ, model attends to nukta
+2	a	schwa_elision	कमल का फूल खिलता है।	baseline: standard Devanagari, schwa elision implicit	reference — model must infer schwa elision from context
+2	b	schwa_elision	कमल् का फूल खिल्ता है।	explicit halant on कमल् and खिल्ता: no schwa between ल and next consonant	cleaner consonant clusters, no lingering vowel between ल and क/त
+2	c	schwa_elision	कमल का फूल खिल्ता है।	mixed: halant only on खिल्ता, not on कमल	intermediate: खिल्ता cluster explicit, कमल elision still implicit
+3	a	vowel_length	मिटी की किताब लिखी।	short i matra (ि) used in place of correct long ी	vowels should sound clipped / shorter duration than 3c
+3	b	vowel_length	मीटी की कीताब लीखी।	all long i matra (ी) — over-long vowels	vowels should sound stretched / longer duration than 3c
+3	c	vowel_length	मिट्टी की किताब लिखी।	correct Hindi spelling (reference)	natural vowel durations — baseline for 3a/3b comparison
+4	a	aspiration	खाना खाओ	fully aspirated stops: ख /kʰ/ throughout	aspirated plosives — breathy /kʰ/ sound
+4	b	aspiration	काना काओ	unaspirated stops: क /k/ throughout	unaspirated plosives — harder /k/ sound
+4	c	aspiration	खाना काओ	aspirated then unaspirated: both stops side by side	audible contrast between aspirated खा and unaspirated का in same clip
+5	a	script_register	मुझे office जाना है।	Roman "office" in Devanagari context — NO preprocessing	model receives ASCII in otherwise-Devanagari input; likely garbled (baseline for Mode C)
+5	b	script_register	मुझे ऑफिस जाना है।	standard Hinglish Devanagari rendering (ऑ vowel)	canonical Hinglish pronunciation with anglicised /ɔ/ vowel
+5	c	script_register	मुझे आफ़ीस जाना है।	heavily Hindi-ized: long आ vowel, explicit nukta on फ़, long ई	more Hindi-phonetic rendering — longer first vowel, fricative फ़, longer second vowel
+6	a	prosody_emphasis	मैं बहुत खुश हूं।	neutral declarative statement	flat, even prosody — reference
+6	b	prosody_emphasis	मैं बहुत बहुत खुश हूं।	intensifier repetition (natural Hindi emphasis)	should sound more emphatic than 6a — बहुत बहुत is a natural emphasis marker
+6	c	prosody_emphasis	मैं... बहुत... खुश हूं!	ellipsis + exclamation — punctuation-driven pacing cue	pacing should be slower/more deliberate; exclamation may lift final pitch
