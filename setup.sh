@@ -122,17 +122,21 @@ fi
 # ---------------------------------------------------------------------------
 step "5/9  Install fairseq + requirements.txt"
 # ---------------------------------------------------------------------------
-# fairseq 0.12.2 PyPI sdist has two known bugs:
-#   1. Missing fairseq/version.txt — causes FileNotFoundError during build
-#   2. Missing data_utils_fast.cpp — it's Cython-generated, absent from sdist
-# Fix: download sdist, inject version.txt, then build with Cython available.
-# Cython must be installed before the build (--no-build-isolation uses the
-# current venv, so if Cython is installed here, the build can transpile .pyx).
+# fairseq 0.12.2 PyPI sdist is missing multiple source files (version.txt,
+# balanced_assignment.cpp, and others). Use the GitHub source tarball at the
+# v0.12.2 tag instead — same ~8 MB, has all source files, and is a curl
+# download (not git clone, so not the 200 MB / flaky GnuTLS failure).
+# Cython<3 must be pre-installed so the .pyx → .cpp transpilation works
+# during --no-build-isolation build.
 pip install "Cython<3"
 
 _FSDIR=$(mktemp -d)
-pip download "fairseq==0.12.2" --no-deps -d "$_FSDIR" -q
-tar xzf "$_FSDIR/fairseq-0.12.2.tar.gz" -C "$_FSDIR"
+log "Downloading fairseq v0.12.2 source tarball from GitHub (~8 MB)..."
+curl -fsSL \
+  -o "$_FSDIR/fairseq-v0.12.2.tar.gz" \
+  "https://github.com/facebookresearch/fairseq/archive/refs/tags/v0.12.2.tar.gz"
+tar xzf "$_FSDIR/fairseq-v0.12.2.tar.gz" -C "$_FSDIR"
+# GitHub archives extract as fairseq-0.12.2/ (leading 'v' stripped from tag)
 printf "0.12.2\n" > "$_FSDIR/fairseq-0.12.2/fairseq/version.txt"
 pip install "$_FSDIR/fairseq-0.12.2/" --no-build-isolation -q
 rm -rf "$_FSDIR"
