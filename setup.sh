@@ -112,12 +112,20 @@ if [ -n "$TORCH_INDEX" ]; then
   pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1" \
     --index-url "$TORCH_INDEX" --timeout 300
 else
-  log "Installing CPU-only torch (~200 MB; set TORCH_INDEX for GPU e.g. cu124)..."
-  # Use the PyTorch CPU index to avoid pulling 2 GB of CUDA libs onto a machine
-  # that may have no GPU. GPU users: TORCH_INDEX=https://download.pytorch.org/whl/cu124
-  # --timeout 300: PyTorch wheels are large; default 15s read timeout drops the connection.
-  pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1" \
-    --index-url https://download.pytorch.org/whl/cpu --timeout 300
+  log "Installing CPU-only torch 2.5.1 (~180 MB)..."
+  # IMPORTANT: Do NOT use --index-url https://download.pytorch.org/whl/cpu here.
+  # The index redirects all wheel downloads to download-r2.pytorch.org (Cloudflare R2).
+  # R2 is unreachable from many corporate/restricted networks. Instead we install
+  # from direct S3-hosted URLs (download.pytorch.org) which bypass the R2 redirect.
+  # Pinned to 2.5.1+cpu cp311 linux_x86_64 — matches the Python 3.11 venv we create.
+  # GPU users: set TORCH_INDEX=https://download.pytorch.org/whl/cu124 before running.
+  _TORCH_BASE="https://download.pytorch.org/whl/cpu"
+  _TORCH_ABI="cp311-cp311-linux_x86_64"
+  pip install \
+    "${_TORCH_BASE}/torch-2.5.1%2Bcpu-${_TORCH_ABI}.whl" \
+    "${_TORCH_BASE}/torchaudio-2.5.1%2Bcpu-${_TORCH_ABI}.whl" \
+    "numpy<2.1" \
+    --timeout 300
 fi
 
 # ---------------------------------------------------------------------------
