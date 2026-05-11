@@ -55,9 +55,11 @@ step "1/9  System packages"
 # ---------------------------------------------------------------------------
 export DEBIAN_FRONTEND=noninteractive
 
-log "Installing software-properties-common..."
+log "Installing software-properties-common + gnupg2..."
 $SUDO apt-get update -qq
-$SUDO apt-get install -y --no-install-recommends software-properties-common
+# gnupg2 is required for add-apt-repository to import PPA keys (gpg-agent absent
+# in minimal Ubuntu Docker images even when gpg is present).
+$SUDO apt-get install -y --no-install-recommends software-properties-common gnupg2
 
 log "Adding deadsnakes PPA (Python 3.11)..."
 $SUDO add-apt-repository -y ppa:deadsnakes/ppa
@@ -95,7 +97,7 @@ log "Active Python: $(python --version) at $(which python)"
 # ---------------------------------------------------------------------------
 step "3/9  pip / wheel / setuptools"
 # ---------------------------------------------------------------------------
-pip install --upgrade pip wheel "setuptools<69"
+pip install "pip==24.0" wheel "setuptools<69"
 # setuptools is capped at <69 before fairseq install because fairseq's setup.py
 # uses distutils APIs that were deprecated in setuptools>=70. After fairseq
 # installs we restore a current setuptools.
@@ -106,18 +108,32 @@ step "4/9  Install torch (must precede fairseq / ai4bharat-transliteration)"
 # fairseq reads torch during its own build. Installing torch first avoids
 # build failures where fairseq tries to import torch before it exists.
 if [ -n "$TORCH_INDEX" ]; then
-  log "Installing torch from custom index: $TORCH_INDEX"
+  log "Installing torch from GPU index: $TORCH_INDEX"
   pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1" \
-    --extra-index-url "$TORCH_INDEX"
+    --index-url "$TORCH_INDEX"
 else
-  log "Installing torch from PyPI (CPU-compatible wheel; set TORCH_INDEX for GPU)..."
-  pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1"
+  log "Installing CPU-only torch (~200 MB; set TORCH_INDEX for GPU e.g. cu124)..."
+  # Use the PyTorch CPU index to avoid pulling 2 GB of CUDA libs onto a machine
+  # that may have no GPU. GPU users: TORCH_INDEX=https://download.pytorch.org/whl/cu124
+  pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1" \
+    --index-url https://download.pytorch.org/whl/cpu
 fi
 
 # ---------------------------------------------------------------------------
-step "5/9  Install requirements.txt"
+step "5/9  Install fairseq + requirements.txt"
 # ---------------------------------------------------------------------------
+# fairseq 0.12.2 PyPI sdist is missing fairseq/version.txt (known packaging
+# bug). The git clone fix is too large (~200 MB) and flaky. Instead: download
+# the sdist (~8 MB), inject the missing file, install from local directory.
+_FSDIR=$(mktemp -d)
+pip download "fairseq==0.12.2" --no-deps -d "$_FSDIR" -q
+tar xzf "$_FSDIR/fairseq-0.12.2.tar.gz" -C "$_FSDIR"
+printf "0.12.2\n" > "$_FSDIR/fairseq-0.12.2/fairseq/version.txt"
+pip install "$_FSDIR/fairseq-0.12.2/" --no-build-isolation -q
+rm -rf "$_FSDIR"
+
 # torch/numpy/torchaudio already satisfied — pip will skip them.
+# fairseq already satisfied above — pip will skip it.
 pip install -r "$REPO_ROOT/requirements.txt"
 
 # Restore a current setuptools now that fairseq has built.
