@@ -239,31 +239,36 @@ The other 25 rows are byte-identical to v2.0 → deterministic model → same wa
 **Kaggle run:** `harshalsinghcn/hinglish-tts-audit-indicf5-xlit` v3, T4,
 30/30 wavs ok. Output dir: `results/indicf5_patched_xlit_v2/`.
 
-**Results (rubric v2.1, AAI-only — Deepgram/Groq keys not available locally):**
+**Results (rubric v2.1, 3-ASR consensus — AAI + Deepgram + Groq):**
 
-| id | category | v2.0 intel (3-ASR) | v2.1 intel (AAI) | note |
-|:--:|----------|:------------------:|:----------------:|------|
-| 10 | pure_roman | 4 | **5** | mai→मैं, hu→हूं fixed |
-| 11 | pure_roman | 4 | 1* | AAI empty (1.7s clip) |
-| 12 | pure_roman | 4 | **5** | tu→तू, aa→आ fixed |
-| 13 | pure_roman | 5 | 5 | no change (already 5) |
-| 16 | pure_roman | 4 | 4 | tu→तू fixed; बोहोट/बहुत CER residual remains |
+| category | v2.0 xlit | v2.1 xlit | Δ |
+|----------|:---------:|:---------:|:-:|
+| pure_devanagari | 4.62 | **4.62** | +0.00 |
+| pure_roman | 4.38 | **4.75** | **+0.38** |
+| mixed_script | 4.88 | **4.88** | +0.00 |
+| english_with_NE | 4.33 | **4.50** | **+0.17** |
+| **overall** | **4.57** | **4.70** | **+0.13** |
 
-`*` AAI consistently returns empty on short clips — same in v2.0, rescued by Deepgram/Groq there.
+`silence_or_skip`: 0/30 (unchanged). Mean PESQ: 3.996.
 
-**Note on RESEARCH_LOG 2026-05-10 entry:** that entry stated ids 12 and 16
-"Two residual 3s". The actual computed v2.0 score (per_sentence_3way.json) was
-**4**, not 3, for both. The "3" came from a draft prediction that over-penalized
-the IndicXlit artifacts; the 3-ASR consensus reconciled partial transcripts to 4.
-The v2.1 COMPARISON.md (§4) documents this correction.
+Changed rows:
 
-**Net effect of v2.1 fix:**
-- ids 10, 12 lifted 4→5 (+2 raw points over 30 rows)
-- Expected v2.1 overall ≈ **4.64** (vs 4.57 v2.0), controlling for ASR backend
-- Mean PESQ (SQUIM): **4.00** (same acoustic quality, text-only change)
+| id | v2.0 | v2.1 (aai/dg/groq) | Δ |
+|:--:|:----:|:------------------:|:-:|
+| 10 | 4 | **5** (5/5/4) | +1 |
+| 11 | 4 | **5** (1/5/5) | +1 |
+| 12 | 4 | **5** (5/5/5) | +1 |
+| 13 | 5 | 5 (5/5/5) | 0 |
+| 16 | 4 | 4 (4/4/4) | 0 |
 
-**PESQ note:** Speaker quality is unchanged as expected — the whitelist fix
-only changes text input, not model weights.
+Three rows lifted (10, 11, 12), not two as predicted. Id 11's AAI returned empty
+(1.7s clip — same pattern as v2.0) but Deepgram + Groq consensus = 5. Id 16 stayed
+at 4: `tu→तू` fixed, but `बोहोट` vs `बहुत` CER residual persists on all backends.
+
+**Correction to 2026-05-10 entry:** that entry stated "Two residual 3s (id 12, 16)".
+The actual v2.0 scores (per_sentence_3way.json) were **4**, not 3. The "3" came from
+a pre-computation draft; the 3-ASR consensus recovered partial transcripts to 4.
+The v2.1 COMPARISON.md §4 documents this.
 
 **Phase 2 status: complete.** The production deliverable is patched IndicF5 +
 `lib_normalize.to_unified_devanagari` preprocessing (v2.1 whitelist). No LoRA
