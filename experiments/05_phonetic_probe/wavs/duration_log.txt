@@ -1,0 +1,90 @@
+
+--- 1a [nukta_fricative] ---
+  text: मेरा नाम ज़ारा है।
+DEBUG-PATCH: ref_chars=70 gen_chars=15 ref_frames=628 gen_frames=134 text='मेरा नाम ज़ारा है।'
+    ok: 1.419s  (9.7s wall)
+
+--- 1b [nukta_fricative] ---
+  text: मेरा नाम जारा है।
+DEBUG-PATCH: ref_chars=70 gen_chars=14 ref_frames=628 gen_frames=125 text='मेरा नाम जारा है।'
+    ok: 1.323s  (7.4s wall)
+
+--- 1c [nukta_fricative] ---
+  text: मेरा नाम ज़ारा है।
+DEBUG-PATCH: ref_chars=70 gen_chars=15 ref_frames=628 gen_frames=134 text='मेरा नाम ज़ारा है।'
+    ok: 1.419s  (7.5s wall)
+
+--- 2a [schwa_elision] ---
+  text: कमल का फूल खिलता है।
+DEBUG-PATCH: ref_chars=70 gen_chars=16 ref_frames=628 gen_frames=143 text='कमल का फूल खिलता है।'
+    ok: 1.515s  (8.0s wall)
+
+--- 2b [schwa_elision] ---
+  text: कमल् का फूल खिल्ता है।
+DEBUG-PATCH: ref_chars=70 gen_chars=18 ref_frames=628 gen_frames=161 text='कमल् का फूल खिल्ता है।'
+    ok: 1.707s  (8.2s wall)
+
+--- 2c [schwa_elision] ---
+  text: कमल का फूल खिल्ता है।
+DEBUG-PATCH: ref_chars=70 gen_chars=17 ref_frames=628 gen_frames=152 text='कमल का फूल खिल्ता है।'
+    ok: 1.611s  (8.2s wall)
+
+--- 3a [vowel_length] ---
+  text: मिटी की किताब लिखी।
+DEBUG-PATCH: ref_chars=70 gen_chars=16 ref_frames=628 gen_frames=143 text='मिटी की किताब लिखी।'
+    ok: 1.515s  (8.2s wall)
+
+--- 3b [vowel_length] ---
+  text: मीटी की कीताब लीखी।
+DEBUG-PATCH: ref_chars=70 gen_chars=16 ref_frames=628 gen_frames=143 text='मीटी की कीताब लीखी।'
+    ok: 1.515s  (8.2s wall)
+
+--- 3c [vowel_length] ---
+  text: मिट्टी की किताब लिखी।
+DEBUG-PATCH: ref_chars=70 gen_chars=18 ref_frames=628 gen_frames=161 text='मिट्टी की किताब लिखी।'
+    ok: 1.707s  (8.4s wall)
+
+--- 4a [aspiration] ---
+  text: खाना खाओ
+DEBUG-PATCH: ref_chars=70 gen_chars=7 ref_frames=628 gen_frames=62 text='खाना खाओ'
+    ok: 0.651s  (7.3s wall)
+
+--- 4b [aspiration] ---
+  text: काना काओ
+DEBUG-PATCH: ref_chars=70 gen_chars=7 ref_frames=628 gen_frames=62 text='काना काओ'
+    ok: 0.651s  (7.4s wall)
+
+--- 4c [aspiration] ---
+  text: खाना काओ
+DEBUG-PATCH: ref_chars=70 gen_chars=7 ref_frames=628 gen_frames=62 text='खाना काओ'
+    ok: 0.651s  (7.5s wall)
+
+--- 5a [script_register] ---
+  text: मुझे office जाना है।
+DEBUG-PATCH: ref_chars=70 gen_chars=17 ref_frames=628 gen_frames=152 text='मुझे office जाना है।'
+    ok: 1.611s  (8.6s wall)
+
+--- 5b [script_register] ---
+  text: मुझे ऑफिस जाना है।
+DEBUG-PATCH: ref_chars=70 gen_chars=15 ref_frames=628 gen_frames=134 text='मुझे ऑफिस जाना है।'
+    ok: 1.419s  (8.1s wall)
+
+--- 5c [script_register] ---
+  text: मुझे आफ़ीस जाना है।
+DEBUG-PATCH: ref_chars=70 gen_chars=16 ref_frames=628 gen_frames=143 text='मुझे आफ़ीस जाना है।'
+    ok: 1.515s  (8.7s wall)
+
+--- 6a [prosody_emphasis] ---
+  text: मैं बहुत खुश हूं।
+DEBUG-PATCH: ref_chars=70 gen_chars=14 ref_frames=628 gen_frames=125 text='मैं बहुत खुश हूं।'
+    ok: 1.323s  (8.2s wall)
+
+--- 6b [prosody_emphasis] ---
+  text: मैं बहुत बहुत खुश हूं।
+DEBUG-PATCH: ref_chars=70 gen_chars=18 ref_frames=628 gen_frames=161 text='मैं बहुत बहुत खुश हूं।'
+    ok: 1.707s  (8.8s wall)
+
+--- 6c [prosody_emphasis] ---
+  text: मैं... बहुत... खुश हूं!
+DEBUG-PATCH: ref_chars=70 gen_chars=20 ref_frames=628 gen_frames=179 text='मैं... बहुत... खुश हूं!'
+    ok: 1.899s  (8.8s wall)

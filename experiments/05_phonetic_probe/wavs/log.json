@@ -1,0 +1,182 @@
+[
+  {
+    "output_id": "1a",
+    "sentence_id": "1",
+    "variant": "a",
+    "category": "nukta_fricative",
+    "text": "मेरा नाम ज़ारा है।",
+    "duration_s": 1.419,
+    "elapsed_s": 9.75,
+    "status": "ok"
+  },
+  {
+    "output_id": "1b",
+    "sentence_id": "1",
+    "variant": "b",
+    "category": "nukta_fricative",
+    "text": "मेरा नाम जारा है।",
+    "duration_s": 1.323,
+    "elapsed_s": 7.4,
+    "status": "ok"
+  },
+  {
+    "output_id": "1c",
+    "sentence_id": "1",
+    "variant": "c",
+    "category": "nukta_fricative",
+    "text": "मेरा नाम ज़ारा है।",
+    "duration_s": 1.419,
+    "elapsed_s": 7.49,
+    "status": "ok"
+  },
+  {
+    "output_id": "2a",
+    "sentence_id": "2",
+    "variant": "a",
+    "category": "schwa_elision",
+    "text": "कमल का फूल खिलता है।",
+    "duration_s": 1.515,
+    "elapsed_s": 8.02,
+    "status": "ok"
+  },
+  {
+    "output_id": "2b",
+    "sentence_id": "2",
+    "variant": "b",
+    "category": "schwa_elision",
+    "text": "कमल् का फूल खिल्ता है।",
+    "duration_s": 1.707,
+    "elapsed_s": 8.15,
+    "status": "ok"
+  },
+  {
+    "output_id": "2c",
+    "sentence_id": "2",
+    "variant": "c",
+    "category": "schwa_elision",
+    "text": "कमल का फूल खिल्ता है।",
+    "duration_s": 1.611,
+    "elapsed_s": 8.17,
+    "status": "ok"
+  },
+  {
+    "output_id": "3a",
+    "sentence_id": "3",
+    "variant": "a",
+    "category": "vowel_length",
+    "text": "मिटी की किताब लिखी।",
+    "duration_s": 1.515,
+    "elapsed_s": 8.17,
+    "status": "ok"
+  },
+  {
+    "output_id": "3b",
+    "sentence_id": "3",
+    "variant": "b",
+    "category": "vowel_length",
+    "text": "मीटी की कीताब लीखी।",
+    "duration_s": 1.515,
+    "elapsed_s": 8.24,
+    "status": "ok"
+  },
+  {
+    "output_id": "3c",
+    "sentence_id": "3",
+    "variant": "c",
+    "category": "vowel_length",
+    "text": "मिट्टी की किताब लिखी।",
+    "duration_s": 1.707,
+    "elapsed_s": 8.39,
+    "status": "ok"
+  },
+  {
+    "output_id": "4a",
+    "sentence_id": "4",
+    "variant": "a",
+    "category": "aspiration",
+    "text": "खाना खाओ",
+    "duration_s": 0.651,
+    "elapsed_s": 7.34,
+    "status": "ok"
+  },
+  {
+    "output_id": "4b",
+    "sentence_id": "4",
+    "variant": "b",
+    "category": "aspiration",
+    "text": "काना काओ",
+    "duration_s": 0.651,
+    "elapsed_s": 7.4,
+    "status": "ok"
+  },
+  {
+    "output_id": "4c",
+    "sentence_id": "4",
+    "variant": "c",
+    "category": "aspiration",
+    "text": "खाना काओ",
+    "duration_s": 0.651,
+    "elapsed_s": 7.48,
+    "status": "ok"
+  },
+  {
+    "output_id": "5a",
+    "sentence_id": "5",
+    "variant": "a",
+    "category": "script_register",
+    "text": "मुझे office जाना है।",
+    "duration_s": 1.611,
+    "elapsed_s": 8.62,
+    "status": "ok"
+  },
+  {
+    "output_id": "5b",
+    "sentence_id": "5",
+    "variant": "b",
+    "category": "script_register",
+    "text": "मुझे ऑफिस जाना है।",
+    "duration_s": 1.419,
+    "elapsed_s": 8.11,
+    "status": "ok"
+  },
+  {
+    "output_id": "5c",
+    "sentence_id": "5",
+    "variant": "c",
+    "category": "script_register",
+    "text": "मुझे आफ़ीस जाना है।",
+    "duration_s": 1.515,
+    "elapsed_s": 8.69,
+    "status": "ok"
+  },
+  {
+    "output_id": "6a",
+    "sentence_id": "6",
+    "variant": "a",
+    "category": "prosody_emphasis",
+    "text": "मैं बहुत खुश हूं।",
+    "duration_s": 1.323,
+    "elapsed_s": 8.17,
+    "status": "ok"
+  },
+  {
+    "output_id": "6b",
+    "sentence_id": "6",
+    "variant": "b",
+    "category": "prosody_emphasis",
+    "text": "मैं बहुत बहुत खुश हूं।",
+    "duration_s": 1.707,
+    "elapsed_s": 8.79,
+    "status": "ok"
+  },
+  {
+    "output_id": "6c",
+    "sentence_id": "6",
+    "variant": "c",
+    "category": "prosody_emphasis",
+    "text": "मैं... बहुत... खुश हूं!",
+    "duration_s": 1.899,
+    "elapsed_s": 8.79,
+    "status": "ok"
+  }
+]
