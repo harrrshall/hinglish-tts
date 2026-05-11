@@ -110,13 +110,14 @@ step "4/9  Install torch (must precede fairseq / ai4bharat-transliteration)"
 if [ -n "$TORCH_INDEX" ]; then
   log "Installing torch from GPU index: $TORCH_INDEX"
   pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1" \
-    --index-url "$TORCH_INDEX"
+    --index-url "$TORCH_INDEX" --timeout 300
 else
   log "Installing CPU-only torch (~200 MB; set TORCH_INDEX for GPU e.g. cu124)..."
   # Use the PyTorch CPU index to avoid pulling 2 GB of CUDA libs onto a machine
   # that may have no GPU. GPU users: TORCH_INDEX=https://download.pytorch.org/whl/cu124
+  # --timeout 300: PyTorch wheels are large; default 15s read timeout drops the connection.
   pip install "torch>=2.0,<3" "torchaudio>=2.0,<3" "numpy<2.1" \
-    --index-url https://download.pytorch.org/whl/cpu
+    --index-url https://download.pytorch.org/whl/cpu --timeout 300
 fi
 
 # ---------------------------------------------------------------------------
