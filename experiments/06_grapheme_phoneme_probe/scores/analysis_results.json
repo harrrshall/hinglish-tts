@@ -1,0 +1,240 @@
+{
+  "test_A": {
+    "pairs": [
+      {
+        "pair": "A1",
+        "sim_full": 0.9954,
+        "sim_200ms": 0.9936
+      },
+      {
+        "pair": "A2",
+        "sim_full": 0.9981,
+        "sim_200ms": 0.9998
+      },
+      {
+        "pair": "A3",
+        "sim_full": 0.9982,
+        "sim_200ms": 0.9999
+      },
+      {
+        "pair": "A4",
+        "sim_full": 0.041,
+        "sim_200ms": -0.0061
+      },
+      {
+        "pair": "A5",
+        "sim_full": 0.0104,
+        "sim_200ms": -0.0979
+      },
+      {
+        "pair": "A6",
+        "sim_full": 0.9968,
+        "sim_200ms": 0.9982
+      },
+      {
+        "pair": "A7",
+        "sim_full": 0.9916,
+        "sim_200ms": 0.9996
+      },
+      {
+        "pair": "A8",
+        "sim_full": 0.9905,
+        "sim_200ms": 0.9865
+      }
+    ],
+    "mean_matched_sim_full": 0.7527,
+    "mean_baseline_sim_full": 0.2661,
+    "delta": 0.4866,
+    "interpretation": "PHONEME_MEDIATED \u2014 matched pairs above baseline by \u22650.15"
+  },
+  "test_B": {
+    "pairs": [
+      {
+        "pair": "B1_B2",
+        "sim_50ms": 0.9959
+      },
+      {
+        "pair": "B1_B3",
+        "sim_50ms": -0.0236
+      },
+      {
+        "pair": "B1_B4",
+        "sim_50ms": -0.0128
+      },
+      {
+        "pair": "B1_B5",
+        "sim_50ms": -0.0251
+      },
+      {
+        "pair": "B1_B6",
+        "sim_50ms": -0.0226
+      },
+      {
+        "pair": "B1_B7",
+        "sim_50ms": 0.9942
+      },
+      {
+        "pair": "B1_B8",
+        "sim_50ms": -0.0213
+      },
+      {
+        "pair": "B2_B3",
+        "sim_50ms": -0.0597
+      },
+      {
+        "pair": "B2_B4",
+        "sim_50ms": -0.049
+      },
+      {
+        "pair": "B2_B5",
+        "sim_50ms": -0.0614
+      },
+      {
+        "pair": "B2_B6",
+        "sim_50ms": -0.0587
+      },
+      {
+        "pair": "B2_B7",
+        "sim_50ms": 0.9975
+      },
+      {
+        "pair": "B2_B8",
+        "sim_50ms": -0.0575
+      },
+      {
+        "pair": "B3_B4",
+        "sim_50ms": 0.9998
+      },
+      {
+        "pair": "B3_B5",
+        "sim_50ms": 0.9999
+      },
+      {
+        "pair": "B3_B6",
+        "sim_50ms": 1.0
+      },
+      {
+        "pair": "B3_B7",
+        "sim_50ms": -0.0628
+      },
+      {
+        "pair": "B3_B8",
+        "sim_50ms": 1.0
+      },
+      {
+        "pair": "B4_B5",
+        "sim_50ms": 0.9999
+      },
+      {
+        "pair": "B4_B6",
+        "sim_50ms": 0.9998
+      },
+      {
+        "pair": "B4_B7",
+        "sim_50ms": -0.0523
+      },
+      {
+        "pair": "B4_B8",
+        "sim_50ms": 0.9999
+      },
+      {
+        "pair": "B5_B6",
+        "sim_50ms": 0.9999
+      },
+      {
+        "pair": "B5_B7",
+        "sim_50ms": -0.0649
+      },
+      {
+        "pair": "B5_B8",
+        "sim_50ms": 0.9999
+      },
+      {
+        "pair": "B6_B7",
+        "sim_50ms": -0.0619
+      },
+      {
+        "pair": "B6_B8",
+        "sim_50ms": 1.0
+      },
+      {
+        "pair": "B7_B8",
+        "sim_50ms": -0.0608
+      }
+    ],
+    "mean_sim_50ms": 0.439,
+    "std_sim_50ms": 0.5215,
+    "n_available": 8,
+    "interpretation": "PARTIAL_K_CONSISTENCY \u2014 0.40\u20130.70, coarticulation dominates"
+  },
+  "test_C": {
+    "pairwise_sims": {
+      "C1_C2": 1.0,
+      "C1_C3": 1.0,
+      "C1_C4": 1.0,
+      "C1_C5": 1.0,
+      "C1_C6": 1.0,
+      "C1_C7": 1.0,
+      "C1_C8": 1.0,
+      "C2_C3": 1.0,
+      "C2_C4": 1.0,
+      "C2_C5": 1.0,
+      "C2_C6": 1.0,
+      "C2_C7": 1.0,
+      "C2_C8": 1.0,
+      "C3_C4": 1.0,
+      "C3_C5": 1.0,
+      "C3_C6": 1.0,
+      "C3_C7": 1.0,
+      "C3_C8": 1.0,
+      "C4_C5": 1.0,
+      "C4_C6": 1.0,
+      "C4_C7": 1.0,
+      "C4_C8": 1.0,
+      "C5_C6": 1.0,
+      "C5_C7": 1.0,
+      "C5_C8": 1.0,
+      "C6_C7": 1.0,
+      "C6_C8": 1.0,
+      "C7_C8": 1.0
+    },
+    "clustering": {
+      "ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "2_clusters": {
+        "C1": 1,
+        "C2": 1,
+        "C3": 1,
+        "C4": 1,
+        "C5": 2,
+        "C6": 1,
+        "C7": 1,
+        "C8": 1
+      },
+      "3_clusters": {
+        "C1": 2,
+        "C2": 2,
+        "C3": 1,
+        "C4": 2,
+        "C5": 3,
+        "C6": 1,
+        "C7": 2,
+        "C8": 2
+      },
+      "within_hindi_deva": 1.0,
+      "within_english": 1.0,
+      "within_roman": 1.0,
+      "between_hindi_english": 1.0,
+      "between_hindi_roman": 1.0
+    },
+    "interpretation": "MIXED_OR_UNCLEAR"
+  }
+}

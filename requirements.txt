@@ -1,0 +1,24 @@
+# Hinglish TTS — production inference stack
+# Install order matters: torch must be installed before ai4bharat-transliteration
+# because fairseq (its dep) reads torch during build. setup.sh handles this.
+#
+# IndicF5 itself is NOT listed here — it has no PyPI release.
+# setup.sh installs it via: pip install git+https://github.com/AI4Bharat/IndicF5.git
+
+# --- Model inference ---
+torch>=2.0,<3
+torchaudio>=2.0,<3
+numpy<2.1
+
+# --- HuggingFace stack ---
+transformers>=4.38
+huggingface_hub>=0.20
+
+# --- Audio I/O ---
+soundfile
+
+# --- Hinglish preprocessing (IndicXlit) ---
+# Pin to tested version. Pulls in fairseq + heavy deps;
+# system packages build-essential + python3.11-dev are required if fairseq
+# must compile from source (handled by setup.sh).
+ai4bharat-transliteration==1.1.3

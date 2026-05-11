@@ -1,0 +1,322 @@
+[
+  {
+    "test_id": "A1_devanagari",
+    "test_type": "A",
+    "pair_id": "A1",
+    "text": "कल",
+    "script": "devanagari",
+    "duration_s": 0.171,
+    "elapsed_s": 9.6,
+    "status": "ok"
+  },
+  {
+    "test_id": "A1_roman",
+    "test_type": "A",
+    "pair_id": "A1",
+    "text": "kal",
+    "script": "roman",
+    "duration_s": 0.267,
+    "elapsed_s": 7.59,
+    "status": "ok"
+  },
+  {
+    "test_id": "A2_devanagari",
+    "test_type": "A",
+    "pair_id": "A2",
+    "text": "दिल्ली",
+    "script": "devanagari",
+    "duration_s": 0.555,
+    "elapsed_s": 7.1,
+    "status": "ok"
+  },
+  {
+    "test_id": "A2_roman",
+    "test_type": "A",
+    "pair_id": "A2",
+    "text": "Delhi",
+    "script": "roman",
+    "duration_s": 0.459,
+    "elapsed_s": 7.11,
+    "status": "ok"
+  },
+  {
+    "test_id": "A3_devanagari",
+    "test_type": "A",
+    "pair_id": "A3",
+    "text": "मेरा नाम",
+    "script": "devanagari",
+    "duration_s": 0.651,
+    "elapsed_s": 7.43,
+    "status": "ok"
+  },
+  {
+    "test_id": "A3_roman",
+    "test_type": "A",
+    "pair_id": "A3",
+    "text": "mera naam",
+    "script": "roman",
+    "duration_s": 0.747,
+    "elapsed_s": 7.69,
+    "status": "ok"
+  },
+  {
+    "test_id": "A4_devanagari",
+    "test_type": "A",
+    "pair_id": "A4",
+    "text": "पानी",
+    "script": "devanagari",
+    "duration_s": 0.363,
+    "elapsed_s": 7.54,
+    "status": "ok"
+  },
+  {
+    "test_id": "A4_roman",
+    "test_type": "A",
+    "pair_id": "A4",
+    "text": "paani",
+    "script": "roman",
+    "duration_s": 0.459,
+    "elapsed_s": 7.7,
+    "status": "ok"
+  },
+  {
+    "test_id": "A5_devanagari",
+    "test_type": "A",
+    "pair_id": "A5",
+    "text": "कितना",
+    "script": "devanagari",
+    "duration_s": 0.459,
+    "elapsed_s": 7.84,
+    "status": "ok"
+  },
+  {
+    "test_id": "A5_roman",
+    "test_type": "A",
+    "pair_id": "A5",
+    "text": "kitna",
+    "script": "roman",
+    "duration_s": 0.459,
+    "elapsed_s": 7.91,
+    "status": "ok"
+  },
+  {
+    "test_id": "A6_devanagari",
+    "test_type": "A",
+    "pair_id": "A6",
+    "text": "भाई",
+    "script": "devanagari",
+    "duration_s": 0.267,
+    "elapsed_s": 7.95,
+    "status": "ok"
+  },
+  {
+    "test_id": "A6_roman",
+    "test_type": "A",
+    "pair_id": "A6",
+    "text": "bhai",
+    "script": "roman",
+    "duration_s": 0.363,
+    "elapsed_s": 8.2,
+    "status": "ok"
+  },
+  {
+    "test_id": "A7_devanagari",
+    "test_type": "A",
+    "pair_id": "A7",
+    "text": "धन्यवाद",
+    "script": "devanagari",
+    "duration_s": 0.651,
+    "elapsed_s": 8.67,
+    "status": "ok"
+  },
+  {
+    "test_id": "A7_roman",
+    "test_type": "A",
+    "pair_id": "A7",
+    "text": "dhanyavaad",
+    "script": "roman",
+    "duration_s": 0.939,
+    "elapsed_s": 9.2,
+    "status": "ok"
+  },
+  {
+    "test_id": "A8_devanagari",
+    "test_type": "A",
+    "pair_id": "A8",
+    "text": "नमस्ते",
+    "script": "devanagari",
+    "duration_s": 0.555,
+    "elapsed_s": 9.15,
+    "status": "ok"
+  },
+  {
+    "test_id": "A8_roman",
+    "test_type": "A",
+    "pair_id": "A8",
+    "text": "namaste",
+    "script": "roman",
+    "duration_s": 0.651,
+    "elapsed_s": 9.48,
+    "status": "ok"
+  },
+  {
+    "test_id": "B1",
+    "test_type": "B",
+    "pair_id": "B1",
+    "text": "कल",
+    "script": "devanagari",
+    "duration_s": 0.171,
+    "elapsed_s": 9.31,
+    "status": "ok"
+  },
+  {
+    "test_id": "B2",
+    "test_type": "B",
+    "pair_id": "B2",
+    "text": "कान",
+    "script": "devanagari",
+    "duration_s": 0.267,
+    "elapsed_s": 9.17,
+    "status": "ok"
+  },
+  {
+    "test_id": "B3",
+    "test_type": "B",
+    "pair_id": "B3",
+    "text": "किताब",
+    "script": "devanagari",
+    "duration_s": 0.459,
+    "elapsed_s": 9.02,
+    "status": "ok"
+  },
+  {
+    "test_id": "B4",
+    "test_type": "B",
+    "pair_id": "B4",
+    "text": "कुत्ता",
+    "script": "devanagari",
+    "duration_s": 0.555,
+    "elapsed_s": 8.95,
+    "status": "ok"
+  },
+  {
+    "test_id": "B5",
+    "test_type": "B",
+    "pair_id": "B5",
+    "text": "केला",
+    "script": "devanagari",
+    "duration_s": 0.363,
+    "elapsed_s": 8.74,
+    "status": "ok"
+  },
+  {
+    "test_id": "B6",
+    "test_type": "B",
+    "pair_id": "B6",
+    "text": "कोल्ड",
+    "script": "devanagari",
+    "duration_s": 0.459,
+    "elapsed_s": 8.78,
+    "status": "ok"
+  },
+  {
+    "test_id": "B7",
+    "test_type": "B",
+    "pair_id": "B7",
+    "text": "क्या",
+    "script": "devanagari",
+    "duration_s": 0.363,
+    "elapsed_s": 8.75,
+    "status": "ok"
+  },
+  {
+    "test_id": "B8",
+    "test_type": "B",
+    "pair_id": "B8",
+    "text": "कितना अच्छा",
+    "script": "devanagari",
+    "duration_s": 0.939,
+    "elapsed_s": 9.28,
+    "status": "ok"
+  },
+  {
+    "test_id": "C1",
+    "test_type": "C",
+    "pair_id": "C1",
+    "text": "कल मैं जाऊंगा",
+    "script": "devanagari",
+    "duration_s": 1.035,
+    "elapsed_s": 9.45,
+    "status": "ok"
+  },
+  {
+    "test_id": "C2",
+    "test_type": "C",
+    "pair_id": "C2",
+    "text": "मेरा computer है",
+    "script": "mixed_roman",
+    "duration_s": 1.323,
+    "elapsed_s": 9.76,
+    "status": "ok"
+  },
+  {
+    "test_id": "C3",
+    "test_type": "C",
+    "pair_id": "C3",
+    "text": "kal main jaunga",
+    "script": "roman",
+    "duration_s": 1.227,
+    "elapsed_s": 9.68,
+    "status": "ok"
+  },
+  {
+    "test_id": "C4",
+    "test_type": "C",
+    "pair_id": "C4",
+    "text": "Cat is sitting",
+    "script": "english",
+    "duration_s": 1.131,
+    "elapsed_s": 9.54,
+    "status": "ok"
+  },
+  {
+    "test_id": "C5",
+    "test_type": "C",
+    "pair_id": "C5",
+    "text": "कैसे हो?",
+    "script": "devanagari",
+    "duration_s": 0.651,
+    "elapsed_s": 9.1,
+    "status": "ok"
+  },
+  {
+    "test_id": "C6",
+    "test_type": "C",
+    "pair_id": "C6",
+    "text": "Coffee पीते हो?",
+    "script": "mixed_roman",
+    "duration_s": 1.227,
+    "elapsed_s": 9.55,
+    "status": "ok"
+  },
+  {
+    "test_id": "C7",
+    "test_type": "C",
+    "pair_id": "C7",
+    "text": "kya tum theek ho?",
+    "script": "roman",
+    "duration_s": 1.323,
+    "elapsed_s": 9.63,
+    "status": "ok"
+  },
+  {
+    "test_id": "C8",
+    "test_type": "C",
+    "pair_id": "C8",
+    "text": "Karen और मैं",
+    "script": "mixed_roman",
+    "duration_s": 0.939,
+    "elapsed_s": 9.37,
+    "status": "ok"
+  }
+]

@@ -1,0 +1,33 @@
+test_id	test_type	pair_id	text	script	notes	preprocessing
+A1_devanagari	A	A1	कल	devanagari	one-word homophone /kʌl/	none
+A1_roman	A	A1	kal	roman	one-word homophone /kʌl/	none — bypass IndicXlit deliberately
+A2_devanagari	A	A2	दिल्ली	devanagari	proper noun	none
+A2_roman	A	A2	Delhi	roman	proper noun — Roman spelling	none
+A3_devanagari	A	A3	मेरा नाम	devanagari	two-word phrase	none
+A3_roman	A	A3	mera naam	roman	two-word phrase	none
+A4_devanagari	A	A4	पानी	devanagari	common content word	none
+A4_roman	A	A4	paani	roman	common content word	none
+A5_devanagari	A	A5	कितना	devanagari	aspirate + nasal	none
+A5_roman	A	A5	kitna	roman	aspirate + nasal	none
+A6_devanagari	A	A6	भाई	devanagari	aspirated stop	none
+A6_roman	A	A6	bhai	roman	aspirated stop	none
+A7_devanagari	A	A7	धन्यवाद	devanagari	complex multi-phoneme word	none
+A7_roman	A	A7	dhanyavaad	roman	complex multi-phoneme word	none
+A8_devanagari	A	A8	नमस्ते	devanagari	well-known greeting	none
+A8_roman	A	A8	namaste	roman	well-known greeting	none
+B1	B	B1	कल	devanagari	/k/+/ʌ/ — word-initial k before a	none
+B2	B	B2	कान	devanagari	/k/+/aː/ — k before long a	none
+B3	B	B3	किताब	devanagari	/k/+/ɪ/ — k before i	none
+B4	B	B4	कुत्ता	devanagari	/k/+/ʊ/ — k before u	none
+B5	B	B5	केला	devanagari	/k/+/eː/ — k before e	none
+B6	B	B6	कोल्ड	devanagari	/k/+/oː/ — k before o	none
+B7	B	B7	क्या	devanagari	/k/ in cluster /kj/	none
+B8	B	B8	कितना अच्छा	devanagari	/k/ at sentence start with complex tail	none
+C1	C	C1	कल मैं जाऊंगा	devanagari	pure Hindi — /k/ initial	none
+C2	C	C2	मेरा computer है	mixed_roman	English word in Devanagari sentence — feed raw	none
+C3	C	C3	kal main jaunga	roman	pure Roman Hindi — /k/ initial	none
+C4	C	C4	Cat is sitting	english	pure English — /k/ initial	none
+C5	C	C5	कैसे हो?	devanagari	Hindi /kɛ/ — k before e	none
+C6	C	C6	Coffee पीते हो?	mixed_roman	English-initial mixed sentence	none
+C7	C	C7	kya tum theek ho?	roman	Roman Hindi question	none
+C8	C	C8	Karen और मैं	mixed_roman	Proper noun /k/ in mixed sentence	none

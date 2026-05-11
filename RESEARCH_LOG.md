@@ -428,3 +428,68 @@ inference time.
 - `experiments/04_indicf5_xlit_v2/scores/auto_scores_v2.1.csv`
 - `experiments/04_indicf5_xlit_v2/COMPARISON.md` (detailed two-way analysis)
 - `scoring/rubric/JUDGE_PROMPT_v2.md` (v2.1 header added, v2.0 logic locked)
+
+---
+
+## 2026-05-11 — Methodological calibration: auto-metrics vs ear evaluation
+
+**Calibration finding (applies to all future phonetic experiments):**
+
+> Auto-analysis (MFCC similarity, F0 mean, ASR transcripts) systematically
+> underestimated phonetic sensitivity vs ear evaluation. For future phonetic
+> experiments, ear evaluation is the authoritative signal; auto-metrics serve
+> only as triage.
+
+**Evidence basis — Direction 1 (`experiments/05_phonetic_probe`):**
+
+The Direction 1 probe ran auto-metrics (Deepgram + Groq ASR, F0 mean, spectral
+centroid) and ear evaluation on the same 18 clips. Auto-metrics classified the
+outcome as **B (partial sensitivity, 3/6 sentences sensitive)**. Ear evaluation
+reclassified to **A (fully sensitive, 6/6)**. Three specific failures drove the
+gap:
+
+| Sentence | Auto verdict | Ear verdict | Why auto failed |
+|---|---|---|---|
+| S2 — halant/schwa elision | Insensitive | Sensitive | Halant changed consonant quality (spectral centroid +112 Hz on 2b vs 2a/2c), not words. ASR is lexical — it cannot detect sub-phonemic consonant quality changes. |
+| S4 — aspiration ख vs क | Partial | Sensitive | 0.65 s clips are below the reliable floor for Hindi ASR. Groq produced garbled merges on 4a. Ear clearly heard /kʰ/ vs /k/ on all three variants without ambiguity. |
+| S6 — prosody / punctuation | Partial | Sensitive | Ellipsis + exclamation (`मैं... बहुत... खुश हूं!`) produced identical transcript to neutral 6a, but 44% longer audio (1.90s vs 1.32s), slower pacing, and a pitch rise on the final syllable. ASR is insensitive to prosodic changes when words don't change. |
+
+**Mechanism summary — three classes of auto-metric failure:**
+
+1. **Sub-phonemic acoustic changes** (consonant quality, formant transitions) are
+   invisible to lexical ASR. Spectral centroid or MFCC shifts may flag them but
+   do not provide interpretable evidence without ear confirmation.
+
+2. **Short clips** (≤1s) push Hindi ASR below its reliable floor. Groq (Whisper)
+   is more robust than Deepgram at short durations, but both degrade. Ear
+   evaluation is the only reliable signal for clips < 1s.
+
+3. **Prosodic changes without word-content changes** (pacing, pitch contour,
+   emphasis) are invisible to transcript-based metrics by design. Duration Δ is
+   a weak proxy — but even a significant duration jump (e.g. +44%) can be
+   misattributed to inference variance without ear confirmation.
+
+**MFCC / F0 auto-analysis (Direction 2):** Additionally, the Direction 2 acoustic
+analysis had three compounding bugs — C0 energy coefficient domination, silent
+lead-in windows, and full-clip vs voiced-frame means — that required a complete
+v2 re-run to recover valid numbers. The v1 results (Test B mean 0.439 bimodal, Test C
+all-1.0 degenerate) were artefacts rather than findings. Auto-acoustic analysis
+requires explicit validation steps (check for silence in feature windows, check
+C0 before computing cosine similarity) or it will produce confident-looking
+nonsense.
+
+**Standing operational rule for this project:**
+
+| Signal type | Role | Weight |
+|---|---|---|
+| Ear evaluation (native listener) | Authoritative | Primary |
+| ASR transcript comparison (Deepgram + Groq) | Triage / coarse filter | Secondary |
+| MFCC / F0 acoustic analysis | Hypothesis generation | Tertiary |
+| MOS predictors (UTMOS, SQUIM) | Disallowed on Hindi | Excluded (see 2026-05-09 entry) |
+
+Auto-metrics identify which sentences or variants are *candidates* for interesting
+differences. Ear evaluation determines whether a candidate is a real finding. No
+phonetic sensitivity claim should be published from auto-metrics alone.
+
+**Artifact:** `experiments/05_phonetic_probe/FINDINGS.md` §§1.6, 2, 4 (full
+reconciliation table and per-case analysis).

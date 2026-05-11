@@ -1,181 +1,138 @@
 # Known Limitations
 
-This document expands the [README limitations summary](README.md#known-limitations)
-with detail, examples, and architectural notes where relevant.
-
-The 4.70 / 5.0 score is real, but it measures intelligibility and code-switch
-handling only. The limitations below are the honest accounting of what the score
-does not capture.
+Read this before installing. The 4.70 score is real, but it was measured on a specific eval
+set with one reference voice under specific conditions. Below is what the score does not cover
+and what the package does not do.
 
 ---
 
-## 1. Synthetic texture
+## 1. Acoustic texture
 
-Every output clip is identifiably synthetic to a trained ear, regardless of
-intelligibility score. The model's delivery is fluent and the words are clear,
-but the micro-variation in pitch, breathiness, and timing that distinguishes
-natural conversational Hindi from TTS is absent. Clips that score 5/5 on
-intelligibility sound robotic when compared to the human ground-truth recordings
-in `data/human_recordings/`.
+Every output clip has the characteristic texture of Vocos-vocoded speech. To a trained ear —
+particularly anyone who has worked in audio production — the timbre is identifiable as
+synthetic regardless of intelligibility score. This is a property of the vocoder and the
+IndicF5 training distribution (2023–2024), not a bug in the preprocessing or the duration
+patch. Clips that score 5/5 on intelligibility still sound like TTS because ASR is measuring
+word accuracy, not timbral quality.
 
-**Cause:** Flow-matching TTS conditioned on a reference audio clip inherits the
-reference's mean spectral character but not its moment-to-moment variation.
-The DiT fills the synthesis canvas with spectrally consistent frames, producing
-a "smoother" output than natural speech.
+**What this means in practice:** if your use case requires audio that passes a "does this
+sound human" test with audio-literate listeners, this package does not meet that bar. It is
+suitable for voice interfaces, content prototyping, and accessibility tools where intelligible
+synthesis at natural speed is the goal.
 
-**What would fix it:** A naturalness fine-tune on a curated single-speaker
-Hindi dataset (Path B in `PROJECT_INSTRUCTIONS.md`). Not included in this
-package.
-
----
-
-## 2. Prosodic flatness
-
-Long sentences, questions, exclamations, and imperatives receive similar
-flat intonation contours. The model does not distinguish `कल मुझे दिल्ली
-जाना है।` (declarative) from `क्या आप मुझे पानी दे सकते हैं?` (polite question)
-in prosodic delivery — both receive a falling-then-flat contour.
-
-Measured in the phonetic probe experiment (`experiments/05_phonetic_probe/`):
-ellipsis and exclamation marks do produce subtle effects — 6c (`मैं... बहुत...
-खुश हूं!`) was 44% longer than 6a (1.90s vs 1.32s) and had a higher terminal
-pitch — but the effect is below the threshold of dramatic expressive delivery.
-
-**What would fix it:** Prosody conditioning via a text-level F0 predictor or
-duration predictor (e.g. PL-BERT) trained on Hindi data. This requires model
-modification, not just inference-time tricks.
-
-**What does NOT fix it:** Punctuation. The model attends to punctuation in a
-limited way. Inserting `!` or `...` does not reliably produce emphasis or
-dramatic pacing.
+**What would change it:** fine-tuning on naturalistic Hindi speech with a higher-bandwidth
+neural codec vocoder (e.g. EnCodec-based). That is a separate training project and is not
+included here.
 
 ---
 
-## 3. No naturalness number
+## 2. Flat prosody
 
-The 4.70 score is intelligibility and code-switch handling only. There is no
-naturalness number in this package, for a documented reason:
+Delivery is conditioned on a single neutral reference clip. Declarative sentences, questions,
+and exclamations all receive a similar falling-then-flat intonation contour. Punctuation has
+limited effect — the phonetic probe (`experiments/05_phonetic_probe/`) measured a ~44%
+duration difference between plain and ellipsis+exclamation variants, and a raised terminal
+pitch, but not the kind of dramatic expressive delivery a human speaker would produce.
 
-UTMOS and SQUIM_MOS — the two standard automatic naturalness predictors — rate
-Hindi human recordings **1.7–2.4 ranks lower** than IndicF5 TTS outputs on the
-same content. This directional inversion makes these predictors unusable as
-naturalness estimates on Hindi audio. The full ceiling study is at
-`scoring/rubric/CEILING_REPORT.md`.
+The inference API has no mechanism for requesting "deliver this with urgency" or "read this
+as a question." There is no text-level prosody conditioning in IndicF5.
 
-A naturalness score would require a listening test with native Hindi speakers
-and a perceptual rating scale. This was conducted informally (see
-[README — Naturalness](README.md#naturalness)) but not on a statistically
-adequate sample.
-
----
-
-## 4. Whitelist generalisation (n=30)
-
-The `ENGLISH_LOAN_CANONICAL` (36 entries) and `INDIAN_NE_CANONICAL` (19 entries)
-tables in `scoring/scripts/lib_normalize.py` were assembled from the 30-sentence
-eval set. Any English loanword or Indian proper noun not in these tables falls
-through to IndicXlit transliteration.
-
-For tokens not in the whitelist:
-
-- **Common loanwords** (e.g. `phone`, `school`, `car`): IndicXlit usually
-  produces a reasonable Devanagari rendering. Occasional short-token
-  misreadings (e.g. `ok → ओके` instead of `ओके`) are possible.
-- **Indian proper nouns** (city names, people names): common pan-Indian names
-  and cities typically work. Less common names, brand names, and regional
-  place names may be phonetically inaccurate.
-- **Short ambiguous tokens** (2–3 characters): the highest risk category.
-  `mai` (I), `tu` (you), `aa` (come), `hu` (am) are handled by the v2.1
-  function-word whitelist, but similar short tokens outside this list
-  (e.g. `se`, `ko`, `ne`) rely on IndicXlit.
-
-**How to extend the whitelist:** add entries directly to the `ENGLISH_LOAN_CANONICAL`
-or `INDIAN_NE_CANONICAL` dicts in `scoring/scripts/lib_normalize.py`. The
-`ROMAN_HINDI_FUNCTION_WORDS` dict is for function words IndicXlit specifically
-misreads. Changes take effect immediately — no retraining.
+**What this means in practice:** conversational back-and-forth, emotional scenes, and
+multi-sentence narration with varied register will all sound flat. Single declarative
+statements and neutral informational content are where the package performs best.
 
 ---
 
-## 5. Kokoro leads on `english_with_NE`
+## 3. One fixed reference voice
 
-Kokoro v1.0 (Hindi) scores **4.83** on `english_with_NE` vs this package's
-**4.50**. The gap exists because:
+The 4.70 score was measured using the reference clip in `data/reference_audio/hindi_ref.wav`.
+The `synthesize()` API accepts any 3–10s reference clip, but voice-to-voice fidelity has not
+been measured, and the following are true:
 
-This package transliterates full English sentences to Devanagari phonetics:
-> "My friend Aishwarya from Chennai" → माय फ्रेंड ऐश्वर्या फ्रॉम चेन्नई
+- The duration patch and preprocessing were validated against one voice. Canvas allocation
+  behavior with other voices has not been checked.
+- IndicF5's zero-shot cloning is sensitive to reference audio quality. Background noise,
+  reverb, clipping, and non-speech sounds in the reference all degrade output quality.
+- No speaker-similarity metric (e.g. speaker cosine similarity via an x-vector model) was
+  computed. Informal listening suggests the model captures broad voice weight and register
+  from a reference clip, but this was not quantified.
 
-Kokoro, having broader English training, generates English-mode phonetics for
-the English words and Indian-mode phonetics for the proper nouns.
-
-Both approaches score 4–5 on intelligibility because the ASR rubric evaluates
-after Devanagari normalisation — Hindi-accented English and native-English
-phonetics both normalise to the same Devanagari reference. But a listener who
-expects English words to sound English may find Kokoro's rendering more
-natural for this category.
-
-**If your use case is English-dominant content:** evaluate Kokoro for
-`english_with_NE` sentences. For all Hinglish categories (pure Roman, mixed,
-pure Devanagari), this package outperforms Kokoro by 0–2.25 ranks.
+This package does not provide a validated plug-and-play "clone this voice" workflow. If
+custom voice cloning is your use case, treat the reference-clip input as experimental and
+evaluate on your specific target voice before committing.
 
 ---
 
-## 6. Gated model weights
+## 4. Generalization not measured
 
-IndicF5 weights are hosted at `ai4bharat/IndicF5` on HuggingFace behind a
-gating form. You must create a HuggingFace account and click "Agree and access
-repository" before the weights can be downloaded. This is a one-time step.
+The 30-sentence eval set covers four categories: pure Devanagari, pure Roman Hinglish,
+mixed script, and English with Indian named entities. Within those categories it was designed
+to cover common colloquial patterns. What it does not cover:
 
-The license terms for the weights are set by AI4Bharat and are separate from
-the license of the evaluation code in this repository. Attribution is required;
-commercial use requires explicit permission from AI4Bharat. Check the model
-card at [huggingface.co/ai4bharat/IndicF5](https://huggingface.co/ai4bharat/IndicF5)
-for the current terms.
+- Long-form content (sentences substantially over ~15 words)
+- Technical and domain-specific vocabulary (medical, legal, financial)
+- Code-switching in specialized registers (e.g. software engineering Hinglish)
+- Regional Hindi dialects (Bhojpuri, Rajasthani, Haryanvi influence)
+- Dense multi-language alternation within a single utterance
 
----
+No native-speaker A/B comparison at scale has been conducted. The naturalness evaluation in
+this package was a single informal listen over 30 clips — not a rated perceptual study with
+multiple listeners and a statistical design. The 4.70 score is an intelligibility ceiling,
+not a naturalness floor, and it is a 30-sentence sample, not a population estimate.
 
-## 7. Python version constraint for preprocessing
-
-IndicXlit depends on `fairseq`, which uses Python dataclasses in a way that is
-incompatible with Python 3.12's stricter dataclass handling. Full IndicXlit
-functionality requires Python 3.10 or 3.11.
-
-On Python 3.12:
-- Whitelist-only paths (the eval-set vocabulary) work correctly without
-  IndicXlit being called.
-- Unknown tokens that fall through the whitelist will fail with an import
-  error when IndicXlit is called.
-
-If you are on Python 3.12 and need full Roman-script support, create a Python
-3.11 virtualenv and use `venv-scoring-py311/` (already set up if you cloned
-this repository on the development machine).
+**If you are evaluating for production use**, run your own eval set. The rubric is
+documented in `EVALUATION_REPORT.md` and is re-runnable against any new sentences with
+the scoring scripts in `scoring/`.
 
 ---
 
-## 8. Non-deterministic inference
+## 5. IndicXlit edge cases on rare tokens
 
-IndicF5's diffusion sampler does not fix a random seed by default. Identical
-input text and reference audio produce different waveforms across runs. Duration
-is consistent (within ~50ms) but raw audio samples differ. This was confirmed in
-the phonetic probe: two runs of identical input `मेरा नाम ज़ारा है।` produced
-waveforms with max sample difference of 0.798 (on a [−1, 1] scale).
+The preprocessing pipeline handles Roman tokens in four tiers:
 
-**Practical effect:** if you are building a system that requires byte-identical
-reproducible outputs (e.g. for caching, A/B testing of text variants, or
-deterministic evaluation), you need to set `torch.manual_seed(N)` before each
-inference call and confirm that the specific IndicF5 version you are using
-seeds the diffusion process from PyTorch's RNG. This is not currently handled
-in `inference.py`.
+1. **Short Hindi function words** (`mai`, `tu`, `aa`, `hu`): handled by the 4-entry
+   function-word whitelist before IndicXlit sees the token.
+2. **Common English loanwords** (`office`, `laptop`, `party`, etc.): handled by the
+   36-entry loan whitelist.
+3. **Indian proper nouns** (`Delhi`, `Mumbai`, `Aishwarya`, etc.): handled by the
+   19-entry NE whitelist.
+4. **Everything else**: falls through to IndicXlit transliteration.
+
+IndicXlit handles common vocabulary reliably. It degrades on:
+
+- **Rare proper nouns**: uncommon surnames, small-city place names, startup brands,
+  regional names. The whitelist was built from a 30-sentence eval set and does not cover
+  the long tail.
+- **Short ambiguous tokens** (2–3 characters): common postpositions like `se`, `ko`, `ne`
+  are not in the function-word whitelist. IndicXlit may render these with English phonetics.
+- **Abbreviations**: `NGO`, `CEO`, `IIT` are lowercased to `ngo`, `ceo`, `iit` before
+  lookup. They miss the whitelists and IndicXlit output is unpredictable.
+
+**How to extend the whitelists:** add entries to `ENGLISH_LOAN_CANONICAL`,
+`INDIAN_NE_CANONICAL`, or `ROMAN_HINDI_FUNCTION_WORDS` in
+`scoring/scripts/lib_normalize.py`. No retraining required; changes take effect immediately.
 
 ---
 
-## 9. Voice cloning fidelity not evaluated
+## 6. Output is 24 kHz — resampling is the caller's responsibility
 
-The 4.70 score does not measure how faithfully outputs match the reference
-speaker's voice. Timbre accuracy, pitch range match, and speaking rate match
-were not part of the eval rubric. Informal listening suggests the model captures
-broad speaker characteristics (voice weight, approximate register) from a 5–10s
-reference clip, but no quantitative claim is made here.
+IndicF5 outputs 24 kHz mono PCM float32. `synthesize()` returns this array directly.
+If your downstream system expects a different sample rate, resample before writing:
 
-Users who require verified speaker-identity fidelity — for dubbing, persona
-consistency, or speaker authentication applications — should conduct their own
-evaluation on their target voice.
+```python
+import librosa
+audio_16k = librosa.resample(audio, orig_sr=24000, target_sr=16000)
+sf.write("out.wav", audio_16k, 16000)
+```
+
+No automatic resampling is applied. Common failure modes if you skip this:
+
+- **Playback on a 44.1 kHz device without resampling:** the audio plays at 24/44.1 ≈ 54%
+  of normal speed with a pitch shift down.
+- **Writing 24 kHz audio to a 16 kHz pipeline:** the pipeline either rejects it or
+  interprets the sample data incorrectly, producing corrupted or truncated audio.
+- **Telephone/VoIP systems:** almost universally expect 8 kHz or 16 kHz. A 24 kHz WAV
+  will not play correctly without explicit resampling.
+
+`librosa`, `torchaudio.functional.resample`, and `soundfile`+`resampy` all handle this.
+The choice is yours; the responsibility is yours.

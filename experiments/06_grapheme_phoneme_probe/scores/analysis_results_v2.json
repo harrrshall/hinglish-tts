@@ -1,0 +1,397 @@
+{
+  "test_A": {
+    "feature": "mfcc_voiced_mean C1-C12",
+    "pairs": [
+      {
+        "pair": "A1",
+        "sim_voiced": 0.9972,
+        "f0_dev": 93.0,
+        "f0_rom": 93.5,
+        "onset_dev_ms": 0.0,
+        "onset_rom_ms": 0.0
+      },
+      {
+        "pair": "A2",
+        "sim_voiced": 0.9635,
+        "f0_dev": 172.0,
+        "f0_rom": 188.2,
+        "onset_dev_ms": 186.7,
+        "onset_rom_ms": 197.3
+      },
+      {
+        "pair": "A3",
+        "sim_voiced": 0.9793,
+        "f0_dev": 166.8,
+        "f0_rom": 181.7,
+        "onset_dev_ms": 170.7,
+        "onset_rom_ms": 256.0
+      },
+      {
+        "pair": "A4",
+        "sim_voiced": 0.908,
+        "f0_dev": 194.1,
+        "f0_rom": 93.4,
+        "onset_dev_ms": 64.0,
+        "onset_rom_ms": 0.0
+      },
+      {
+        "pair": "A5",
+        "sim_voiced": 0.9068,
+        "f0_dev": 182.9,
+        "f0_rom": 93.1,
+        "onset_dev_ms": 69.3,
+        "onset_rom_ms": 0.0
+      },
+      {
+        "pair": "A6",
+        "sim_voiced": 0.9967,
+        "f0_dev": 93.2,
+        "f0_rom": 93.5,
+        "onset_dev_ms": 0.0,
+        "onset_rom_ms": 0.0
+      },
+      {
+        "pair": "A7",
+        "sim_voiced": 0.887,
+        "f0_dev": 176.6,
+        "f0_rom": 170.1,
+        "onset_dev_ms": 149.3,
+        "onset_rom_ms": 293.3
+      },
+      {
+        "pair": "A8",
+        "sim_voiced": 0.9348,
+        "f0_dev": 178.8,
+        "f0_rom": 146.7,
+        "onset_dev_ms": 80.0,
+        "onset_rom_ms": 218.7
+      }
+    ],
+    "mean_matched": 0.9467,
+    "mean_baseline": 0.8948,
+    "delta": 0.0519,
+    "interpretation": "WEAK_SIGNAL \u2014 matched pairs exceed baseline by 0.05\u20130.15"
+  },
+  "test_B": {
+    "feature": "mfcc_onset50ms_mean C1-C12 (after silence strip)",
+    "pairs": [
+      {
+        "pair": "B1_B2",
+        "sim_onset50ms": 0.9966
+      },
+      {
+        "pair": "B1_B3",
+        "sim_onset50ms": 0.8708
+      },
+      {
+        "pair": "B1_B4",
+        "sim_onset50ms": 0.8773
+      },
+      {
+        "pair": "B1_B5",
+        "sim_onset50ms": 0.778
+      },
+      {
+        "pair": "B1_B6",
+        "sim_onset50ms": 0.8293
+      },
+      {
+        "pair": "B1_B7",
+        "sim_onset50ms": 0.9949
+      },
+      {
+        "pair": "B1_B8",
+        "sim_onset50ms": 0.754
+      },
+      {
+        "pair": "B2_B3",
+        "sim_onset50ms": 0.877
+      },
+      {
+        "pair": "B2_B4",
+        "sim_onset50ms": 0.8707
+      },
+      {
+        "pair": "B2_B5",
+        "sim_onset50ms": 0.7702
+      },
+      {
+        "pair": "B2_B6",
+        "sim_onset50ms": 0.8211
+      },
+      {
+        "pair": "B2_B7",
+        "sim_onset50ms": 0.9975
+      },
+      {
+        "pair": "B2_B8",
+        "sim_onset50ms": 0.7566
+      },
+      {
+        "pair": "B3_B4",
+        "sim_onset50ms": 0.881
+      },
+      {
+        "pair": "B3_B5",
+        "sim_onset50ms": 0.6795
+      },
+      {
+        "pair": "B3_B6",
+        "sim_onset50ms": 0.8776
+      },
+      {
+        "pair": "B3_B7",
+        "sim_onset50ms": 0.8845
+      },
+      {
+        "pair": "B3_B8",
+        "sim_onset50ms": 0.72
+      },
+      {
+        "pair": "B4_B5",
+        "sim_onset50ms": 0.6806
+      },
+      {
+        "pair": "B4_B6",
+        "sim_onset50ms": 0.9881
+      },
+      {
+        "pair": "B4_B7",
+        "sim_onset50ms": 0.8897
+      },
+      {
+        "pair": "B4_B8",
+        "sim_onset50ms": 0.7204
+      },
+      {
+        "pair": "B5_B6",
+        "sim_onset50ms": 0.6495
+      },
+      {
+        "pair": "B5_B7",
+        "sim_onset50ms": 0.7487
+      },
+      {
+        "pair": "B5_B8",
+        "sim_onset50ms": 0.9684
+      },
+      {
+        "pair": "B6_B7",
+        "sim_onset50ms": 0.8431
+      },
+      {
+        "pair": "B6_B8",
+        "sim_onset50ms": 0.6947
+      },
+      {
+        "pair": "B7_B8",
+        "sim_onset50ms": 0.738
+      }
+    ],
+    "mean_sim": 0.8271,
+    "std_sim": 0.1033,
+    "n_available": 8,
+    "bimodal_check": {
+      "n_high_gt05": 28,
+      "n_low_lt0": 0,
+      "n_total": 28,
+      "is_bimodal": false
+    },
+    "onset_diagnostics": [
+      {
+        "clip": "B1",
+        "speech_onset_ms": 0.0,
+        "f0_mean": 93.5,
+        "onset50ms_available": true
+      },
+      {
+        "clip": "B2",
+        "speech_onset_ms": 0.0,
+        "f0_mean": 93.4,
+        "onset50ms_available": true
+      },
+      {
+        "clip": "B3",
+        "speech_onset_ms": 293.3,
+        "f0_mean": 121.2,
+        "onset50ms_available": true
+      },
+      {
+        "clip": "B4",
+        "speech_onset_ms": 101.3,
+        "f0_mean": 161.9,
+        "onset50ms_available": true
+      },
+      {
+        "clip": "B5",
+        "speech_onset_ms": 69.3,
+        "f0_mean": 165.2,
+        "onset50ms_available": true
+      },
+      {
+        "clip": "B6",
+        "speech_onset_ms": 218.7,
+        "f0_mean": 218.9,
+        "onset50ms_available": true
+      },
+      {
+        "clip": "B7",
+        "speech_onset_ms": 0.0,
+        "f0_mean": 93.5,
+        "onset50ms_available": true
+      },
+      {
+        "clip": "B8",
+        "speech_onset_ms": 176.0,
+        "f0_mean": 196.3,
+        "onset50ms_available": true
+      }
+    ],
+    "interpretation": "CONSISTENT_K \u2014 mean >0.70 (phoneme-consistent onset)"
+  },
+  "test_C": {
+    "feature": "mfcc_onset100ms_mean C1-C12 (after silence strip)",
+    "identity_check": {
+      "C1_C1_C12_first4": [
+        138.722,
+        -13.293,
+        12.089,
+        -4.109
+      ],
+      "C4_C1_C12_first4": [
+        150.735,
+        -46.788,
+        47.695,
+        -14.778
+      ],
+      "L2_distance": 66.6719,
+      "are_identical": false
+    },
+    "pairwise_sims": {
+      "C1_C2": 0.8514,
+      "C1_C3": 0.908,
+      "C1_C4": 0.926,
+      "C1_C5": 0.9011,
+      "C1_C6": 0.9211,
+      "C1_C7": 0.6682,
+      "C1_C8": 0.9164,
+      "C2_C3": 0.7241,
+      "C2_C4": 0.7927,
+      "C2_C5": 0.9097,
+      "C2_C6": 0.7814,
+      "C2_C7": 0.8754,
+      "C2_C8": 0.7597,
+      "C3_C4": 0.9577,
+      "C3_C5": 0.8545,
+      "C3_C6": 0.9678,
+      "C3_C7": 0.6037,
+      "C3_C8": 0.9941,
+      "C4_C5": 0.9502,
+      "C4_C6": 0.9929,
+      "C4_C7": 0.7304,
+      "C4_C8": 0.9777,
+      "C5_C6": 0.9364,
+      "C5_C7": 0.8791,
+      "C5_C8": 0.8939,
+      "C6_C7": 0.7119,
+      "C6_C8": 0.9851,
+      "C7_C8": 0.6641
+    },
+    "clustering": {
+      "ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "2_clusters": {
+        "C1": 1,
+        "C2": 2,
+        "C3": 1,
+        "C4": 1,
+        "C5": 2,
+        "C6": 1,
+        "C7": 2,
+        "C8": 1
+      },
+      "3_clusters": {
+        "C1": 1,
+        "C2": 2,
+        "C3": 1,
+        "C4": 1,
+        "C5": 2,
+        "C6": 1,
+        "C7": 3,
+        "C8": 1
+      },
+      "within_hindi_deva": 0.9011,
+      "within_english": 0.8557,
+      "within_roman": 0.6037,
+      "between_hindi_english": 0.9158,
+      "between_hindi_roman": 0.8274
+    },
+    "all_sims_degenerate": false,
+    "interpretation": "MIXED_OR_UNCLEAR"
+  },
+  "sanity_A4_A5": {
+    "pairs": [
+      {
+        "pair": "A4",
+        "sim_voiced_C1_12": 0.908,
+        "f0_dev": 194.1,
+        "f0_rom": 93.4,
+        "onset_dev_ms": 64.0,
+        "onset_rom_ms": 0.0,
+        "dur_dev_s": 0.363,
+        "dur_rom_s": 0.459,
+        "voiced_dev": 32,
+        "voiced_rom": 46,
+        "diagnosis": "MODE_C_CONFIRMED: Roman f0\u224893Hz (garbage attractor) vs Devanagari f0>150Hz (normal output). Low similarity is real, not artifact."
+      },
+      {
+        "pair": "A5",
+        "sim_voiced_C1_12": 0.9068,
+        "f0_dev": 182.9,
+        "f0_rom": 93.1,
+        "onset_dev_ms": 69.3,
+        "onset_rom_ms": 0.0,
+        "dur_dev_s": 0.459,
+        "dur_rom_s": 0.459,
+        "voiced_dev": 37,
+        "voiced_rom": 46,
+        "diagnosis": "MODE_C_CONFIRMED: Roman f0\u224893Hz (garbage attractor) vs Devanagari f0>150Hz (normal output). Low similarity is real, not artifact."
+      },
+      {
+        "pair": "A7",
+        "sim_voiced_C1_12": 0.887,
+        "f0_dev": 176.6,
+        "f0_rom": 170.1,
+        "onset_dev_ms": 149.3,
+        "onset_rom_ms": 293.3,
+        "dur_dev_s": 0.651,
+        "dur_rom_s": 0.939,
+        "voiced_dev": 53,
+        "voiced_rom": 87,
+        "diagnosis": "CONTROL: high-frequency Roman word; should show higher similarity"
+      },
+      {
+        "pair": "A8",
+        "sim_voiced_C1_12": 0.9348,
+        "f0_dev": 178.8,
+        "f0_rom": 146.7,
+        "onset_dev_ms": 80.0,
+        "onset_rom_ms": 218.7,
+        "dur_dev_s": 0.555,
+        "dur_rom_s": 0.651,
+        "voiced_dev": 42,
+        "voiced_rom": 41,
+        "diagnosis": "CONTROL: high-frequency Roman word; should show higher similarity"
+      }
+    ],
+    "note": "A4/A5 are low-similarity because Roman inputs hit Mode-C (f0\u224893Hz). A7/A8 shown as controls (common romanized words, partial phoneme access)."
+  }
+}

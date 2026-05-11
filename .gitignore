@@ -3,6 +3,8 @@
 .env.*
 
 # Python virtual environments
+.venv/
+venv-music/
 venv-scoring/
 venv-scoring-py311/
 __pycache__/
@@ -10,6 +12,12 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
+
+# Large audio and experiment artifacts
+data/music_source/
+data/reference_audio/music_refs/
+experiments/05_indicf5_music_refs/
+experiments/music_ref_pipeline/
 
 # Large zip archives
 *.zip
