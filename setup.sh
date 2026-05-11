@@ -146,7 +146,7 @@ step "5/9  Install fairseq + requirements.txt"
 # download (not git clone, so not the 200 MB / flaky GnuTLS failure).
 # Cython<3 must be pre-installed so the .pyx → .cpp transpilation works
 # during --no-build-isolation build.
-pip install "Cython<3"
+pip install "Cython<3" --timeout 300
 
 _FSDIR=$(mktemp -d)
 log "Downloading fairseq v0.12.2 source tarball from GitHub (~8 MB)..."
@@ -156,15 +156,15 @@ curl -fsSL \
 tar xzf "$_FSDIR/fairseq-v0.12.2.tar.gz" -C "$_FSDIR"
 # GitHub archives extract as fairseq-0.12.2/ (leading 'v' stripped from tag)
 printf "0.12.2\n" > "$_FSDIR/fairseq-0.12.2/fairseq/version.txt"
-pip install "$_FSDIR/fairseq-0.12.2/" --no-build-isolation -q
+pip install "$_FSDIR/fairseq-0.12.2/" --no-build-isolation -q --timeout 300
 rm -rf "$_FSDIR"
 
 # torch/numpy/torchaudio already satisfied — pip will skip them.
 # fairseq already satisfied above — pip will skip it.
-pip install -r "$REPO_ROOT/requirements.txt"
+pip install -r "$REPO_ROOT/requirements.txt" --timeout 300
 
 # Restore a current setuptools now that fairseq has built.
-pip install --upgrade setuptools
+pip install --upgrade setuptools --timeout 300
 
 # ---------------------------------------------------------------------------
 step "6/9  Install IndicF5 from GitHub"
@@ -172,7 +172,7 @@ step "6/9  Install IndicF5 from GitHub"
 # IndicF5 has no PyPI release. The GitHub repo includes f5_tts (the underlying
 # engine) and the ai4bharat model code. Pinning to main; to reproduce exactly:
 #   pip install git+https://github.com/AI4Bharat/IndicF5.git@<commit-sha>
-pip install git+https://github.com/AI4Bharat/IndicF5.git
+pip install git+https://github.com/AI4Bharat/IndicF5.git --timeout 300
 
 # ---------------------------------------------------------------------------
 step "7/9  Download reference audio"
