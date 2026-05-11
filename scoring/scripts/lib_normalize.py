@@ -102,7 +102,22 @@ INDIAN_NE_CANONICAL: dict[str, str] = {
     "tata":        "टाटा",            # 30
 }
 
-CANONICAL: dict[str, str] = {**ENGLISH_LOAN_CANONICAL, **INDIAN_NE_CANONICAL}
+# Roman-script Hindi function words — short tokens IndicXlit misreads as English.
+# v2.1 addition (2026-05-11): these four tokens drove the two pure_roman 3s in
+# the v2.0 xlit run (ids 12, 16). IndicXlit renders them with English phonetics;
+# the canonical Hindi forms are added here so the whitelist intercepts first.
+ROMAN_HINDI_FUNCTION_WORDS: dict[str, str] = {
+    "aa":  "आ",   # "come" / vowel — IndicXlit gives "एए"
+    "hu":  "हूं",  # "am" (1st person) — IndicXlit gives "हू" (drops nasal)
+    "mai": "मैं",  # "I" — IndicXlit gives "माई" (English "my")
+    "tu":  "तू",   # "you" (informal) — IndicXlit gives "टू" (English "to")
+}
+
+CANONICAL: dict[str, str] = {
+    **ENGLISH_LOAN_CANONICAL,
+    **INDIAN_NE_CANONICAL,
+    **ROMAN_HINDI_FUNCTION_WORDS,
+}
 
 
 # --- IndicXlit engine (lazy-loaded singleton) ---

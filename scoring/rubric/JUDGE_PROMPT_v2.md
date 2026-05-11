@@ -1,8 +1,16 @@
 # Judge Prompt v2 — Hindi/Hinglish TTS Auto-Scoring (LOCKED)
 
-> **Version:** 2.0 (2026-05-09)
-> Pin this version in every `auto_scores_v2.csv` row's metadata so re-runs are reproducible.
-> v1.0 (`JUDGE_PROMPT.md`) remains intact for reproducibility of the original 4-model audit; v2.0 is parallel, not a replacement.
+> **Current version:** 2.1 (2026-05-11)
+> **v2.0 locked:** 2026-05-09 — all scoring logic below is unchanged from v2.0.
+> **v2.1 delta (2026-05-11):** Four tokens added to `ROMAN_HINDI_FUNCTION_WORDS`
+> in `scoring/scripts/lib_normalize.py`: `tu → तू`, `mai → मैं`, `aa → आ`, `hu → हूं`.
+> These were rendering as English phonetics (`टू`, `माई`, `एए`, `हू`) and costing
+> ids 12 and 16 a rank each (3 instead of 5) in the v2.0 xlit run.
+> No other scoring logic changed. Results from `experiments/04_indicf5_xlit_v2/`
+> are scored under v2.1; all prior results remain under v2.0.
+> Pin `rubric_version: "2.1"` in `auto_scores_v2.1.csv` rows.
+>
+> v1.0 (`JUDGE_PROMPT_v1_archive.md`) remains intact for reproducibility of the original 4-model audit.
 
 ## Changelog vs v1.0
 

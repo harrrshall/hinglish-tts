@@ -1,0 +1,31 @@
+id	category	text_original	text_preprocessed	preprocessing_applied
+1	pure_devanagari	कल मुझे दिल्ली जाना है।	कल मुझे दिल्ली जाना है।	no
+2	pure_devanagari	क्या आप मुझे पानी दे सकते हैं?	क्या आप मुझे पानी दे सकते हैं?	no
+3	pure_devanagari	मेरा भाई आज स्कूल नहीं गया क्योंकि उसकी तबीयत खराब है।	मेरा भाई आज स्कूल नहीं गया क्योंकि उसकी तबीयत खराब है।	no
+4	pure_devanagari	मेरे पास सिर्फ़ तीन सौ रुपये हैं, बस इतने में चला लो।	मेरे पास सिर्फ़ तीन सौ रुपये हैं, बस इतने में चला लो।	no
+5	pure_devanagari	जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।	जल्दी आओ यार, सब तेरा इंतज़ार कर रहे हैं।	no
+6	pure_devanagari	आज बहुत थक गया हूँ, बस सीधा सोना चाहता हूँ।	आज बहुत थक गया हूँ, बस सीधा सोना चाहता हूँ।	no
+7	pure_devanagari	तुझे पता है कल मीटिंग कितने बजे है?	तुझे पता है कल मीटिंग कितने बजे है?	no
+8	pure_devanagari	अरे यार, मेरा फ़ोन कहाँ रखा था?!	अरे यार, मेरा फ़ोन कहाँ रखा था?!	no
+9	pure_roman	kal mujhe office jaana hai	कल मुझे ऑफिस जाना है	yes
+10	pure_roman	mera naam Arjun hai aur mai Bengaluru se hu	मेरा नाम अर्जुन है और मैं बेंगलुरु से हूं	yes
+11	pure_roman	yaar tu kal kya kar raha tha	यार तू कल क्या कर रहा था	yes
+12	pure_roman	kya tu bhi aaj party me aa raha hai?	क्या तू भी आज पार्टी मे आ रहा है?	yes
+13	pure_roman	abe yaar jaldi reply kar, mai wait kar raha hu	अबे यार जल्दी रिप्लाई कर, मैं वेट कर रहा हूं	yes
+14	pure_roman	kal raat ka movie tha bohot bakwaas, paisa bilkul waste	कल रात का मूवी था बोहोट बकवास, पैसा बिलकुल वेस्ट	yes
+15	pure_roman	tera laptop kab tak deliver hoga bhai?	तेरा लैपटॉप कब तक डिलीवर होगा भाई?	yes
+16	pure_roman	yaar tu bohot lucky hai, mujhe nahi mila ticket!	यार तू बोहोट लकी है, मुझे नही मिला टिकट!	yes
+17	mixed_script	Kal mujhe ऑफिस जाना hai, but ट्राफिक will be an issue.	कल मुझे ऑफिस जाना है, बट ट्राफिक विल बे एएन इश्यू.	yes
+18	mixed_script	Mera presentation tomorrow है, और मैं nervous हूं।	मेरा प्रेज़ेंटेशन टुमॉरो है, और मैं नर्वस हूं।	yes
+19	mixed_script	Bhai please मेरा homework कर दे, मैं तुझे ₹100 दूंगा।	भाई प्लीज़ मेरा होमवर्क कर दे, मैं तुझे ₹100 दूंगा।	yes
+20	mixed_script	Tumne वो new restaurant try kiya jo Connaught Place में khula hai?	तुमने वो न्यू रेस्टोरेंट ट्राई किया जो कनॉट प्लेस में खुला है?	yes
+21	mixed_script	कल का event cancel हो गया, सबको message कर देना please।	कल का इवेंट कैंसल हो गया, सबको मैसेज कर देना प्लीज़।	yes
+22	mixed_script	Boss को बता देना kal मैं leave पर रहूँगा, kuch personal काम है।	बॉस को बता देना कल मैं लीव पर रहूँगा, कुच पर्सनल काम है।	yes
+23	mixed_script	Ye file को quickly review करो, deadline बहुत close है।	ये फाइल को क्विकली रिव्यू करो, डेडलाइन बहुत क्लोज़ है।	yes
+24	english_with_NE	My friend Aishwarya from Chennai is visiting Bengaluru next week.	माय फ्रेंड ऐश्वर्या फ्रॉम चेन्नई इस विज़िटिंग बेंगलुरु नेक्स्ट वीक.	yes
+25	english_with_NE	Mr. Khanna will join the meeting after he finishes lunch with Priya.	मिस्टर. खन्ना विल जोइन थे मीटिंग आफ्टर हे फिनिश लंच विथ प्रिया.	yes
+26	english_with_NE	I love butter chicken from Karim's in Old Delhi.	आई लोव बटर चिकन फ्रॉम करीम'एस इन ओल्ड दिल्ली.	yes
+27	mixed_script	Office में सब log lunch के लिए बाहर गए, तू भी आ ja yaar.	ऑफिस में सब लॉग लंच के लिए बाहर गए, तू भी आ जा यार.	yes
+28	english_with_NE	Rohan is flying from Mumbai to Bengaluru tomorrow morning for work.	रोहन इस फ्लाइंग फ्रॉम मुंबई टो बेंगलुरु टुमॉरो मॉर्निंग फोर वर्क.	yes
+29	english_with_NE	Let's grab biryani from Paradise in Hyderabad this weekend.	लेट'एस ग्रैब बिरयानी फ्रॉम पैराडाइज़ इन हैदराबाद थिस वीकेंड.	yes
+30	english_with_NE	She just got hired at Tata Consultancy Services in Pune.	शे जस्ट गोट हायर्ड एटी टाटा कंसल्टेंसी सर्विसेज़ इन पुणे.	yes
