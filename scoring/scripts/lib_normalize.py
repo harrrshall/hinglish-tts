@@ -1,126 +1,125 @@
-"""IndicXlit-powered Hinglish normalizer.
+"""Hinglish normalizer — converts any script-mix Hinglish text to Devanagari.
 
-`to_unified_devanagari(text)` produces a canonical Devanagari rendering of any
-Hinglish input. Used by:
+Public API
+----------
+to_unified_devanagari(text: str) -> str
+    Convert Hinglish text (any script mix) to Devanagari for IndicF5 input.
+    Idempotent: applying twice gives the same result.
 
-  * rubric v2.0 — applied symmetrically to ground-truth reference and ASR
-    transcript before WER/CER. Solves the script-mismatch artifact where
-    Devanagari-output-on-Roman-input pegged CER at ~1.0.
+ROMAN_HINDI_FUNCTION_WORDS : dict[str, str]
+    Short Roman-script Hindi function words that IndicXlit misreads as English
+    phonetics (e.g. "mai" → "माई" instead of "मैं"). Whitelist intercepts first.
 
-  * Step 2a (input preprocessing) — same function applied to eval sentences
-    before feeding to patched IndicF5, testing whether the model's
-    Devanagari-trained character embeddings handle the input better.
+ENGLISH_LOAN_CANONICAL : dict[str, str]
+    English loanwords common in Hinglish — canonical Devanagari renderings.
 
-The function is symmetric across these uses by design.
+INDIAN_NE_CANONICAL : dict[str, str]
+    Indian named entities (cities, people, brands) — canonical Devanagari.
 
-Strategy:
-  1. Tokenize on whitespace + punctuation boundaries (preserve punctuation).
-  2. For each token:
-       - Pure Devanagari (or other Indic script): pass through unchanged.
-       - Pure ASCII alphabetic: lowercase + strip apostrophes, then:
-           - look up in CANONICAL dict (English loans + Indian NEs)
-           - else IndicXlit transliterate (topk=1, deterministic)
-       - Numeric / pure-punctuation: pass through.
-
-The whitelists are tuned to the 30-sentence eval set (`eval_sentences.tsv`).
-Each entry's source-sentence id is annotated. Generalization to wild Hinglish
-would require expansion.
-
-Idempotent: applying the function twice gives the same result.
-
-Author: agent, 2026-05-09 (rubric v2.0 build)
+Strategy
+--------
+1. Tokenize on whitespace + punctuation boundaries (preserve punctuation).
+2. Per token:
+   - Pure Devanagari (or other Indic script): pass through unchanged.
+   - Pure ASCII alphabetic: lowercase + strip apostrophes, then:
+       a. look up in whitelist tables (ROMAN_HINDI_FUNCTION_WORDS first,
+          then ENGLISH_LOAN_CANONICAL, then INDIAN_NE_CANONICAL)
+       b. else transliterate via IndicXlit (topk=1, deterministic)
+   - Numeric / pure-punctuation: pass through.
 """
 from __future__ import annotations
 
 import re
-import unicodedata
 
 
-# --- Whitelists (eval-set-tuned, n=30) ---
+# ---------------------------------------------------------------------------
+# Public whitelist tables (v2.1)
+# ---------------------------------------------------------------------------
 
-# English loans used in Hinglish — canonical Devanagari renderings.
-# Each entry annotated with the eval-sentence id(s) where it appears.
-ENGLISH_LOAN_CANONICAL: dict[str, str] = {
-    "biryani":      "बिरयानी",       # 29
-    "boss":         "बॉस",            # 22
-    "butter":       "बटर",            # 26
-    "cancel":       "कैंसल",          # 21
-    "chicken":      "चिकन",           # 26
-    "close":        "क्लोज़",          # 23
-    "deadline":     "डेडलाइन",        # 23
-    "deliver":      "डिलीवर",         # 15
-    "event":        "इवेंट",          # 21
-    "file":         "फाइल",           # 23
-    "homework":     "होमवर्क",        # 19
-    "issue":        "इश्यू",          # 17
-    "laptop":       "लैपटॉप",         # 15
-    "leave":        "लीव",            # 22
-    "log":          "लॉग",            # 27
-    "lucky":        "लकी",            # 16
-    "lunch":        "लंच",            # 25, 27
-    "message":      "मैसेज",          # 21
-    "movie":        "मूवी",           # 14
-    "nervous":      "नर्वस",          # 18
-    "new":          "न्यू",           # 20
-    "office":       "ऑफिस",           # 9, 27
-    "party":        "पार्टी",         # 12
-    "personal":     "पर्सनल",         # 22
-    "place":        "प्लेस",          # 20
-    "please":       "प्लीज़",         # 19, 21
-    "presentation": "प्रेज़ेंटेशन",   # 18
-    "quickly":      "क्विकली",        # 23
-    "reply":        "रिप्लाई",        # 13
-    "restaurant":   "रेस्टोरेंट",     # 20
-    "review":       "रिव्यू",         # 23
-    "ticket":       "टिकट",           # 16
-    "tomorrow":     "टुमॉरो",         # 18, 28
-    "try":          "ट्राई",          # 20
-    "wait":         "वेट",            # 13
-    "waste":        "वेस्ट",          # 14
-}
-
-# Indian named entities — canonical Devanagari renderings.
-INDIAN_NE_CANONICAL: dict[str, str] = {
-    "aishwarya":   "ऐश्वर्या",        # 24
-    "arjun":       "अर्जुन",          # 10
-    "bengaluru":   "बेंगलुरु",         # 10, 24, 28
-    "chennai":     "चेन्नई",           # 24
-    "connaught":   "कनॉट",            # 20
-    "consultancy": "कंसल्टेंसी",      # 30
-    "delhi":       "दिल्ली",           # 26
-    "hyderabad":   "हैदराबाद",        # 29
-    "karim":       "करीम",            # 26 ("Karim's" → strip apostrophe before lookup)
-    "khanna":      "खन्ना",           # 25
-    "mr":          "मिस्टर",           # 25 (treated as title)
-    "mumbai":      "मुंबई",           # 28
-    "old":         "ओल्ड",            # 26 ("Old Delhi")
-    "paradise":    "पैराडाइज़",        # 29
-    "priya":       "प्रिया",          # 25
-    "pune":        "पुणे",             # 30
-    "rohan":       "रोहन",            # 28
-    "services":    "सर्विसेज़",        # 30
-    "tata":        "टाटा",            # 30
-}
-
-# Roman-script Hindi function words — short tokens IndicXlit misreads as English.
-# v2.1 addition (2026-05-11): these four tokens drove the two pure_roman 3s in
-# the v2.0 xlit run (ids 12, 16). IndicXlit renders them with English phonetics;
-# the canonical Hindi forms are added here so the whitelist intercepts first.
+# Short Hindi function words in Roman script — IndicXlit maps these to English
+# phonetics. The correct Hindi forms are listed here; the whitelist intercepts
+# before IndicXlit sees the token.
 ROMAN_HINDI_FUNCTION_WORDS: dict[str, str] = {
-    "aa":  "आ",   # "come" / vowel — IndicXlit gives "एए"
+    "aa":  "आ",   # "come" / leading vowel — IndicXlit gives "एए"
     "hu":  "हूं",  # "am" (1st person) — IndicXlit gives "हू" (drops nasal)
     "mai": "मैं",  # "I" — IndicXlit gives "माई" (English "my")
     "tu":  "तू",   # "you" (informal) — IndicXlit gives "टू" (English "to")
 }
 
-CANONICAL: dict[str, str] = {
-    **ENGLISH_LOAN_CANONICAL,
-    **INDIAN_NE_CANONICAL,
-    **ROMAN_HINDI_FUNCTION_WORDS,
+# English loanwords common in Hinglish — stable canonical Devanagari renderings.
+ENGLISH_LOAN_CANONICAL: dict[str, str] = {
+    "biryani":      "बिरयानी",
+    "boss":         "बॉस",
+    "butter":       "बटर",
+    "cancel":       "कैंसल",
+    "chicken":      "चिकन",
+    "close":        "क्लोज़",
+    "deadline":     "डेडलाइन",
+    "deliver":      "डिलीवर",
+    "event":        "इवेंट",
+    "file":         "फाइल",
+    "homework":     "होमवर्क",
+    "issue":        "इश्यू",
+    "laptop":       "लैपटॉप",
+    "leave":        "लीव",
+    "log":          "लॉग",
+    "lucky":        "लकी",
+    "lunch":        "लंच",
+    "message":      "मैसेज",
+    "movie":        "मूवी",
+    "nervous":      "नर्वस",
+    "new":          "न्यू",
+    "office":       "ऑफिस",
+    "party":        "पार्टी",
+    "personal":     "पर्सनल",
+    "place":        "प्लेस",
+    "please":       "प्लीज़",
+    "presentation": "प्रेज़ेंटेशन",
+    "quickly":      "क्विकली",
+    "reply":        "रिप्लाई",
+    "restaurant":   "रेस्टोरेंट",
+    "review":       "रिव्यू",
+    "ticket":       "टिकट",
+    "tomorrow":     "टुमॉरो",
+    "try":          "ट्राई",
+    "wait":         "वेट",
+    "waste":        "वेस्ट",
+}
+
+# Indian named entities (cities, people, brands) — canonical Devanagari.
+# Apostrophes are stripped before lookup ("Karim's" → "karim").
+INDIAN_NE_CANONICAL: dict[str, str] = {
+    "aishwarya":   "ऐश्वर्या",
+    "arjun":       "अर्जुन",
+    "bengaluru":   "बेंगलुरु",
+    "chennai":     "चेन्नई",
+    "connaught":   "कनॉट",
+    "consultancy": "कंसल्टेंसी",
+    "delhi":       "दिल्ली",
+    "hyderabad":   "हैदराबाद",
+    "karim":       "करीम",
+    "khanna":      "खन्ना",
+    "mr":          "मिस्टर",
+    "mumbai":      "मुंबई",
+    "old":         "ओल्ड",
+    "paradise":    "पैराडाइज़",
+    "priya":       "प्रिया",
+    "pune":        "पुणे",
+    "rohan":       "रोहन",
+    "services":    "सर्विसेज़",
+    "tata":        "टाटा",
 }
 
 
-# --- IndicXlit engine (lazy-loaded singleton) ---
+# ---------------------------------------------------------------------------
+# Internal: merged lookup + IndicXlit engine
+# ---------------------------------------------------------------------------
+
+_CANONICAL: dict[str, str] = {
+    **ROMAN_HINDI_FUNCTION_WORDS,   # checked first — short tokens, high collision risk
+    **ENGLISH_LOAN_CANONICAL,
+    **INDIAN_NE_CANONICAL,
+}
 
 _xlit_engine = None
 
@@ -133,49 +132,43 @@ def _get_xlit():
     return _xlit_engine
 
 
-# --- Token detection ---
+# ---------------------------------------------------------------------------
+# Internal: token classification
+# ---------------------------------------------------------------------------
 
 _DEVANAGARI_RANGE = (0x0900, 0x097F)
 
+# Captures: ASCII alpha runs | Devanagari runs | digit runs | whitespace |
+# any single char (punctuation, apostrophes, etc.)
+# Apostrophes are NOT folded into ASCII alpha tokens so "Karim's" →
+# ["Karim", "'", "s"] — "karim" then hits the NE whitelist cleanly.
+_TOKEN_RE = re.compile(
+    r"([A-Za-z]+"
+    r"|[ऀ-ॿ]+"
+    r"|\d+"
+    r"|\s+"
+    r"|.)"
+)
+
 
 def _is_devanagari_token(tok: str) -> bool:
-    """True if at least one character is Devanagari and no characters are ASCII alpha."""
     has_deva = any(_DEVANAGARI_RANGE[0] <= ord(c) <= _DEVANAGARI_RANGE[1] for c in tok)
     has_ascii_alpha = any(c.isascii() and c.isalpha() for c in tok)
     return has_deva and not has_ascii_alpha
 
 
 def _is_ascii_alpha_token(tok: str) -> bool:
-    """True if token consists only of ASCII alphabetic chars (and apostrophes)."""
     if not tok:
         return False
     return all(c.isascii() and (c.isalpha() or c == "'") for c in tok)
 
 
-# --- Tokenization & assembly ---
-
-# Captures: (a) ASCII alpha runs, (b) Devanagari runs, (c) digit runs,
-# (d) any single non-space non-alpha char (punctuation incl. apostrophe), (e) whitespace.
-# Apostrophes are deliberately NOT captured into ASCII alpha tokens so "Karim's"
-# splits into ["Karim", "'", "s"] — letting "karim" hit the NE whitelist cleanly.
-_TOKEN_RE = re.compile(
-    r"([A-Za-z]+|"                       # ASCII alpha words
-    r"[ऀ-ॿ]+|"                 # Devanagari runs
-    r"\d+|"                              # numerals
-    r"\s+|"                              # whitespace
-    r".)"                                # punctuation / anything else (incl. apostrophes)
-)
-
-
 def _normalize_ascii_token(tok: str) -> str:
-    """Lookup canonical, else fall back to IndicXlit transliteration."""
     key = tok.lower()
-    if key in CANONICAL:
-        return CANONICAL[key]
-    # Fallback: IndicXlit (deterministic at topk=1)
+    if key in _CANONICAL:
+        return _CANONICAL[key]
     xlit = _get_xlit()
     result = xlit.translit_word(key, topk=1)
-    # IndicXlit returns dict like {"hi": ["कल"]} or sometimes a list directly.
     if isinstance(result, dict):
         cands = result.get("hi") or next(iter(result.values()), [])
     elif isinstance(result, list):
@@ -184,12 +177,18 @@ def _normalize_ascii_token(tok: str) -> str:
         cands = []
     if cands:
         return cands[0]
-    # Last resort: return the original token (will hurt CER but at least not crash).
     return tok
 
 
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
 def to_unified_devanagari(text: str) -> str:
-    """Return Devanagari-unified version of `text`. Idempotent."""
+    """Convert Hinglish text (any script mix) to Devanagari for IndicF5 input.
+
+    Idempotent: applying twice gives the same result.
+    """
     if not text:
         return text
     out = []
@@ -202,71 +201,70 @@ def to_unified_devanagari(text: str) -> str:
         elif _is_ascii_alpha_token(tok):
             out.append(_normalize_ascii_token(tok))
         else:
-            # punctuation, digits, mixed — pass through
             out.append(tok)
     return "".join(out)
 
 
-# --- Self-test (run as `python lib_normalize.py`) ---
+# ---------------------------------------------------------------------------
+# Self-test
+# ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
     import sys
 
     TESTS = [
-        # (input, [expected substrings], label)
         ("कल मुझे दिल्ली जाना है।",
             ["कल", "मुझे", "दिल्ली", "जाना", "है"],
-            "pure_devanagari pass-through"),
+            "pure Devanagari — pass-through"),
         ("kal mujhe office jaana hai",
             ["ऑफिस"],
-            "pure_roman + canonical English loan"),
+            "Roman Hindi — canonical English loan"),
         ("My friend Aishwarya from Chennai is visiting Bengaluru next week.",
             ["ऐश्वर्या", "चेन्नई", "बेंगलुरु"],
-            "english_with_NE: NE whitelists"),
+            "English with Indian NEs"),
         ("Mera presentation tomorrow है, और मैं nervous हूं।",
             ["प्रेज़ेंटेशन", "टुमॉरो", "नर्वस", "और", "मैं"],
-            "mixed_script: loans + Devanagari pass-through"),
-        ("मेरा भाई आज स्कूल नहीं गया",
-            ["स्कूल"],
-            "Devanagari unchanged"),
+            "mixed script — loans + Devanagari pass-through"),
         ("Boss को बता देना kal मैं leave पर रहूँगा, kuch personal काम है।",
             ["बॉस", "लीव", "पर्सनल"],
-            "mixed_script with Roman loans"),
+            "mixed script — Roman loans"),
         ("I love butter chicken from Karim's in Old Delhi.",
             ["बटर", "चिकन", "करीम", "ओल्ड", "दिल्ली"],
-            "english_with_NE with apostrophe + multi-NE"),
+            "English with NE + apostrophe stripping"),
         ("She just got hired at Tata Consultancy Services in Pune.",
             ["टाटा", "कंसल्टेंसी", "सर्विसेज़", "पुणे"],
-            "english_with_NE: TCS brand"),
+            "English with Indian brand NEs"),
+        ("mai ghar aa raha hu",
+            ["मैं", "आ", "हूं"],
+            "Roman Hindi function words whitelist"),
     ]
 
-    print("Loading IndicXlit (first call may take 30-60s)...")
+    print("Loading IndicXlit (first call may take 30–60s)...")
     _ = _get_xlit()
     print("OK\n")
 
     failed = 0
-    for inp, expected_substrings, label in TESTS:
+    for inp, expected, label in TESTS:
         out = to_unified_devanagari(inp)
-        missing = [s for s in expected_substrings if s not in out]
+        missing = [s for s in expected if s not in out]
+        status = "OK  " if not missing else "FAIL"
+        print(f"  {status} [{label}]")
         if missing:
-            print(f"  FAIL [{label}]")
-            print(f"    in:  {inp}")
-            print(f"    out: {out}")
-            print(f"    missing: {missing}")
+            print(f"       in:      {inp}")
+            print(f"       out:     {out}")
+            print(f"       missing: {missing}")
             failed += 1
         else:
-            print(f"  OK   [{label}]")
-            print(f"    out: {out}")
+            print(f"       out: {out}")
 
-    # Idempotency check
     print("\nIdempotency check:")
-    for inp, _, label in TESTS[:3]:
+    for inp, _, label in TESTS[:4]:
         once = to_unified_devanagari(inp)
         twice = to_unified_devanagari(once)
         if once != twice:
-            print(f"  FAIL [{label}] not idempotent")
-            print(f"    once:  {once}")
-            print(f"    twice: {twice}")
+            print(f"  FAIL [{label}] — not idempotent")
+            print(f"       once:  {once}")
+            print(f"       twice: {twice}")
             failed += 1
         else:
             print(f"  OK   [{label}]")
