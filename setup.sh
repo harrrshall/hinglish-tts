@@ -121,8 +121,9 @@ else
   # GPU users: set TORCH_INDEX=https://download.pytorch.org/whl/cu124 to bypass.
   _TORCH_BASE="https://download.pytorch.org/whl/cpu"
   _TORCH_ABI="cp311-cp311-linux_x86_64"
-  _TORCH_WHL=$(mktemp --suffix=.whl)
-  _AUDIO_WHL=$(mktemp --suffix=.whl)
+  # pip validates wheel filenames; must match {name}-{version}-{python}-{abi}-{platform}.whl
+  _TORCH_WHL="/tmp/torch-2.5.1+cpu-cp311-cp311-linux_x86_64.whl"
+  _AUDIO_WHL="/tmp/torchaudio-2.5.1+cpu-cp311-cp311-linux_x86_64.whl"
   log "  Downloading torch wheel (may retry several times — CDN throttle workaround)..."
   wget -c --tries=30 --waitretry=3 --timeout=30 \
     -O "$_TORCH_WHL" \
