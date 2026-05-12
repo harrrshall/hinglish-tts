@@ -453,7 +453,7 @@
     <tr><th>Category</th><th class="num">Count</th><th>What it tests</th></tr>
     <tr><td><code>pure_devanagari</code></td><td class="num">8</td><td>Standard Hindi in Devanagari script</td></tr>
     <tr><td><code>pure_roman</code></td><td class="num">8</td><td>Colloquial Hinglish written in Roman script</td></tr>
-    <tr><td><code>mixed_script</code></td><td class="num">9</td><td>Mid-sentence script switching</td></tr>
+    <tr><td><code>mixed_script</code></td><td class="num">8</td><td>Mid-sentence script switching</td></tr>
     <tr><td><code>english_with_NE</code></td><td class="num">6</td><td>English with Indian names and places</td></tr>
   </table>
   </div>
@@ -593,7 +593,7 @@ def to_unified_devanagari(text: str) -> str:
   </table>
   </div>
 
-  <p>From 2.13 to 4.57. Zero silence. No training. No new weights. 14 lines of code between a broken model and a working one.</p>
+  <p>From 2.13 to 4.57. Zero silence. No training. No new weights. 14 lines of core logic between a broken model and a working one. (The whitelist tables add 59 additional entries — 4 function words + 36 English loans + 19 Indian named entities — that's data, not code.)</p>
 
   <hr />
 
@@ -612,7 +612,7 @@ def to_unified_devanagari(text: str) -> str:
   </table>
   </div>
 
-  <p>These are the most common Hindi function words written in Roman script. IndicXlit sees them and guesses English. A sentence like <code>mai ghar aa raha hu</code> (I am coming home) becomes <code class="deva">माई घर एए रहा हू</code>. Four wrong words.</p>
+  <p>These are the most common Hindi function words written in Roman script. IndicXlit sees them and guesses English. A sentence like <code>mai ghar aa raha hu</code> (I am coming home) becomes <code class="deva">माई घर एए रहा हू</code>. Three wrong words out of five.</p>
   <p>The fix is a lookup table that runs before IndicXlit sees the token:</p>
 
 <pre><code class="language-python">ROMAN_HINDI_FUNCTION_WORDS = {
@@ -634,7 +634,18 @@ def to_unified_devanagari(text: str) -> str:
     # ... 36 entries total
 }</code></pre>
 
-  <p>Adding these and re-running the evaluation (now rubric v2.1):</p>
+  <p>A third lookup, <code>INDIAN_NE_CANONICAL</code>, does the same job for Indian named entities — cities, people, brands — that ASR transcripts routinely mangle:</p>
+
+<pre><code class="language-python">INDIAN_NE_CANONICAL = {
+    "bengaluru": "बेंगलुरु",
+    "chennai":   "चेन्नई",
+    "mumbai":    "मुंबई",
+    "aishwarya": "ऐश्वर्या",
+    "tata":      "टाटा",
+    # ... 19 entries total (cities, people, brands)
+}</code></pre>
+
+  <p>Adding all three whitelists and re-running the evaluation (now rubric v2.1):</p>
 
   <div class="table-wrap">
   <table>
@@ -873,15 +884,17 @@ pip install ai4bharat-transliteration</code></pre>
 
   <h2 id="next">What Comes Next</h2>
 
-  <p>The 330M-parameter system is shipped. The next question is whether the same quality can be achieved in a model small enough to run in a browser.</p>
-  <p><strong>Path B</strong> is a research bet: a 40 to 50M parameter Hinglish TTS distilled from this system as teacher, using StyleTTS2-lite architecture with phoneme input. The Kokoro paper showed 82M English TTS beating much larger models. The question is whether that recipe ports to Hinglish.</p>
-  <p>Three-week de-risking phase before committing any real compute:</p>
+  <p>The 330M system is shipped. The next question is whether the same quality fits under 25M parameters — small enough for a browser.</p>
+  <p>Path B is structured as five ranked experimental bets, not one architecture:</p>
   <ol>
-    <li>Validate that espeak-ng + multilingual PL-BERT produces meaningful Hindi phoneme embeddings</li>
-    <li>Generate 1,000 sentences with Path A and verify quality consistency</li>
-    <li>Train 100 steps of a tiny StyleTTS2 on dummy data and verify it does not OOM or NaN</li>
+    <li><strong>Matcha-TTS ~22M + Hindi-fine-tuned PL-BERT + per-phoneme emotion head</strong> — the most likely engineering path.</li>
+    <li><strong>IndicParler-TTS distillation</strong> — using AI4Bharat's Apache-licensed emotion-tagged teacher, since Path A's IndicF5 is prosodically flat by our own diagnostic.</li>
+    <li><strong>Frozen neural codec (Mimi at 12.5 Hz) + 15–20M state-space LM</strong> — the research moonshot for zero-shot voice cloning at this size.</li>
+    <li><strong>StyleTTS2-lite at 40–50M, warm-started from Kokoro</strong> — the safety net.</li>
+    <li><strong>EmoSphere++ continuous emotion + EmoSteer inference steering</strong> — bolted on for sliders, not buttons.</li>
   </ol>
-  <p>If those three gates pass, the training run starts. If not, the project closes with the 330M system as the primary deliverable.</p>
+  <p>Two diagnostics run first because they decide everything: an ear-test of IndicParler-TTS outputs (does the teacher actually have the prosody we need?), and a Mimi/SNAC/BiCodec round-trip on Hindi (does the codec preserve retroflex consonants and prosody at 12.5 Hz?). Both finish in an afternoon.</p>
+  <p>The structural insight: at this scale, <strong>the binding constraint isn't parameter count — it's the prosody quality of the teachers and data you train on.</strong></p>
 
   <hr />
 
@@ -904,7 +917,7 @@ pip install ai4bharat-transliteration</code></pre>
   <ul>
     <li><strong>Code and eval set:</strong> <a href="https://github.com/harrrshall/hinglish-tts" target="_blank" rel="noopener">github.com/harrrshall/hinglish-tts</a></li>
     <li><strong>Underlying model:</strong> <a href="https://huggingface.co/ai4bharat/IndicF5" target="_blank" rel="noopener">ai4bharat/IndicF5</a> (HuggingFace gating required)</li>
-    <li><strong>Transliteration library:</strong> <a href="https://github.com/AI4Bharat/IndicTransliteration" target="_blank" rel="noopener">AI4Bharat/IndicTransliteration</a></li>
+    <li><strong>Transliteration library:</strong> <a href="https://github.com/AI4Bharat/IndicXlit" target="_blank" rel="noopener">AI4Bharat/IndicXlit</a></li>
     <li><strong>Detailed methodology:</strong> <code>EVALUATION_REPORT.md</code></li>
     <li><strong>Full decision log:</strong> <code>RESEARCH_LOG.md</code></li>
     <li><strong>Known limitations:</strong> <code>KNOWN_LIMITATIONS.md</code></li>
@@ -926,38 +939,42 @@ pip install ai4bharat-transliteration</code></pre>
   <!-- WIP SECTION -->
   <div class="wip-section">
     <div class="section-label">Currently in progress</div>
-    <h2 style="margin-top:8px; border:none; padding:0; font-size:18px">Path B: Extreme Compression Research — 20–30M Parameter Hinglish TTS</h2>
+    <h2 style="margin-top:8px; border:none; padding:0; font-size:18px">Path B: Sub-25M Hinglish TTS — Five Asymmetric Bets</h2>
 
-    <p style="margin-top:10px">Path A proved that Hinglish TTS quality is achievable without training. Path B asks a harder question: <em>how small can you make it before quality breaks?</em> This is a full research experiment — not engineering a known recipe, but investigating where the floor actually is.</p>
+    <p style="margin-top:10px">Path A proved Hinglish TTS quality is achievable without training. Path B asks the harder question: <em>can the same quality fit under 25M parameters — small enough to ship in a browser, on a phone, or anywhere CPU is the only budget?</em></p>
 
-    <p>The target is 20–30M parameters, roughly one-tenth of Path A. At that scale, every architectural decision matters: which components carry the most quality per parameter, which can be stripped entirely, what properties of the model are load-bearing versus incidental. The research agenda has three parallel threads:</p>
+    <p>The 2024–2025 landscape made this question newly answerable on three axes. Frozen neural codecs (Mimi at 12.5 Hz, SNAC, BiCodec) amortize acoustic capacity out of the trainable parameter budget. IndicParler-TTS shipped as the first license-clean, prompt-controllable, emotion-tagged Indic teacher — exactly the prosody source Path A's IndicF5 isn't. DPO/GRPO post-training crossed from research frontier to engineering integration for LM-class TTS, with Align2Speak (NVIDIA, 2025) explicitly targeting low-resource languages. None of these existed when Phase A was conceived.</p>
+
+    <p>So Path B is structured as five ranked bets — not one architecture commitment. Each bet has a distinct kill-fast diagnostic that runs in hours, not days:</p>
 
     <ol style="margin: 10px 0 14px 20px; font-size:14px; line-height:1.7">
-      <li><strong>Architecture reduction.</strong> Systematically ablating components of StyleTTS2-lite — reducing PL-BERT layers (12 → 4), narrowing decoder channels, replacing the full GAN discriminator with a lightweight multi-scale alternative. Each ablation is evaluated on the same 30-sentence rubric so the quality cost of each cut is measured, not assumed.</li>
-      <li><strong>Property research.</strong> Investigating what acoustic properties survive compression. Does phonetic sensitivity (vowel length, aspiration, nukta) degrade proportionally with parameter count, or are certain properties more fragile than others? Are prosodic features the first to go? The phonetic probe methodology from Direction 1 will be reused on every checkpoint.</li>
-      <li><strong>Representation efficiency.</strong> At 20–30M parameters, the model cannot afford both a full phoneme encoder and a full acoustic decoder. Researching whether a shared latent space — where phoneme context and acoustic style live in the same compressed representation — can preserve Hinglish-specific code-switch behavior that a purely sequential architecture would lose.</li>
+      <li><strong>Matcha-TTS ~22M acoustic + Hindi-fine-tuned multilingual PL-BERT + EmoSpeech-style per-phoneme emotion + reference style encoder.</strong> Engineering with one Hinglish-PL-BERT research wrinkle. Most likely to deliver expressive narration within the ceiling. Kill-fast: 4 hours T4 — load Matcha-TTS LJSpeech checkpoint, swap in papercup PL-BERT, fine-tune 30 minutes on a 1-hour Hindi subset, listen.</li>
+      <li><strong>IndicParler-TTS distillation into a small Matcha or StyleTTS2-lite student, with composite-reward DPO post-train.</strong> Distil-Whisper recipe is well-validated; the teacher is the new variable. Directly addresses Path A's diagnosed prosody gap. Kill-fast: 2 hours — generate 50 sentences of emotional Hinglish from IndicParler, run through three-ASR consensus, listen with the rubric. If the teacher itself fails the ear test, the bet is dead before training begins.</li>
+      <li><strong>Mimi codec (frozen, 80M, off-budget) + 15–20M GLA/RWKV-7 LM with Spark-style global speaker tokens.</strong> The research moonshot — true zero-shot voice cloning at sub-25M trainable would be the most cited Phase B outcome. Kill-fast: 8 hours T4 — Mimi/SNAC/BiCodec round-trip on 10 minutes of expressive Hindi, listening for prosodic preservation, retroflex consonants, schwa deletion, and code-switch artifact behavior. Highest information per T4-hour in the entire menu.</li>
+      <li><strong>StyleTTS2-lite at 40–50M, warm-started from Kokoro v1.0 multilingual weights, with style-diffusion head distilled via StyleTTS-ZS recipe.</strong> The safety net. Kokoro→StyleTTS2-lite warm-start was proven on Vietnamese by dangtr0408. Kill-fast: 2 hours — attempt the warm-start load; if &gt;30% of weights mismatch dimensions, the warm-start advantage is gone.</li>
+      <li><strong>EmoSphere++ continuous valence-arousal-dominance head + training-free EmoSteer-TTS activation steering, bolted on top of any of the above.</strong> Continuous emotion sliders at deploy time without retraining; mitigates the "only four emotion buttons" limitation. Kill-fast: 3 hours — extract activations for 20 happy vs 20 sad samples, compute mean-difference steering vector, apply at inference, listen for audible emotion shift.</li>
     </ol>
 
-    <p style="font-size:14px; color:#444">The teacher is Path A (4.70/5.0). All synthetic training data is generated by Path A inference — license-clean, quality-validated. The student is trained to match the teacher's output distribution, not a human reference, which means the research question is specifically about compression fidelity, not naturalness from scratch.</p>
+    <p style="font-size:14px; color:#444">The primary teacher is <strong>IndicParler-TTS</strong> (AI4Bharat, Apache-2.0, 880M, trained on Rasmalai 1,806h with explicit <code>&lt;happy&gt;/&lt;sad&gt;/&lt;anger&gt;/&lt;fear&gt;</code> emotion tags). Path A is retained only as a secondary pronunciation reference — Direction 2 showed its representation is grapheme-bound and using it as the primary distillation source would propagate the prosody flatness Path A's own diagnostics identified.</p>
 
     <div style="margin: 20px 0 6px; font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .07em;">Research progress</div>
     <pre style="background:none; border:none; margin:0 0 4px; padding:0; font-family:'JetBrains Mono',monospace; font-size:14px; line-height:1.4; overflow:visible">[██████░░░░░░░░░░░░░░]  30 / 100</pre>
-    <div style="font-size:12px; color:var(--muted); font-family:'JetBrains Mono',monospace">de-risking phase · architecture survey · property mapping</div>
+    <div style="font-size:12px; color:var(--muted); font-family:'JetBrains Mono',monospace">kill-fast diagnostics · bet ranking · teacher selection</div>
 
     <ul class="wip-list" style="margin-top:16px">
-      <li class="done">Path A teacher validated at 4.70/5.0 — synthetic data pipeline confirmed</li>
-      <li class="done">Architecture survey complete — StyleTTS2-lite selected as base for ablation</li>
-      <li class="done">Phoneme frontend confirmed — espeak-ng + multilingual PL-BERT produces meaningful Hindi embeddings</li>
-      <li class="active">Component ablation study — measuring quality cost of each architectural cut independently</li>
-      <li class="active">Property mapping — which phonetic properties degrade first under compression</li>
-      <li>Data generation — 200-hour synthetic Hinglish corpus from Path A at scale</li>
-      <li>Stage 1 training — 50M baseline, mel-L1 + lightweight discriminator</li>
-      <li>Compression run — 50M → 20–30M, checkpoint evaluation every 10k steps</li>
-      <li>Property re-test — phonetic probe on compressed model vs Path A baseline</li>
-      <li>Ship or document — if 20–30M reaches within 0.5 ranks of Path A on rubric v2.1, it ships</li>
+      <li class="done">Path A shipped at 4.70/5.0 — production teacher and license-clean synthetic data baseline</li>
+      <li class="done">2025 inflection points identified — Mimi/SNAC/BiCodec frozen codecs, IndicParler-TTS as license-clean Indic teacher, DPO/GRPO recipes mature for LM-class TTS</li>
+      <li class="done">Five-bet ranking framework drafted — engineering integrations vs genuine research clearly separated</li>
+      <li class="active">Week 1 kill-fast: IndicParler-TTS ear-test on 30-sentence Hinglish set (Bet 2 viability)</li>
+      <li class="active">Week 1 kill-fast: Mimi/SNAC/BiCodec round-trip on 10 minutes of expressive Hindi from IndicVoices (Bet 3 viability)</li>
+      <li>Week 1 kill-fast: Matcha-TTS + papercup PL-BERT integration shakedown (Bet 1 viability)</li>
+      <li>Week 1 kill-fast: Kokoro-82M v1.0 warm-start dimensional check into StyleTTS2-lite (Bet 4 viability)</li>
+      <li>Week 2: parallel training of the two highest-asymmetry survivors — Bet 1 on Colab T4 (10-hour data per Phir Hera Fairy precedent), Bet 2 on Modal credits (200h synthetic generation + student fine-tune)</li>
+      <li>Week 3: composite-reward DPO post-train (UTMOS + IndicWav2Vec WER + WavLM-SV similarity + F0 variance, KL-anchored) on the leading bet; optional Bet 3 research stretch if compute remains</li>
+      <li>Ear-rubric comparison vs Path A on the 30-sentence eval; ship-or-document gate</li>
     </ul>
 
-    <p style="margin-top:16px; font-size:13px; color:var(--muted); border-left: 2px solid #ddd; padding-left:12px">Hard gate: if compressed model falls below 3.5/5.0 on any category or overall quality drops more than 1.0 rank from Path A, the experiment is documented as a negative result and the project closes with Path A as the primary deliverable. Negative results count.</p>
+    <p style="margin-top:16px; font-size:13px; color:var(--muted); border-left: 2px solid #ddd; padding-left:12px">Hard gate: if neither Bet 1 (Matcha-TTS engineering) nor Bet 2 (IndicParler distillation) beats Path A on the ear rubric by Day 19 of de-risking, fall back to Bet 4 (StyleTTS2-lite at 40–50M from Kokoro warm-start) and ship that. The fallback is a backstop, not the goal. The structural insight Path B has to internalize: at this scale, <strong>the binding constraint isn't parameter count — it's the prosody quality of the teachers and data you train on</strong>. Negative results count.</p>
   </div>
 
 </main>
