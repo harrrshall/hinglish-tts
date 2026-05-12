@@ -30,9 +30,9 @@ included here.
 
 Delivery is conditioned on a single neutral reference clip. Declarative sentences, questions,
 and exclamations all receive a similar falling-then-flat intonation contour. Punctuation has
-limited effect — the phonetic probe (`experiments/05_phonetic_probe/`) measured a ~44%
-duration difference between plain and ellipsis+exclamation variants, and a raised terminal
-pitch, but not the kind of dramatic expressive delivery a human speaker would produce.
+limited effect — a targeted phonetic probe measured a ~44% duration difference between
+plain and ellipsis+exclamation variants, and a raised terminal pitch, but not the kind of
+dramatic expressive delivery a human speaker would produce.
 
 The inference API has no mechanism for requesting "deliver this with urgency" or "read this
 as a question." There is no text-level prosody conditioning in IndicF5.

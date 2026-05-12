@@ -680,7 +680,7 @@ def to_unified_devanagari(text: str) -> str:
   <p>The gap is largest on <code>pure_roman</code>, the dominant input format for Indian chat, WhatsApp, and voice interfaces. <strong>+2.25 points over Kokoro on the thing that matters most.</strong></p>
   <p>Kokoro leads on <code>english_with_NE</code> (4.83 vs 4.50) because it has deeper English training and handles English-mode proper-noun phonetics natively. Our package transliterates "Bengaluru" to Hindi phonetics. Kokoro says it with an English accent. Both score well by ASR, but a listener who expects Indian-English pronunciation of place names may prefer Kokoro for that category.</p>
 
-  <p>Sample outputs from the final system (all from <code>experiments/04_indicf5_xlit_v2/wavs/</code>):</p>
+  <p>Sample outputs from the final system (rubric v2.1 production run):</p>
 
   <div class="table-wrap">
   <table>
@@ -919,7 +919,6 @@ pip install ai4bharat-transliteration</code></pre>
     <li><strong>Underlying model:</strong> <a href="https://huggingface.co/ai4bharat/IndicF5" target="_blank" rel="noopener">ai4bharat/IndicF5</a> (HuggingFace gating required)</li>
     <li><strong>Transliteration library:</strong> <a href="https://github.com/AI4Bharat/IndicXlit" target="_blank" rel="noopener">AI4Bharat/IndicXlit</a></li>
     <li><strong>Detailed methodology:</strong> <code>EVALUATION_REPORT.md</code></li>
-    <li><strong>Full decision log:</strong> <code>RESEARCH_LOG.md</code></li>
     <li><strong>Known limitations:</strong> <code>KNOWN_LIMITATIONS.md</code></li>
   </ul>
 

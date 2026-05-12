@@ -13,14 +13,15 @@ __pycache__/
 *.pyd
 .Python
 
-# Large audio and experiment artifacts
-data/music_source/
-data/reference_audio/music_refs/
-experiments/05_indicf5_music_refs/
-experiments/music_ref_pipeline/
+# Local agent / tooling state — not part of the package
+.claude/
+.gstack/
 
 # Large zip archives
 *.zip
+
+# Vercel local state
+.vercel/
 
 # OS
 .DS_Store

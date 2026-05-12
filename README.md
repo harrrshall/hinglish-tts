@@ -1,7 +1,7 @@
 # Hinglish TTS
 
 Open-source text-to-speech for Hindi-English code-mixed ("Hinglish") speech.
-Built on [IndicF5](https://huggingface.co/ai4bharat/IndicF5) (AI4Bharat, 330M params) with a two-line duration patch and automatic script normalisation via [IndicXlit](https://github.com/AI4Bharat/IndicTransliteration).
+Built on [IndicF5](https://huggingface.co/ai4bharat/IndicF5) (AI4Bharat, 330M params) with a two-line duration patch and automatic script normalisation via [IndicXlit](https://github.com/AI4Bharat/IndicXlit).
 Accepts Devanagari, Roman-script Hindi, mixed-script sentences, and English with Indian named entities — all in the same API call.
 **4.70 / 5.0** mean intelligibility (30-sentence eval set, three-ASR consensus).
 
@@ -9,17 +9,16 @@ Accepts Devanagari, Roman-script Hindi, mixed-script sentences, and English with
 
 ## Sample outputs
 
-All clips are from the v2.1 production run (`experiments/04_indicf5_xlit_v2/wavs/`).
-Click a filename to download and listen.
+The 6 inputs below come from the rubric v2.1 production run (full table and per-sentence scores in `EVALUATION_REPORT.md`). Live demo with all 30 sentences: [hinglish-tts.vercel.app](https://hinglish-tts.vercel.app).
 
-| Input | Category | Score | Audio |
-|---|---|:---:|---|
-| कल मुझे दिल्ली जाना है। | Pure Devanagari | 5/5 | [01.wav](experiments/04_indicf5_xlit_v2/wavs/01.wav) |
-| yaar tu kal kya kar raha tha | Pure Roman Hinglish | 5/5 | [11.wav](experiments/04_indicf5_xlit_v2/wavs/11.wav) |
-| kal mujhe office jaana hai | Pure Roman (English loan) | 5/5 | [09.wav](experiments/04_indicf5_xlit_v2/wavs/09.wav) |
-| Boss को बता देना kal मैं leave पर रहूँगा | Mixed script | 5/5 | [22.wav](experiments/04_indicf5_xlit_v2/wavs/22.wav) |
-| Mera presentation tomorrow है, और मैं nervous हूं। | Mixed script | 5/5 | [18.wav](experiments/04_indicf5_xlit_v2/wavs/18.wav) |
-| My friend Aishwarya from Chennai is visiting Bengaluru | English with NE | 4/5 | [24.wav](experiments/04_indicf5_xlit_v2/wavs/24.wav) |
+| Input | Category | Score |
+|---|---|:---:|
+| कल मुझे दिल्ली जाना है। | Pure Devanagari | 5/5 |
+| yaar tu kal kya kar raha tha | Pure Roman Hinglish | 5/5 |
+| kal mujhe office jaana hai | Pure Roman (English loan) | 5/5 |
+| Boss को बता देना kal मैं leave पर रहूँगा | Mixed script | 5/5 |
+| Mera presentation tomorrow है, और मैं nervous हूं। | Mixed script | 5/5 |
+| My friend Aishwarya from Chennai is visiting Bengaluru | English with NE | 4/5 |
 
 ---
 
@@ -74,7 +73,7 @@ Full methodology and per-sentence breakdown: [EVALUATION_REPORT.md](EVALUATION_R
 
 ```bash
 # 1. Clone
-git clone https://github.com/harrrshall/hienglish.git && cd hienglish
+git clone https://github.com/harrrshall/hinglish-tts.git && cd hinglish-tts
 
 # 2. Install IndicF5 and inference dependencies
 pip install git+https://github.com/AI4Bharat/IndicF5.git \
@@ -252,7 +251,7 @@ If you use the eval set, scoring rubric, or preprocessing code from this work:
   author       = {Harshal Singh},
   title        = {Hinglish TTS: IndicF5 with IndicXlit Preprocessing},
   year         = {2026},
-  howpublished = {\url{https://github.com/harrrshall/hienglish}},
+  howpublished = {\url{https://github.com/harrrshall/hinglish-tts}},
   note         = {30-sentence Hinglish eval set (4 categories).
                   Rubric v2.1: three-ASR consensus, Devanagari-normalised CER,
                   ear-only naturalness. 4.70/5.0 mean intelligibility.}
@@ -271,7 +270,7 @@ at [huggingface.co/ai4bharat/IndicF5](https://huggingface.co/ai4bharat/IndicF5))
 | Eval set, scoring scripts, rubric, `inference.py` | Free for research; [cybernovascnn@gmail.com](mailto:cybernovascnn@gmail.com) for commercial use |
 | IndicF5 model weights | See [ai4bharat/IndicF5](https://huggingface.co/ai4bharat/IndicF5) — attribution required, commercial use restricted |
 | F5-TTS architecture | MIT ([SWivid/F5-TTS](https://github.com/SWivid/F5-TTS)) |
-| IndicXlit | Apache 2.0 ([ai4bharat/IndicTransliteration](https://github.com/AI4Bharat/IndicTransliteration)) |
+| IndicXlit | Apache 2.0 ([ai4bharat/IndicXlit](https://github.com/AI4Bharat/IndicXlit)) |
 
 ---
 
@@ -280,5 +279,4 @@ at [huggingface.co/ai4bharat/IndicF5](https://huggingface.co/ai4bharat/IndicF5))
 Full evaluation methodology, per-sentence scores, rubric specification,
 and limitation accounting: **[EVALUATION_REPORT.md](EVALUATION_REPORT.md)**
 
-Full decision log — every experiment, rubric change, and dead end, in order:
-**[RESEARCH_LOG.md](RESEARCH_LOG.md)**
+Architectural details and the why behind each decision: **[HOW_IT_WORKS.md](HOW_IT_WORKS.md)**

@@ -302,7 +302,7 @@ The gap is largest on `pure_roman`, the dominant input format for Indian chat, W
 
 Kokoro leads on `english_with_NE` (4.83 vs 4.50) because it has deeper English training and handles English-mode proper-noun phonetics natively. Our package transliterates "Bengaluru" to Hindi phonetics. Kokoro says it with an English accent. Both score well by ASR, but a listener who expects Indian-English pronunciation of place names may prefer Kokoro for that category.
 
-Sample outputs from the final system (all from `experiments/04_indicf5_xlit_v2/wavs/`):
+Sample outputs from the final system (rubric v2.1 production run):
 
 | Input | Category | Score |
 |---|---|:---:|
@@ -571,7 +571,6 @@ export $(grep -v '^#' .env | xargs) && python scoring/scripts/run_scoring.py
 - **Underlying model:** [ai4bharat/IndicF5](https://huggingface.co/ai4bharat/IndicF5) (HuggingFace gating required)
 - **Transliteration library:** [AI4Bharat/IndicXlit](https://github.com/AI4Bharat/IndicXlit)
 - **Detailed methodology:** `EVALUATION_REPORT.md`
-- **Full decision log:** `RESEARCH_LOG.md`
 - **Known limitations:** `KNOWN_LIMITATIONS.md`
 
 **Citation:**

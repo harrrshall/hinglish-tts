@@ -2,7 +2,6 @@
 
 > Technical explainer for the IndicF5 + IndicXlit Hinglish TTS stack.
 > Assumes you have read EVALUATION_REPORT.md and want to know the *why*.
-> Internal audit trail is in RESEARCH_LOG.md.
 
 ---
 

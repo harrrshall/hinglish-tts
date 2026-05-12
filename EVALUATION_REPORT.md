@@ -8,7 +8,6 @@
 
 > This document justifies the **4.70 / 5.0** intelligibility score to anyone who
 > downloads the package. It is written for someone who did not observe the audit.
-> The full internal audit trail is in `RESEARCH_LOG.md`.
 
 ---
 
@@ -216,10 +215,9 @@ these predictors unusable as naturalness estimates on Hindi audio.
 - English loanwords and Indian names inside Hindi sentences are produced with
   consistent Hindi phonetics (e.g. "Bengaluru" with Indian vowels, not anglicised).
   This is the intended behaviour for Hinglish TTS.
-- The phonetic probe experiment (`experiments/05_phonetic_probe/`) confirmed
-  that the model responds to fine Devanagari distinctions — vowel length (ि vs ी),
-  aspiration (ख vs क), nukta (ज़ vs ज) — so pronunciation quality improves when
-  input is correctly marked up.
+- A targeted phonetic probe confirmed that the model responds to fine Devanagari
+  distinctions — vowel length (ि vs ी), aspiration (ख vs क), nukta (ज़ vs ज) —
+  so pronunciation quality improves when input is correctly marked up.
 
 ### 3.6 The duration patch (prerequisite for valid scores)
 
@@ -342,9 +340,8 @@ IndicXlit is from `ai4bharat/IndicXlit` (Apache 2.0).
 
 The evaluation harness, scoring scripts, rubric, preprocessing code, eval
 sentences, and this report are the work of Harshal Singh. The code in
-`scoring/scripts/` and `experiments/` may be used and adapted freely for
-research purposes. For commercial use, contact the author at
-cybernovascnn@gmail.com.
+`scoring/scripts/` may be used and adapted freely for research purposes.
+For commercial use, contact the author at cybernovascnn@gmail.com.
 
 ### Citation
 
@@ -355,7 +352,7 @@ If you use the eval set, rubric, or scoring methodology from this work:
   author       = {Harshal Singh},
   title        = {Hinglish TTS Evaluation: IndicF5 with IndicXlit Preprocessing},
   year         = {2026},
-  howpublished = {\url{https://github.com/harshalsinghcn/hienglish}},
+  howpublished = {\url{https://github.com/harrrshall/hinglish-tts}},
   note         = {30-sentence Hinglish eval set (4 categories).
                   Rubric v2.1: three-ASR consensus, Devanagari-normalised CER,
                   ear-only naturalness. IndicF5 + duration patch + IndicXlit:
@@ -406,7 +403,4 @@ It does not include naturalness, speaker quality, or voice fidelity.
 | `scoring/rubric/JUDGE_PROMPT_v2.md` | Rubric specification (locked) |
 | `scoring/rubric/CEILING_REPORT.md` | Human ground-truth ceiling study |
 | `scoring/scripts/lib_normalize.py` | IndicXlit normalisation + whitelists |
-| `experiments/02_indicf5_patch/patch.diff` | Duration patch (4 lines) |
-| `experiments/04_indicf5_xlit_v2/scores/auto_scores_v2.1.csv` | Final per-sentence scores |
-| `experiments/04_indicf5_xlit_v2/COMPARISON.md` | v2.0→v2.1 detailed comparison |
-| `RESEARCH_LOG.md` | Append-only decision log — full audit trail |
+| `inference.py` | Production inference wrapper (applies the duration patch on import) |
