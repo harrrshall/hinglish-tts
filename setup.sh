@@ -51,7 +51,7 @@ log() { echo "[setup] $*"; }
 step() { echo; echo "=== $* ==="; }
 
 # ---------------------------------------------------------------------------
-step "1/9  System packages"
+step "1/10  System packages"
 # ---------------------------------------------------------------------------
 export DEBIAN_FRONTEND=noninteractive
 
@@ -74,6 +74,7 @@ $SUDO apt-get install -y --no-install-recommends \
   git \
   curl \
   wget \
+  unzip \
   espeak-ng \
   libsndfile1 \
   ffmpeg
@@ -81,7 +82,7 @@ $SUDO apt-get install -y --no-install-recommends \
 python3.11 --version
 
 # ---------------------------------------------------------------------------
-step "2/9  Python venv (.venv/)"
+step "2/10  Python venv (.venv/)"
 # ---------------------------------------------------------------------------
 if [ -d "$VENV" ]; then
   log "Venv already exists at $VENV — skipping creation."
@@ -96,7 +97,7 @@ source "$VENV/bin/activate"
 log "Active Python: $(python --version) at $(which python)"
 
 # ---------------------------------------------------------------------------
-step "3/9  pip / wheel / setuptools"
+step "3/10  pip / wheel / setuptools"
 # ---------------------------------------------------------------------------
 pip install "pip==24.0" wheel "setuptools<69"
 # setuptools is capped at <69 before fairseq install because fairseq's setup.py
@@ -104,7 +105,7 @@ pip install "pip==24.0" wheel "setuptools<69"
 # installs we restore a current setuptools.
 
 # ---------------------------------------------------------------------------
-step "4/9  Install torch (must precede fairseq / ai4bharat-transliteration)"
+step "4/10  Install torch (must precede fairseq / ai4bharat-transliteration)"
 # ---------------------------------------------------------------------------
 # fairseq reads torch during its own build. Installing torch first avoids
 # build failures where fairseq tries to import torch before it exists.
@@ -138,7 +139,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-step "5/9  Install fairseq + requirements.txt"
+step "5/10  Install fairseq + requirements.txt"
 # ---------------------------------------------------------------------------
 # fairseq 0.12.2 PyPI sdist is missing multiple source files (version.txt,
 # balanced_assignment.cpp, and others). Use the GitHub source tarball at the
@@ -167,7 +168,7 @@ pip install -r "$REPO_ROOT/requirements.txt" --timeout 600 --retries 5
 pip install --upgrade setuptools --timeout 600 --retries 5
 
 # ---------------------------------------------------------------------------
-step "6/9  Install IndicF5 from GitHub"
+step "6/10  Install IndicF5 from GitHub"
 # ---------------------------------------------------------------------------
 # IndicF5 has no PyPI release. The GitHub repo includes f5_tts (the underlying
 # engine) and the ai4bharat model code. Pinning to main; to reproduce exactly:
@@ -175,7 +176,46 @@ step "6/9  Install IndicF5 from GitHub"
 pip install git+https://github.com/AI4Bharat/IndicF5.git --timeout 600 --retries 5
 
 # ---------------------------------------------------------------------------
-step "7/9  Download reference audio"
+step "7/10  Pre-download IndicXlit models"
+# ---------------------------------------------------------------------------
+# ai4bharat-transliteration lazy-downloads its ~121 MB model + ~163 MB dicts
+# on first XlitEngine(...) call using pydload, which has no resume support and
+# stalls on the GitHub release CDN's per-connection throttle (~14 MB bursts).
+# Pre-download both with wget -c (resume on stall) so import-time is fast and
+# offline-safe. wget follows the github → release-assets.githubusercontent.com
+# redirect; -c sends Range: bytes=N-, getting a fresh CDN burst per retry.
+_XLIT_PKG_DIR=$(python -c "import ai4bharat.transliteration, os; print(os.path.dirname(ai4bharat.transliteration.__file__))")
+_XLIT_MODELS_DIR="$_XLIT_PKG_DIR/transformer/models/en2indic/v1.0"
+_XLIT_MODEL_FILE="$_XLIT_MODELS_DIR/transformer/indicxlit.pt"
+_XLIT_DICTS_DIR="$_XLIT_MODELS_DIR/word_prob_dicts"
+mkdir -p "$_XLIT_MODELS_DIR"
+
+if [ -f "$_XLIT_MODEL_FILE" ]; then
+  log "IndicXlit model already present — skipping download."
+else
+  log "Downloading IndicXlit en→indic model (~121 MB, may retry several times)..."
+  wget -c --tries=30 --waitretry=3 --timeout=30 \
+    -O /tmp/indicxlit-model.zip \
+    "https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-en-indic-v1.0.zip" 2>&1 | \
+    grep -E "saved|error|Error|retry|%" | tail -5 || true
+  unzip -q -o /tmp/indicxlit-model.zip -d "$_XLIT_MODELS_DIR"
+  rm -f /tmp/indicxlit-model.zip
+fi
+
+if [ -d "$_XLIT_DICTS_DIR" ]; then
+  log "IndicXlit dicts already present — skipping download."
+else
+  log "Downloading IndicXlit word-prob dicts (~163 MB, may retry several times)..."
+  wget -c --tries=30 --waitretry=3 --timeout=30 \
+    -O /tmp/indicxlit-dicts.zip \
+    "https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/word_prob_dicts.zip" 2>&1 | \
+    grep -E "saved|error|Error|retry|%" | tail -5 || true
+  unzip -q -o /tmp/indicxlit-dicts.zip -d "$_XLIT_MODELS_DIR"
+  rm -f /tmp/indicxlit-dicts.zip
+fi
+
+# ---------------------------------------------------------------------------
+step "8/10  Download reference audio"
 # ---------------------------------------------------------------------------
 mkdir -p "$REF_AUDIO_DIR"
 if [ -f "$REF_AUDIO" ]; then
@@ -189,7 +229,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-step "8/9  HuggingFace login"
+step "9/10  HuggingFace login"
 # ---------------------------------------------------------------------------
 if [ -n "${HF_TOKEN:-}" ]; then
   log "Logging in to HuggingFace..."
@@ -202,7 +242,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-step "9/9  Smoke tests"
+step "10/10  Smoke tests"
 # ---------------------------------------------------------------------------
 
 log "Smoke 1: import inference + verify duration patch is active..."
