@@ -78,7 +78,7 @@ git clone https://github.com/harrrshall/hinglish-tts.git && cd hinglish-tts
 # 2. Install IndicF5 and inference dependencies
 pip install git+https://github.com/AI4Bharat/IndicF5.git \
     "transformers==4.49.0" "accelerate==0.33.0" \
-    "numpy>=2.0,<2.1" soundfile
+    "pip install "numpy<2.1"
 
 # 3. Accept model gating — visit the link below and click "Agree and access repository"
 #    https://huggingface.co/ai4bharat/IndicF5
@@ -89,6 +89,24 @@ export HF_TOKEN=hf_your_token_here
 # 5. Install preprocessing (requires Python ≤ 3.11; skip for Devanagari-only input)
 pip install ai4bharat-transliteration
 ```
+### Known Issue: Windows Installation Failure (fairseq)
+
+On Windows, installing `ai4bharat-transliteration` (a dependency used for 
+preprocessing) may fail while building `fairseq` from source, with an 
+error resembling:
+
+    FileNotFoundError: [Errno 2] No such file or directory: 'fairseq/version.txt'
+
+This happens because `fairseq`'s published source distribution on PyPI is 
+missing files required for its build process on Windows. This project's 
+`setup.sh` includes manual patches for this exact issue on Linux (downloading 
+the fairseq source tarball directly and injecting the missing `version.txt`), 
+but no equivalent Windows workaround currently exists.
+
+**Workaround:** Windows users may need to build/install `fairseq` from a 
+pre-built wheel, use WSL, or manually patch the missing file following the 
+same approach as `setup.sh`. A proper cross-platform fix is welcome as a 
+future contribution.
 
 > **Duration patch:** `inference.py` automatically patches
 > `f5_tts/infer/utils_infer.py` in your site-packages on first import.
